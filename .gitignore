@@ -1,0 +1,13 @@
+nozama-kafka/Nozama_OrderInfoUpdater/.mvn/*
+nozama-kafka/Nozama_OrderInfoUpdater/mvnw.cmd
+nozama-kafka/Nozama_OrderInfoUpdater/mvnw
+nozama-batch/Nozama_DeliveryScheduler/.mvn/*
+nozama-kafka/log/*
+nozama-api/log/*
+nozama-api/Nozama_ShipmentService/log/*
+.idea/*
+nozama.ipr
+nozama.iws
+nozama-api/Nozama_ShipmentService/*.log
+nozama-api/*.log
+/nozama-api-automation.tar.xz

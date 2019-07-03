@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Reference https://www.javainterviewpoint.com/spring-boot-logback/
+-->
+<configuration>
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{MM:dd HH:mm:ss.SSS} [%t] [%level] [%logger{36}] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>../log/orderservice_flog.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{MM:dd HH:mm:ss.SSS} [%t] [%level] [%logger{36}] - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RollingAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../log/orderservice_log.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{MM:dd HH:mm:ss.SSS} [%t] [%level] [%logger{36}] - %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../log/orderservice_log_%d{dd-MM-yyyy}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>10MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="in.nozama" level="info" additivity="false">
+        <appender-ref ref="ConsoleAppender"></appender-ref>
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="ConsoleAppender"></appender-ref>
+        <appender-ref ref="RollingAppender"></appender-ref>
+    </root>
+
+</configuration>

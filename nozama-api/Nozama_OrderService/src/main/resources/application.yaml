@@ -1,0 +1,4 @@
+## NOZAMA_SERVICE_PROFILE value from the OS Environment variable value, if no set it takes default value "dev"
+spring:
+    profiles:
+      active: ${NOZAMA_SERVICE_PROFILE:dev}

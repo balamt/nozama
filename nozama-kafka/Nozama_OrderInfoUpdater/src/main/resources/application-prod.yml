@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: "nozama-orderinfoupdater"
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://nozama-mysql-container:3306/nozamadb?useSSL=false"
+    username: nozama_dba
+    password: nozama19
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: update
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  batch:
+    initialize-schema: "always"
+
+server:
+  port: 8087
+
+logging:
+  path: "/tmp/nozama/logs"
+  file: "${logging.path}/${spring.application.name}_log.log"
+
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+
+  config: "classpath:orderinfoupdater-logging-config.xml"
+
+kafka:
+  server:
+    path: "localhost:9092"
+  topic: "order.info.updater"
+
+nozama:
+  api:
+    gateway:
+      serviceid: "nozama-api-gateway"

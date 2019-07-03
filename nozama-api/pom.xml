@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>in.nozama</groupId>
+	<artifactId>nozama-api</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>nozama-api</name>
+	<description>Nozama API Package</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.4.RELEASE</version>
+		<relativePath />
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<modules>
+		<module>Nozama_EurekaServer</module>
+		<module>Nozama_Shared_Lib</module>
+		<module>Nozama_ApiGateway</module>
+		<module>Nozama_UserService</module>
+		<module>Nozama_ProductService</module>
+		<module>Nozama_OrderService</module>
+		<module>Nozama_ShipmentService</module>
+		<module>Nozama_WalletService</module>
+		<module>../nozama-batch/Nozama_DeliveryScheduler</module>
+		<module>../nozama-kafka/Nozama_OrderInfoUpdater</module>
+		<module>Nozama_CartService</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

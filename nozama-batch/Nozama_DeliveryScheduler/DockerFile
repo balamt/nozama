@@ -1,0 +1,7 @@
+FROM nozama-jdk:base
+MAINTAINER nozama
+VOLUME /tmp
+COPY /target/nozama-delivery-batch.jar /opt/lib/nozama-delivery-batch.jar
+EXPOSE 8081
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-delivery-batch.jar"]

@@ -1,0 +1,8 @@
+FROM nozama-jdk:base
+MAINTAINER nozama
+VOLUME /tmp
+COPY /target/nozama-order-service.jar /opt/lib/nozama-order-service.jar
+EXPOSE 8084
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-order-service.jar"]
+
