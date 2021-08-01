@@ -1,0 +1,29 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+nozama:
+  api:
+    gateway:
+      serviceid: nozama-api-gateway
+server:
+  port: 8088
+spring:
+  application:
+    name: nozama-cartservice
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: nozama19
+    url: jdbc:mysql://localhost:3310/nozama_cart_db?useSSL=false
+    username: nozama_dba
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect

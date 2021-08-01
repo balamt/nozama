@@ -59,7 +59,7 @@ public class ShipmentController {
     private String nozamaApiGateway;
     
     @GetMapping
-    public ResponseEntity getAllShipements() {
+    public ResponseEntity<List<Track>> getAllShipements() {
     	List<Track> shipmentDetail = shipmentService.getAll();
         return ResponseEntity.ok(shipmentDetail);
     }
@@ -110,7 +110,7 @@ public class ShipmentController {
     }
 
     @GetMapping("/track/{orderId}")
-    public ResponseEntity trackShipment(@PathVariable(name = "orderId") Long orderId) throws ShipmentNotFoundException {
+    public ResponseEntity<Track> trackShipment(@PathVariable(name = "orderId") Long orderId) throws ShipmentNotFoundException {
         Application application = eurekaClient.getApplication(nozamaApiGateway);
         InstanceInfo instanceInfo = application.getInstances().get(0);
         String orderServiceGetOrderURL = ServiceUrlBuilder.constructUrl(nozamaApiGateway, instanceInfo.getPort(),

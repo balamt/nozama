@@ -1,7 +1,5 @@
 package in.nozama.service.model;
 
-import org.springframework.hateoas.ResourceSupport;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -9,7 +7,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "warehouses")
-public class Warehouse extends ResourceSupport implements Serializable {
+public class Warehouse implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

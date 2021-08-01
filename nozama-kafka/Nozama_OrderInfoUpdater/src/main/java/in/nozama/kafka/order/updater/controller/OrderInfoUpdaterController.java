@@ -18,7 +18,7 @@ public class OrderInfoUpdaterController {
     OrderInfoUpdaterService orderInfoUpdaterService;
 
     @PutMapping
-    public ResponseEntity updateOrder(@RequestBody Order order){
+    public ResponseEntity<String> updateOrder(@RequestBody Order order){
         orderInfoUpdaterService.sendOrderInfo(order);
 
         LOG.info("Order Info Update for Order " + order.getOrderid());
@@ -27,7 +27,7 @@ public class OrderInfoUpdaterController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity testService(){
+    public ResponseEntity<String> testService(){
         return ResponseEntity.ok("Order Info Update Service Running");
     }
 

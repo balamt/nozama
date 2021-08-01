@@ -1,0 +1,7 @@
+FROM nozama-jdk:base
+MAINTAINER nozama
+VOLUME /tmp
+COPY /target/nozama-api-gateway.jar /opt/lib/nozama-api-gateway.jar
+EXPOSE 8080
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-api-gateway.jar"]

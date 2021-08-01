@@ -1,5 +1,5 @@
 FROM nozama-jdk:base
-MAINTAINER nozama
+LABEL maintainer="nozama"
 VOLUME /tmp
 COPY /target/nozama-eureka-server-0.0.1-SNAPSHOT.jar /opt/lib/nozama-eureka-server-0.0.1-SNAPSHOT.jar
 EXPOSE 8761

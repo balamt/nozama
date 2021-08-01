@@ -26,20 +26,20 @@ public class WalletController {
 	WalletService walletService;
 
 	@PostMapping("/add/{mobile}/{amount}")
-	public ResponseEntity addAmount(@PathVariable(name = "mobile") String mobileNo,
+	public ResponseEntity<Wallet> addAmount(@PathVariable(name = "mobile") String mobileNo,
 			@PathVariable(name = "amount") Double Amount) {
 		Wallet walletDetails = walletService.addAmount(mobileNo, Amount);
 		return ResponseEntity.ok(walletDetails);
 	}
 
 	@GetMapping("/check/{mobile}")
-	public ResponseEntity checkAmount(@PathVariable(name = "mobile") String mobileNo) {
+	public ResponseEntity<Wallet> checkAmount(@PathVariable(name = "mobile") String mobileNo) {
 		Wallet walletDetails = walletService.checkAmount(mobileNo);
 		return ResponseEntity.ok(walletDetails);
 	}
 
 	@PostMapping("/deduct/{mobile}/{amount}")
-	public ResponseEntity deductAmount(@PathVariable(name = "mobile") String mobileNo,
+	public ResponseEntity<Wallet> deductAmount(@PathVariable(name = "mobile") String mobileNo,
 			@PathVariable(name = "amount") Double Amount) throws WalletNotFoundException {
 		Wallet walletDetails = walletService.deductAmount(mobileNo, Amount);
 		return ResponseEntity.ok(walletDetails);

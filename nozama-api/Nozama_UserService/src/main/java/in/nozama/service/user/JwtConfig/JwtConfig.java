@@ -19,7 +19,7 @@ public class JwtConfig {
 		FilterRegistrationBean<JwtFilter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(jwtFilter);
 		//Need to add filter to Secure Paths
-		filterRegistrationBean.addUrlPatterns("/secured/*");
+		filterRegistrationBean.addUrlPatterns("/user/*");
 		return filterRegistrationBean;
 	}
 }

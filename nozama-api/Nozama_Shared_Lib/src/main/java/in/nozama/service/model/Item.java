@@ -6,8 +6,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "cart")
 public class Item implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;

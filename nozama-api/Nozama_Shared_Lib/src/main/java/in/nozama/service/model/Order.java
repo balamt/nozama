@@ -1,22 +1,43 @@
 package in.nozama.service.model;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.sun.istack.NotNull;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public class Order implements Serializable {
 
 	/**
@@ -78,7 +99,7 @@ public class Order implements Serializable {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime updatedDate;
 
-	public Long getOrderid() {
+/*	public Long getOrderid() {
 		return orderid;
 	}
 
@@ -156,9 +177,9 @@ public class Order implements Serializable {
 
 	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -178,7 +199,7 @@ public class Order implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(orderid, user, items, status, finalprice, totalPrice, discountApplied, discountPercentage, createdDate, updatedDate);
-	}
+	}*/
 
 	@Override
 	public String toString() {

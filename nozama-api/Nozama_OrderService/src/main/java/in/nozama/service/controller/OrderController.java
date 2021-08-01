@@ -32,7 +32,7 @@ public class OrderController {
     RestTemplate restTemplate;
 
     @GetMapping
-    public ResponseEntity testServerStatus(){
+    public ResponseEntity<String> testServerStatus(){
         return ResponseEntity.ok("Order Server is Up and Running...");
     }
 
@@ -57,9 +57,7 @@ public class OrderController {
 
     @PostMapping("/cancel/{orderId}")
     public ResponseEntity<Order> cancelOrder(@PathVariable(name = "orderId") Long orderId) throws OrderNotFoundException {
-
         Order order = orderService.getOrderById(orderId);
-
         Order updateOrder = orderService.updateOrderStatus(order.getOrderid(), Status.ORDER_CANCELLED);
         if(LOG.isDebugEnabled()){
             LOG.debug(String.format( "Updated Order %s ",updateOrder.toString()));
@@ -69,9 +67,9 @@ public class OrderController {
     }
 
     @PostMapping("/process/{orderId}")
-    public ResponseEntity processOrder(@PathVariable(name = "orderId") Long orderId) throws OrderNotFoundException {
+    public ResponseEntity<Order> processOrder(@PathVariable(name = "orderId") Long orderId) throws OrderNotFoundException {
         Order order = orderService.getOrderById(orderId);
-        if(order.getStatus().code().equals(Status.SHIP_CREATED)){
+        if(order.getStatus().equals(Status.SHIP_CREATED)){
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
         orderService.updateOrderStatus(order.getOrderid(), Status.SHIP_CREATED);
@@ -89,7 +87,7 @@ public class OrderController {
      * @return List of Orders
      */
     @GetMapping("/ship")
-    public ResponseEntity getActiveOrdersHavingShipOnlyStatus(){
+    public ResponseEntity<List<Optional<Order>>> getActiveOrdersHavingShipOnlyStatus(){
         List<Optional<Order>> orders = orderService.getOrdersWithShipStatus();
         return ResponseEntity.ok(orders);
     }

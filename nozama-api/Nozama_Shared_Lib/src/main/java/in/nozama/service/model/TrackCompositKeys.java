@@ -15,7 +15,12 @@ import java.util.Objects;
 @Embeddable
 public class TrackCompositKeys implements Serializable {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Order orderId;
 

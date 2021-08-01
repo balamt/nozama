@@ -14,12 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/product")
+/*@CrossOrigin(origins = {"http://localhost:4200", "http://balahp:4200","http://localhost:4200/"})*/
 public class ProductController {
 	
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Product>> getAllProducts() {
 		List<Product> products = productService.getAllProducts();				
 		return ResponseEntity.ok().body(products);
@@ -29,6 +30,12 @@ public class ProductController {
 	public ResponseEntity<Product> getProductById(@PathVariable(name = "productId") Long productId)
 			throws ProductNotFoundException {
 		return ResponseEntity.ok(productService.getProductById(productId));
+	}
+
+	@GetMapping("/by/{categoryId}")
+	public ResponseEntity<List<Product>> getProductByCategory(@PathVariable(name = "categoryId") String categoryId)
+			throws ProductNotFoundException {
+		return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
 	}
 
 	@ExceptionHandler

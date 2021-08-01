@@ -1,20 +1,30 @@
 package in.nozama.service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.hateoas.ResourceSupport;
+import com.fasterxml.jackson.annotation.JsonView;
+import in.nozama.service.view.UserModelView;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User extends ResourceSupport implements Serializable {
+@JsonView(UserModelView.PublicView.class)
+public class User extends RepresentationModel<User> implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="user_id")
@@ -36,6 +46,7 @@ public class User extends ResourceSupport implements Serializable {
 	
 	@NotNull
 	@Column(name = "password")
+	@JsonView(UserModelView.ProtectedView.class)
 	private String password;
 
 	@Enumerated(EnumType.STRING)

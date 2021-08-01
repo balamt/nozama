@@ -6,7 +6,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(code = HttpStatus.NOT_FOUND, value = HttpStatus.NOT_FOUND, reason = "Wallet not found")
 public class WalletNotFoundException extends Exception{
 
-	 public WalletNotFoundException(String message,Exception e) {
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public WalletNotFoundException(String message,Exception e) {
 	        super(message, e);
 	    }
 

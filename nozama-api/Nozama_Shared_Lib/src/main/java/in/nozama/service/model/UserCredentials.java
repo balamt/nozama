@@ -2,7 +2,7 @@ package in.nozama.service.model;
 
 import java.io.Serializable;
 
-public class LoginCredentials implements Serializable {
+public class UserCredentials implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,4 +21,11 @@ public class LoginCredentials implements Serializable {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "LoginCredentials{" +
+				"email='" + email + '\'' +
+				", password='" + password + '\'' +
+				'}';
+	}
 }
