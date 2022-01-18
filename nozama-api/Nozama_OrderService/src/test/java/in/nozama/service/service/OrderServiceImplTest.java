@@ -1,10 +1,10 @@
 package in.nozama.service.service;
 
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
 import in.nozama.service.exception.OrderNotFoundException;
-import in.nozama.service.model.Order;
-import in.nozama.service.model.Status;
-import in.nozama.service.model.User;
 import in.nozama.service.repository.OrderRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,8 +34,7 @@ public class OrderServiceImplTest {
 
     private Long orderId = 1L;
     private List<Optional<Order>> orders;
-    @Mock
-    private User user;
+    private Long user = 2L;
 
     private Order order1;
     private Order order2;

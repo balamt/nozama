@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import in.nozama.nozamacartservice.model.Item;
 import in.nozama.nozamacartservice.repository.CartRepository;
-import in.nozama.service.model.Item;
 
 @Service
 public class ViewCartServiceImpl implements ViewCartService {

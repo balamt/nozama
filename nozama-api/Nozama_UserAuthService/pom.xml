@@ -10,8 +10,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>in.nozama</groupId>
-	<artifactId>nozama-userauthservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>nozama-userauthservice</artifactId>
 	<name>Nozama_UserAuthService</name>
 	<description>Nozama User Authentication Service</description>
 	<properties>
@@ -37,6 +37,10 @@
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -58,6 +62,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-rest-core -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-rest-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -100,7 +109,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<release>16</release>
-					<!-- <source>16</source> <target>16</target> -->
+					<source>16</source>
+					<target>16</target>
 				</configuration>
 			</plugin>
 			<plugin>

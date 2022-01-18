@@ -1,8 +1,9 @@
 package in.nozama.service.user.repository;
 
 
-import in.nozama.service.model.User;
 import in.nozama.service.user.mapper.UsersRowMapper;
+import in.nozama.service.user.model.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

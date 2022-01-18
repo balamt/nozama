@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.2</version>
+		<version>2.5.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>in.nozama</groupId>
-	<artifactId>nozama-userservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>nozama-userservice</artifactId>
 	<name>Nozama_UserService</name>
 	<description>Nozama User Service</description>
 
@@ -55,7 +55,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -123,7 +126,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<release>16</release>
-					<!-- <source>16</source> <target>16</target> -->
+					<source>16</source>
+					<target>16</target>
 				</configuration>
 			</plugin>
 			<plugin>

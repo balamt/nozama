@@ -20,7 +20,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
-    url: jdbc:mysql://nozama-mysql-container:3306/nozamadb?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://nozama-mysql-container:3306/nozama_user_auth_db?allowPublicKeyRetrieval=true&useSSL=false
     username: nozama_dba
   jackson:
     serialization:

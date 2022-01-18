@@ -1,8 +1,9 @@
 package in.nozama.service.service;
 
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
 import in.nozama.service.exception.OrderNotFoundException;
-import in.nozama.service.model.Order;
-import in.nozama.service.model.Status;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

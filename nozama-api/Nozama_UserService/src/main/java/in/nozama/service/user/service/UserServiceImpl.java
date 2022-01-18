@@ -1,7 +1,10 @@
 package in.nozama.service.user.service;
 
-import in.nozama.service.model.UserCredentials;
-import in.nozama.service.model.User;
+import in.nozama.service.dto.CreateUserRequest;
+import in.nozama.service.dto.UserResponse;
+import in.nozama.service.user.mapper.UserMapper;
+import in.nozama.service.user.model.User;
+import in.nozama.service.user.model.UserCredentials;
 import in.nozama.service.user.repository.UserRepository;
 import in.nozama.service.user.repository.UserRepositoryCustomDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +20,24 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
 	@Autowired UserRepository userRepository;
+	
+	@Autowired UserMapper userMapper;
 
 	@Autowired UserRepositoryCustomDao userRepositoryCustomDao;
 
 	@Override
-	public List<User> getAllUser() {
-		return userRepository.findAll();
+	public List<UserResponse> getAllUser() {
+		return userMapper.map(userRepository.findAll());
 	}
 
 	@Override
-	public Optional<User> getUserById(Long userId) {
-		return userRepository.findById(userId);
+	public Optional<UserResponse> getUserById(Long userId) {
+		return userMapper.map(userRepository.findById(userId));
 	}
 
 	@Override
-	public User addNewUser(User user){
-		User userPersisted = userRepository.save(user);
+	public User addNewUser(CreateUserRequest user){
+		User userPersisted = userRepository.save(userMapper.map(user));
 		System.out.println("User Service addNewUser " + userPersisted.toString());
 		if(userPersisted.getUserid() != null && userPersisted.getUserid() > 0){
 			return userPersisted;

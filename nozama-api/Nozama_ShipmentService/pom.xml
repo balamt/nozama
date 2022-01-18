@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.2</version>
+		<version>2.5.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>in.nozama</groupId>
-	<artifactId>nozama-shipmentservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>nozama-shipmentservice</artifactId>
 	<name>Nozama_ShipmentService</name>
-	<description>Nozama Shipment or Delivery Tracking Service</description>
+	<description>Nozama Shipment or Delivery Tracking Service - this uses the Kafka</description>
 
 	<properties>
 		<java.version>16</java.version>
@@ -22,12 +22,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>in.nozama</groupId>
-			<artifactId>nozama-shared-lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

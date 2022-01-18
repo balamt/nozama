@@ -4,8 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
-import in.nozama.service.model.*;
 import org.springframework.stereotype.Component;
+
+import in.nozama.service.user.model.UserCredentials;
 
 @Component
 public class LoginCredentialsRowMapper implements RowMapper<UserCredentials> {

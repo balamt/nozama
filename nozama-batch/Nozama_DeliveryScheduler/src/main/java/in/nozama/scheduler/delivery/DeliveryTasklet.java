@@ -3,7 +3,8 @@ package in.nozama.scheduler.delivery;
 import in.nozama.scheduler.delivery.processor.OrderItemProcessor;
 import in.nozama.scheduler.delivery.reader.OrderItemReader;
 import in.nozama.scheduler.delivery.writer.OrderItemWriter;
-import in.nozama.service.model.Order;
+import in.nozama.service.entity.Order;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;

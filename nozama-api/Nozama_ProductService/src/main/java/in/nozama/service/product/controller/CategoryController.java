@@ -1,6 +1,6 @@
 package in.nozama.service.product.controller;
 
-import in.nozama.service.model.Category;
+import in.nozama.service.product.model.Category;
 import in.nozama.service.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

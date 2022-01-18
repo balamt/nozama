@@ -1,8 +1,8 @@
 package in.nozama.service.controller;
 
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
 import in.nozama.service.exception.OrderNotFoundException;
-import in.nozama.service.model.Order;
-import in.nozama.service.model.Status;
 import in.nozama.service.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

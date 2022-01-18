@@ -2,7 +2,7 @@ package in.nozama.nozamacartservice.service;
 
 import java.util.List;
 
-import in.nozama.service.model.Item;
+import in.nozama.nozamacartservice.model.Item;
 
 public interface RemoveCartService {
 

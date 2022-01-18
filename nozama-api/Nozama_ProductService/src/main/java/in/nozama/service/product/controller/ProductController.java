@@ -1,7 +1,7 @@
 package in.nozama.service.product.controller;
 
-import in.nozama.service.exception.ProductNotFoundException;
-import in.nozama.service.model.Product;
+import in.nozama.service.product.exception.ProductNotFoundException;
+import in.nozama.service.product.model.Product;
 import in.nozama.service.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import in.nozama.nozamacartservice.model.Item;
 import in.nozama.nozamacartservice.service.AddCartService;
 import in.nozama.nozamacartservice.util.CartResponse;
-import in.nozama.service.model.Item;
-import in.nozama.service.model.Product;
 
 @RestController
 @RequestMapping("/cart")
@@ -32,20 +31,20 @@ public class AddCartController {
 	public ResponseEntity<CartResponse> addCart(@RequestBody Item item, @RequestParam("productId") Long productId) {
 
 		LOGGER.info("before calling rest template");
-		Product product = new Product();
+		Long product = -1L;
 
 		CartResponse cartReponse = new CartResponse();
 
 		System.out.println(productId);
-		Product[] productDetails = restTemplate.getForObject("http://nozama-productservice/product", Product[].class);
+		Long[] productDetails = restTemplate.getForObject("http://nozama-productservice/product", Long[].class);
 		System.out.println(productDetails.toString());
-		for (Product products : productDetails) {
-			if (products.getProductId() == productId) {
+		for (Long products : productDetails) {
+			if (products.equals(productId)) {
 				product = products;
 			}
 		}
 
-		if (product.getProductName() == null) {
+		if (product <= -1L) {
 			cartReponse.setMesssage("PRODUCT DOES NOT EXISTS");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(cartReponse);
 		}

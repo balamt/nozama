@@ -1,6 +1,6 @@
 package in.nozama.nozamacartservice.service;
 
-import in.nozama.service.model.Item;
+import in.nozama.nozamacartservice.model.Item;
 
 public interface AddCartService {
 	

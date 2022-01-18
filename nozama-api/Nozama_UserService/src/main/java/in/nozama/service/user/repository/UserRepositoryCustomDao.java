@@ -1,7 +1,8 @@
 package in.nozama.service.user.repository;
 
-import in.nozama.service.model.User;
 import org.springframework.stereotype.Repository;
+
+import in.nozama.service.user.model.User;
 
 @Repository
 public interface UserRepositoryCustomDao {

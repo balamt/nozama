@@ -1,6 +1,7 @@
 package in.nozama.service.util;
 
-import in.nozama.service.model.*;
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
 
 public class OrderTestUtil {
 
@@ -10,7 +11,7 @@ public class OrderTestUtil {
             "\"links\":[]},\"items\":[],\"status\":\"NEW\",\"finalprice\":120.0,\"totalPrice\":120.0," +
             "\"discountApplied\":false,\"discountPercentage\":0.0,\"createdDate\":null,\"updatedDate\":null}";
 
-    public static Order createOrderModel(Long id, Status status, User user, Double totalPrice, Double finalPrice,
+    public static Order createOrderModel(Long id, Status status, Long user, Double totalPrice, Double finalPrice,
                                          Double discountPercentage,
                                          Boolean isDiscountApplied){
         Order order = new Order();
@@ -19,14 +20,7 @@ public class OrderTestUtil {
         if(user != null){
             order.setUser(user);
         }else{
-            User user1 = new User();
-            user1.setUserid(100L);
-            user1.setFullname("Jack");
-            user1.setEmail("jack@test.com");
-            user1.setGender(Gender.MALE);
-            user1.setMobile("98989809898");
-            user1.setUsertype(UserType.BASIC);
-            order.setUser(user1);
+            order.setUser(1L);
         }
         order.setTotalPrice(totalPrice);
         order.setFinalprice(finalPrice);

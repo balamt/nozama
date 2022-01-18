@@ -10,7 +10,7 @@ public class ApiController {
 	
 	@GetMapping("/test")
 	public String testAPIService() {
-		return "Order is up and running...";
+		return "API is up and running...";
 	}
 
 }

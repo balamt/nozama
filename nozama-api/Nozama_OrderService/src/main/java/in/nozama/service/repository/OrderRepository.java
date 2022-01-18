@@ -1,7 +1,8 @@
 package in.nozama.service.repository;
 
-import in.nozama.service.model.Order;
-import in.nozama.service.model.Status;
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

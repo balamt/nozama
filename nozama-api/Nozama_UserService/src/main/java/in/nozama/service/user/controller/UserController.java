@@ -7,9 +7,6 @@ import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +21,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import in.nozama.service.model.JwtAuthenticationToken;
-import in.nozama.service.model.UserCredentials;
-import in.nozama.service.model.User;
-import in.nozama.service.model.UserType;
+import in.nozama.service.dto.CreateUserRequest;
+import in.nozama.service.dto.UserResponse;
+import in.nozama.service.dto.view.UserModelView;
 import in.nozama.service.user.exception.UserNotFoundException;
+import in.nozama.service.user.model.JwtAuthenticationToken;
+import in.nozama.service.user.model.User;
+import in.nozama.service.user.model.UserCredentials;
 import in.nozama.service.user.service.UserService;
-import in.nozama.service.view.UserModelView;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -49,10 +47,10 @@ public class UserController {
     @RolesAllowed("PRIME")
     @GetMapping(value = "/all")
     @JsonView(UserModelView.PublicView.class)
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         final String uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toString();
 
-        List<User> users = userService.getAllUser();
+        List<UserResponse> users = userService.getAllUser();
 
         // By This we can add self link to the user, Note we need to extend User class
         // with ResourceSupport
@@ -69,8 +67,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     @JsonView(UserModelView.PublicView.class)
-    public ResponseEntity<User> getUserById(@PathVariable(name = "id") Long userId) throws UserNotFoundException {
-    	Optional<User> user = userService.getUserById(userId);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable(name = "id") Long userId) throws UserNotFoundException {
+    	Optional<UserResponse> user = userService.getUserById(userId);
     	if(user.isPresent()) {
     		return ResponseEntity.ok(user.get());
     	}
@@ -80,7 +78,7 @@ public class UserController {
 
     @PostMapping("/signup")
     @JsonView(UserModelView.ProtectedView.class)
-    public ResponseEntity<User> addUser(@RequestBody User user) {
+    public ResponseEntity<UserResponse> addUser(@RequestBody CreateUserRequest user) {
         //Encoding the password using BCrypt Encoder
 
         System.out.println(user.toString());

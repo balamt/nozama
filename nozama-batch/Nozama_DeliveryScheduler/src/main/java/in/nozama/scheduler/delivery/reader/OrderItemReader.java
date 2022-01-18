@@ -3,7 +3,8 @@ package in.nozama.scheduler.delivery.reader;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import in.nozama.service.model.Order;
+
+import in.nozama.service.entity.Order;
 import in.nozama.service.util.ServiceUrlBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
