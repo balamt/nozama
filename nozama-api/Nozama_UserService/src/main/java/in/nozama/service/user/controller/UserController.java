@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +46,8 @@ public class UserController {
 
     HttpHeaders headers;
 
-    @RolesAllowed("PRIME")
+    @Secured(value = {"ROLE_ADMIN"})
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/all")
     @JsonView(UserModelView.PublicView.class)
     public ResponseEntity<List<UserResponse>> getAllUsers() {
@@ -62,10 +65,11 @@ public class UserController {
 //        final CollectionModel<User> userResources = CollectionModel.of(users);
 //        userResources.add(Link.of(uri, "self"));
 //        return ResponseEntity.ok(userResources);
+        System.out.println("\n " + users.toString() + " " + users.size());
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/view/{id}")
     @JsonView(UserModelView.PublicView.class)
     public ResponseEntity<UserResponse> getUserById(@PathVariable(name = "id") Long userId) throws UserNotFoundException {
     	Optional<UserResponse> user = userService.getUserById(userId);
@@ -101,7 +105,7 @@ public class UserController {
             User user = userService.getUserByEmail(loginCredentials.getEmail());
             headers = new HttpHeaders();
             JwtAuthenticationToken token =
-                    new JwtAuthenticationToken(Jwts.builder().setSubject(user.getEmail()).claim("roles", user.getUsertype())
+                    new JwtAuthenticationToken(Jwts.builder().setSubject(user.getEmail()).claim("roles", "ROLE_" + user.getUsertype())
                             .setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "nozama").compact());
             headers.set("token", token.getToken());
             headers.set("userid", user.getUserid().toString());

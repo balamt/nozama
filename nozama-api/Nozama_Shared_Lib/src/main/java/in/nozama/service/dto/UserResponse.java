@@ -9,7 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
+import in.nozama.service.dto.view.UserModelView;
 import in.nozama.service.model.Gender;
 import in.nozama.service.model.UserType;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonView(UserModelView.PublicView.class)
 public class UserResponse implements Serializable {
 
 	/**

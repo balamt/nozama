@@ -1,12 +1,15 @@
 package in.nozama.service.user.JwtHandler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +24,7 @@ public class JwtTokenUtil implements Serializable {
 	@Value("${jwt.secret}")
 	private String jwtSecret;
 
-	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+	public static final long JWT_TOKEN_VALIDITY = 15 * 60 * 60;
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
@@ -47,6 +50,17 @@ public class JwtTokenUtil implements Serializable {
 
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
+		
+		List<String> roles = new ArrayList<>();
+		  if (userDetails.getAuthorities() != null) {
+		    for (GrantedAuthority authority : userDetails.getAuthorities()) {
+		      roles.add("ROLE_" + authority.getAuthority().trim().toUpperCase());
+		    }
+		  }
+		  claims.put("roles", roles);
+		  String username = userDetails.getUsername();
+		  claims.put("username", username);
+		  
 		return doGenerateToken(claims, userDetails.getUsername());
 
 	}

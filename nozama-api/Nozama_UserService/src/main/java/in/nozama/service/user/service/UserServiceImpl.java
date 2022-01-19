@@ -2,15 +2,19 @@ package in.nozama.service.user.service;
 
 import in.nozama.service.dto.CreateUserRequest;
 import in.nozama.service.dto.UserResponse;
+import in.nozama.service.model.UserType;
 import in.nozama.service.user.mapper.UserMapper;
 import in.nozama.service.user.model.User;
 import in.nozama.service.user.model.UserCredentials;
 import in.nozama.service.user.repository.UserRepository;
 import in.nozama.service.user.repository.UserRepositoryCustomDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,7 @@ public class UserServiceImpl implements UserService {
 	public Optional<UserResponse> getUserById(Long userId) {
 		return userMapper.map(userRepository.findById(userId));
 	}
+	
 
 	@Override
 	public User addNewUser(CreateUserRequest user){
@@ -59,8 +64,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails getUserByUsername(String email) {
+		System.out.println("email " + email);
 		User user = userRepositoryCustomDao.getUserByEmail(email);
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), null);
+		List<SimpleGrantedAuthority> list = new ArrayList<SimpleGrantedAuthority>(0);
+		list.add(new SimpleGrantedAuthority(user.getUsertype().code()));
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), list);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return getUserByUsername(username);
 	}	
 	
 

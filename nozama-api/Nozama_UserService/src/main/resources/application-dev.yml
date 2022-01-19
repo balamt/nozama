@@ -9,7 +9,10 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
-        type: TRACE
+        type: ERROR
+      springframework:
+         security: DEBUG
+         type: TRACE
 server:
   port: 8081
   error:
@@ -33,3 +36,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 jwt:
   secret: nozama
+springdoc:  swagger-ui:    path: /sw/swagger-ui.html

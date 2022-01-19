@@ -1,4 +1,3 @@
-CREATE DATABASE `nozama_user_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_cart_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_delivery_schedule_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_orderinfo_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
@@ -6,13 +5,10 @@ CREATE DATABASE `nozama_order_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_products_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_shipment_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_user_auth_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE `nozama_user_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_wallet_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-CREATE USER 'nozama_dba'@'%' IDENTIFIED BY 'nozama19';
---GRANT ALL ON nozamadb.* TO 'nozama_dba'@'%' IDENTIFIED BY 'nozama19';
 
-GRANT ALL PRIVILEGES ON nozama_user_db.* TO 'nozama_dba'@'%' with grant option;
-FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON nozama_cart_db.* TO 'nozama_dba'@'%' with grant option;
 FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON nozama_delivery_schedule_db.* TO 'nozama_dba'@'%' with grant option;
@@ -28,4 +24,6 @@ FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON nozama_user_auth_db.* TO 'nozama_dba'@'%' with grant option;
 FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON nozama_wallet_db.* TO 'nozama_dba'@'%' with grant option;
+FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON nozama_user_db.* TO 'nozama_dba'@'%' with grant option;
 FLUSH PRIVILEGES;

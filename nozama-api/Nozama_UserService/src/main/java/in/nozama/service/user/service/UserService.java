@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import in.nozama.service.dto.CreateUserRequest;
 import in.nozama.service.dto.UserResponse;
 import in.nozama.service.user.model.User;
 import in.nozama.service.user.model.UserCredentials;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	
 	public List<UserResponse> getAllUser();
 
