@@ -35,6 +35,7 @@
 		<module>Nozama_OrderService</module>
 		<!-- <module>Nozama_ShipmentService</module> -->
 		<module>Nozama_WalletService</module>
+		<module>Nozama_ConfigService</module>
 		<!-- <module>../nozama-batch/Nozama_DeliveryScheduler</module> <module>../nozama-kafka/Nozama_OrderInfoUpdater</module> -->
 		<module>Nozama_CartService</module>
 	</modules>

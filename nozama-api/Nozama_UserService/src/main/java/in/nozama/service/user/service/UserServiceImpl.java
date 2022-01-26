@@ -1,22 +1,22 @@
 package in.nozama.service.user.service;
 
-import in.nozama.service.dto.CreateUserRequest;
-import in.nozama.service.dto.UserResponse;
-import in.nozama.service.model.UserType;
-import in.nozama.service.user.mapper.UserMapper;
-import in.nozama.service.user.model.User;
-import in.nozama.service.user.model.UserCredentials;
-import in.nozama.service.user.repository.UserRepository;
-import in.nozama.service.user.repository.UserRepositoryCustomDao;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import in.nozama.service.dto.CreateUserRequest;
+import in.nozama.service.dto.UserResponse;
+import in.nozama.service.model.UserCredentials;
+import in.nozama.service.user.mapper.UserMapper;
+import in.nozama.service.user.model.User;
+import in.nozama.service.user.repository.UserRepository;
+import in.nozama.service.user.repository.UserRepositoryCustomDao;
 
 
 
@@ -63,17 +63,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDetails getUserByUsername(String email) {
-		System.out.println("email " + email);
+	public UserCredentials getUserByUsername(String email) {
 		User user = userRepositoryCustomDao.getUserByEmail(email);
-		List<SimpleGrantedAuthority> list = new ArrayList<SimpleGrantedAuthority>(0);
-		list.add(new SimpleGrantedAuthority(user.getUsertype().code()));
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), list);
+		List<String> list = new ArrayList<String>();
+		list.add(user.getUsertype().code());
+		return new UserCredentials(user.getEmail(), user.getPassword(), list);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return getUserByUsername(username);
+		UserCredentials uc = getUserByUsername(username);
+		List<SimpleGrantedAuthority> grantedAuthority = new ArrayList<SimpleGrantedAuthority>();
+		for(String role :  uc.getRoles()) {
+			grantedAuthority.add(new SimpleGrantedAuthority(role));
+		}
+		return new org.springframework.security.core.userdetails.User(uc.getEmail(), uc.getPassword(), grantedAuthority);
 	}	
 	
 

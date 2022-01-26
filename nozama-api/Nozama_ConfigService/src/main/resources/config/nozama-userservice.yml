@@ -18,8 +18,6 @@ server:
   error:
     include-stacktrace: never
 spring:
-  application:
-    name: nozama-userservice
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19

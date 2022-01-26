@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import in.nozama.nozamauserauthservice.util.TokenProvider;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -28,14 +26,15 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtAuthenticationEntryPoint unautorizedHandler;
 
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	@Override
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
 	}
 
 	@Autowired
@@ -51,8 +50,12 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/health/**", "/signup", "/token/*")
-				.permitAll().anyRequest().authenticated().and().exceptionHandling()
+		http.cors().and().csrf().disable().authorizeRequests()
+				.antMatchers("/health/**").permitAll()
+				.antMatchers("/auth/status", "/auth/token").permitAll()
+				.antMatchers("/swagger-ui/**",
+						"/webjars/**", "/v3/**").permitAll()
+				.anyRequest().authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(unautorizedHandler).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

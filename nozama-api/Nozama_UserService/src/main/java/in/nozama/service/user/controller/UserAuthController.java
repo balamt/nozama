@@ -6,22 +6,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.nozama.service.model.UserCredentials;
 import in.nozama.service.user.JwtHandler.JwtTokenUtil;
 import in.nozama.service.user.exception.AuthenticationException;
 import in.nozama.service.user.model.TokenResponse;
-import in.nozama.service.user.model.UserCredentials;
 import in.nozama.service.user.service.UserService;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/auth")
+//@RequestMapping(value = "/auth")
 public class UserAuthController {
 
 	@Autowired
@@ -33,12 +30,12 @@ public class UserAuthController {
 	@Autowired
 	UserService userService;
 
-	@PostMapping(path = "/token")
+//	@PostMapping(path = "/token")
 	public ResponseEntity<?> createAuthToken(@RequestBody UserCredentials userCredentials)
 			throws AuthenticationException {
 		authenticate(userCredentials);
-		final UserDetails userDetails = userService.getUserByUsername(userCredentials.getEmail());
-		final String token = jwtTokenUtil.generateToken(userDetails);
+		final UserCredentials userCredential = userService.getUserByUsername(userCredentials.getEmail());
+		final String token = jwtTokenUtil.generateToken(userCredential);
 		return ResponseEntity.ok(new TokenResponse(token));
 	}
 

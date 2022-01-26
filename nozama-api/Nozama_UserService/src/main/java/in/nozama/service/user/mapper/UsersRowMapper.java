@@ -1,14 +1,14 @@
 package in.nozama.service.user.mapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import in.nozama.service.model.Gender;
 import in.nozama.service.model.UserType;
 import in.nozama.service.user.model.User;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Component
 public class UsersRowMapper implements RowMapper<User> {

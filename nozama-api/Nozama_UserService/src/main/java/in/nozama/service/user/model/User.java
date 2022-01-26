@@ -1,20 +1,31 @@
 package in.nozama.service.user.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import java.io.Serializable;
+import java.util.Objects;
 
-import in.nozama.service.dto.view.UserModelView;
-import in.nozama.service.model.Gender;
-import in.nozama.service.model.UserType;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import java.io.Serializable;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import in.nozama.service.dto.view.UserModelView;
+import in.nozama.service.model.Gender;
+import in.nozama.service.model.UserType;
 
 @Entity
 @Table(name = "users")
@@ -120,6 +131,9 @@ public class User extends RepresentationModel<User> implements Serializable {
 	}
 
 	public UserType getUsertype() {
+		if(usertype == null) {
+			return UserType.BASIC;
+		}
 		return usertype;
 	}
 

@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import in.nozama.service.dto.CreateUserRequest;
-import in.nozama.service.dto.UserRequest;
 import in.nozama.service.dto.UserResponse;
 import in.nozama.service.user.model.User;
 

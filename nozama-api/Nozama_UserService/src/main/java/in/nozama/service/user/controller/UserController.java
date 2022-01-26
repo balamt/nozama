@@ -4,14 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +22,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import in.nozama.service.dto.CreateUserRequest;
 import in.nozama.service.dto.UserResponse;
 import in.nozama.service.dto.view.UserModelView;
+import in.nozama.service.model.UserCredentials;
 import in.nozama.service.user.exception.UserNotFoundException;
 import in.nozama.service.user.model.JwtAuthenticationToken;
 import in.nozama.service.user.model.User;
-import in.nozama.service.user.model.UserCredentials;
 import in.nozama.service.user.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -46,25 +42,11 @@ public class UserController {
 
     HttpHeaders headers;
 
-    @Secured(value = {"ROLE_ADMIN"})
-    @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/all")
     @JsonView(UserModelView.PublicView.class)
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         final String uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toString();
-
         List<UserResponse> users = userService.getAllUser();
-
-        // By This we can add self link to the user, Note we need to extend User class
-        // with ResourceSupport
-//        for (User usr : users) {
-//            Link selfLink = WebMvcLinkBuilder.linkTo(UserController.class).slash(usr.getUserid()).withSelfRel();
-//            usr.add(selfLink);
-//        }
-//
-//        final CollectionModel<User> userResources = CollectionModel.of(users);
-//        userResources.add(Link.of(uri, "self"));
-//        return ResponseEntity.ok(userResources);
         System.out.println("\n " + users.toString() + " " + users.size());
         return ResponseEntity.ok(users);
     }
@@ -78,6 +60,16 @@ public class UserController {
     	}
     	throw new UserNotFoundException(String.format("Could not find such user id %d", userId));
         //return ResponseEntity.ok(null);
+    }
+    
+
+    @PostMapping("/email/{username}")
+    public ResponseEntity<UserCredentials> getUserById(@PathVariable(name = "username") String email) throws UserNotFoundException {
+    	Optional<UserCredentials> user = Optional.ofNullable(userService.getUserByUsername(email));
+    	if(user.isPresent()) {
+    		return ResponseEntity.ok(user.get());
+    	}
+    	throw new UserNotFoundException(String.format("Could not find such user id %d", email));
     }
 
     @PostMapping("/signup")

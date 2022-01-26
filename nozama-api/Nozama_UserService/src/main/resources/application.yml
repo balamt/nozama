@@ -1,4 +1,3 @@
-#https://stackoverflow.com/questions/41401009/load-balancer-does-not-have-available-server-for-client
 eureka:
   client:
     fetch-registry: true
@@ -6,8 +5,6 @@ eureka:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
-    metadataMap:
-      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 jwt:
   secret: nozama
 logging:
@@ -15,17 +12,18 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
-        type: TRACE
+        type: ERROR
       springframework:
         security: DEBUG
         type: TRACE
 server:
   error:
     include-stacktrace: never
-  port: 8089
+  port: 8081
 spring:
-  application:
-    name: nozama-userauthservice
+  config:
+    import:
+    - optional:configserver:${CONFIG_SERVER:http://localhost:8091}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
@@ -40,7 +38,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-## This is the way we can provide the service proxy url and port to reach the other msa
-userservice :
-  ribbon :
-    listOfServers : localhost:8081
+springdoc:
+  swagger-ui:
+    path: /sw/swagger-ui.html
+ribbon:
+  eureka:
+    enabled: false

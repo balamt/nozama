@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ApiController {
 	
-	@GetMapping("/test")
+	@GetMapping("/status")
 	public String testAPIService() {
 		return "API is up and running...";
 	}

@@ -19,6 +19,7 @@ Below are the list of Applications and PORTS occupied by the service and batch/s
 |   Nozama_OrderInfoUpdater**   |   8087        |
 |   Nozama_CartService          |   8088        |
 |   Nozama_UserAuthService      |	8089        |
+|   Nozama_ConfigService      	|	8091        |
 |   Nozama_CheckoutService      |               |
 |   Nozama_PaymentService       |               |
 
