@@ -9,7 +9,7 @@ Below are the list of Applications and PORTS occupied by the service and batch/s
 |    Service/Applications       |     Port      |
 |-------------------------------|---------------|
 |   Nozama_EurekaServer         |   8761        |
-|   Nozama_ApiGareway           |   8090        |
+|   Nozama_ApiGateway           |   8090        |
 |   Nozama_UserService          |   8081        |
 |   Nozama_ProductService       |   8082        |
 |   Nozama_ShipmentService      |   8083        |
