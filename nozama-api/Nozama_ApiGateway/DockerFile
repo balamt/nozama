@@ -1,5 +1,5 @@
 FROM nozama-jdk:base
-MAINTAINER nozama
+LABEL maintainer="nozama"
 VOLUME /tmp
 COPY /target/nozama-api-gateway.jar /opt/lib/nozama-api-gateway.jar
 EXPOSE 8080

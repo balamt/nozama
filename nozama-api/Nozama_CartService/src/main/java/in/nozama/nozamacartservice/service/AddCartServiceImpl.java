@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import in.nozama.nozamacartservice.repository.CartRepository;
-import in.nozama.service.model.Item;
+import in.nozama.nozamacartservice.model.Item;
 
 @Service
 public class AddCartServiceImpl implements AddCartService {
@@ -20,19 +20,26 @@ public class AddCartServiceImpl implements AddCartService {
 
 		LOGGER.info("Before adding item into the cart in AddCartService");
 
-		if (item.getQuantity() <= item.getProduct().getStockQuantity()) {
+		/**
+		 * Make call to the Product Service and cgeck check the quantity before adding
+		 * the item to the cart. Also get the price of the product from the Product
+		 * service.
+		 */
 
-			double totalPrice = item.getQuantity() * item.getProduct().getPricePerItem();
-			item.setItemPrice(totalPrice);
+		/*
+		 * if (item.getQuantity() <= item.getProduct().getStockQuantity()) {
+		 * 
+		 * double totalPrice = item.getQuantity() * item.getProduct().getPricePerItem();
+		 * item.setItemPrice(totalPrice);
+		 * 
+		 * LOGGER.info("After adding item into the cart in AddCartService"); return
+		 * cartRepository.save(item); } else {
+		 * LOGGER.info("Afterstock is empty in AddCartService");
+		 * 
+		 * item.setItemPrice(null); return item; }
+		 */
 
-			LOGGER.info("After adding item into the cart in AddCartService");
-			return cartRepository.save(item);
-		} else {
-			LOGGER.info("Afterstock is empty in AddCartService");
-
-			item.setItemPrice(null);
-			return item;
-		}
+		return item;
 	}
 
 }

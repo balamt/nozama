@@ -9,7 +9,7 @@ Below are the list of Applications and PORTS occupied by the service and batch/s
 |    Service/Applications       |     Port      |
 |-------------------------------|---------------|
 |   Nozama_EurekaServer         |   8761        |
-|   Nozama_ApiGareway           |   8080        |
+|   Nozama_ApiGareway           |   8090        |
 |   Nozama_UserService          |   8081        |
 |   Nozama_ProductService       |   8082        |
 |   Nozama_ShipmentService      |   8083        |
@@ -18,8 +18,11 @@ Below are the list of Applications and PORTS occupied by the service and batch/s
 |   Nozama_WallerService        |   8086        |
 |   Nozama_OrderInfoUpdater**   |   8087        |
 |   Nozama_CartService          |   8088        |
+|   Nozama_UserAuthService      |	8089        |
+|   Nozama_ConfigService      	|	8091        |
 |   Nozama_CheckoutService      |               |
 |   Nozama_PaymentService       |               |
+
 
 <sup>Note: Make sure you are having these ports available in your machine to run the services without docker</sup>
 

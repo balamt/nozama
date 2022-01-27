@@ -2,15 +2,14 @@ package in.nozama.nozamacartservice.util;
 
 import java.util.List;
 
-import in.nozama.service.model.Item;
-import in.nozama.service.model.Product;
+import in.nozama.nozamacartservice.model.Item;
 
 public class CartResponse {
 
 	private List<Item> itemlist;
 	private Item item;
 
-	private Product product;
+	private Long product;
 	private String messsage;
 	private boolean status;
 
@@ -46,11 +45,11 @@ public class CartResponse {
 		this.item = item;
 	}
 
-	public Product getProduct() {
+	public Long getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(Long product) {
 		this.product = product;
 	}
 

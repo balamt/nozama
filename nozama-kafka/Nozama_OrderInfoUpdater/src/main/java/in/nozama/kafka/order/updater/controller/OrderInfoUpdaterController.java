@@ -1,7 +1,8 @@
 package in.nozama.kafka.order.updater.controller;
 
 import in.nozama.kafka.order.updater.service.OrderInfoUpdaterService;
-import in.nozama.service.model.Order;
+import in.nozama.service.entity.Order;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class OrderInfoUpdaterController {
     OrderInfoUpdaterService orderInfoUpdaterService;
 
     @PutMapping
-    public ResponseEntity updateOrder(@RequestBody Order order){
+    public ResponseEntity<String> updateOrder(@RequestBody Order order){
         orderInfoUpdaterService.sendOrderInfo(order);
 
         LOG.info("Order Info Update for Order " + order.getOrderid());
@@ -27,7 +28,7 @@ public class OrderInfoUpdaterController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity testService(){
+    public ResponseEntity<String> testService(){
         return ResponseEntity.ok("Order Info Update Service Running");
     }
 

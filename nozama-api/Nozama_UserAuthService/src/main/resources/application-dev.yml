@@ -1,0 +1,46 @@
+#https://stackoverflow.com/questions/41401009/load-balancer-does-not-have-available-server-for-client
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+jwt:
+  secret: nozama
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+      springframework:
+        security: DEBUG
+        type: TRACE
+server:
+  error:
+    include-stacktrace: never
+  port: 8089
+spring:
+  application:
+    name: nozama-userauthservice
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: nozama19
+    url: jdbc:mysql://localhost:3310/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: nozama_dba
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+## This is the way we can provide the service proxy url and port to reach the other msa
+userservice :
+  ribbon :
+    listOfServers : localhost:8081

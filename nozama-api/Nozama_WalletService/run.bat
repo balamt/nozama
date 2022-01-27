@@ -1,2 +1,2 @@
 cd target
-java -jar nozama-user-service.jar
+java -jar nozama-walletservice.jar

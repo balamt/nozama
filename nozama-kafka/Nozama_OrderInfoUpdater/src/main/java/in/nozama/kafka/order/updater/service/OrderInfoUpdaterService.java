@@ -1,6 +1,6 @@
 package in.nozama.kafka.order.updater.service;
 
-import in.nozama.service.model.Order;
+import in.nozama.service.entity.Order;
 
 public interface OrderInfoUpdaterService {
 

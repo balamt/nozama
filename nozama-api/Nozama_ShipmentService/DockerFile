@@ -1,5 +1,5 @@
 FROM nozama-jdk:base
-MAINTAINER nozama
+LABEL maintainer="nozama"
 VOLUME /tmp
 COPY /target/nozama-shipment-service.jar /opt/lib/nozama-shipment-service.jar
 EXPOSE 8083

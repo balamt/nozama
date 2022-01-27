@@ -1,10 +1,11 @@
 package in.nozama.service.shipment.service;
 
-import in.nozama.service.exception.ShipmentAlreadyCreatedException;
-import in.nozama.service.exception.ShipmentNotFoundException;
-import in.nozama.service.model.Order;
+import in.nozama.service.entity.Order;
 import in.nozama.service.model.Track;
 import in.nozama.service.model.TrackCompositKeys;
+import in.nozama.service.shipment.exception.ShipmentAlreadyCreatedException;
+import in.nozama.service.shipment.exception.ShipmentNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/nozamadb?useSSL=false"
+    url: "jdbc:mysql://localhost:3310/nozama_order_db?allowPublicKeyRetrieval=true&useSSL=false"
     username: nozama_dba
     password: nozama19
 
@@ -25,19 +25,7 @@ spring:
       auto-offset-reset: earliest
 
 server:
-    port: 8084
-
-logging:
-  path: "../log"
-  file: "${logging.path}/${spring.application.name}_log.log"
-
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type: TRACE
-
-  config: "classpath:orderservice-logging-config.xml"
+    port: 8094
 
 kafka:
   server:
@@ -48,3 +36,13 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+
+logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE

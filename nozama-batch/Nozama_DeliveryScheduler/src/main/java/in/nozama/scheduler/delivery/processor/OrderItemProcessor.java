@@ -1,7 +1,8 @@
 package in.nozama.scheduler.delivery.processor;
 
-import in.nozama.service.model.Order;
-import in.nozama.service.model.Status;
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;

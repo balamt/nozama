@@ -3,15 +3,25 @@ package in.nozama.service.user.service;
 import java.util.List;
 import java.util.Optional;
 
-import in.nozama.service.model.*;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
-	
-	public List<User> getAllUser();
+import in.nozama.service.dto.CreateUserRequest;
+import in.nozama.service.dto.UserResponse;
+import in.nozama.service.model.UserCredentials;
+import in.nozama.service.user.model.User;
 
-	public Optional<User> getUserById(Long userId);
+public interface UserService extends UserDetailsService {
 	
-	boolean addNewUser(User user);
-	boolean validateUser(LoginCredentials loginCredentials);
+	public List<UserResponse> getAllUser();
+
+	public Optional<UserResponse> getUserById(Long userId);
+
+	User addNewUser(CreateUserRequest user);
+
+	boolean validateUser(UserCredentials loginCredentials);
+
+	User getUserByEmail(String email);
+	
+	UserCredentials getUserByUsername(String email);
 
 }

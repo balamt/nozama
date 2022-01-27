@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    active:
+    - ${NOZAMA_SERVICE_PROFILE:dev}

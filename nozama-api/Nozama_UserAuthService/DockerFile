@@ -1,0 +1,7 @@
+FROM nozama-jdk:base
+LABEL maintainer="nozama"
+VOLUME /tmp
+COPY /target/nozama-user-auth-service.jar /opt/lib/nozama-user-auth-service.jar
+EXPOSE 8081
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-user-auth-service.jar"]

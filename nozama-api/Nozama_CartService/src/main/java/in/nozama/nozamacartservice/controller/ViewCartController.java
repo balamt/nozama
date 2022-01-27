@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.nozama.nozamacartservice.model.Item;
 import in.nozama.nozamacartservice.service.ViewCartService;
 import in.nozama.nozamacartservice.util.CartResponse;
-import in.nozama.service.model.Item;
 
 @RestController
 @RequestMapping("/cart")

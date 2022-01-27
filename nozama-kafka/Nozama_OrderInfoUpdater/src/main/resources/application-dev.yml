@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/nozamadb?useSSL=false"
+    url: "jdbc:mysql://localhost:3306/nozama_orderinfo_db?useSSL=false"
     username: nozama_dba
     password: nozama19
 
@@ -18,20 +18,18 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
-  batch:
-    initialize-schema: "always"
-
+  batch:    jdbc:      initialize-schema: "always"
 server:
   port: 8087
-
+#https://howtodoinjava.com/spring-boot2/logging/configure-logging-application-yml/
 logging:
-  path: "../logs"
-  file: "${logging.path}/${spring.application.name}_log.log"
-
+  file:
+    path: "../logs"
+    name: "${logging.file.path}/${spring.application.name}_log.log"
   level:
     org:
       hibernate:
-        SQL: DEBUG
+        SQL: ERROR
         type: TRACE
 
   config: "classpath:orderinfoupdater-logging-config.xml"

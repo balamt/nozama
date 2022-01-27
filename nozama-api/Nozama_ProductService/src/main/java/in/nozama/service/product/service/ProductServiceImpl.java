@@ -1,13 +1,16 @@
 package in.nozama.service.product.service;
 
-import in.nozama.service.exception.ProductNotFoundException;
-import in.nozama.service.model.Product;
-import in.nozama.service.product.repository.ProductRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import in.nozama.service.product.exception.ProductNotFoundException;
+import in.nozama.service.product.model.Category;
+import in.nozama.service.product.model.Product;
+import in.nozama.service.product.repository.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -28,6 +31,19 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		return optionalProduct.get();
+	}
+
+	@Override
+	public List<Category> getAllCategories() {
+		return productRepository.findCategories();
+	}
+
+	@Override
+	public List<Product> getProductsByCategory(String categoryId) {
+		String catId = categoryId.replace('_',' ');
+		return productRepository.findAll().stream().filter(product -> catId
+				.equalsIgnoreCase(product.getCategory().code()))
+				.collect(Collectors.toList());
 	}
 
 }

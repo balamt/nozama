@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import in.nozama.nozamacartservice.model.Item;
 import in.nozama.nozamacartservice.repository.CartRepository;
-import in.nozama.service.model.Item;
 
 @Service
 public class RemoveCartServiecImpl implements RemoveCartService {

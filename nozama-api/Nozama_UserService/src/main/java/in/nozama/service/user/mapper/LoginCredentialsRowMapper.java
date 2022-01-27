@@ -4,15 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
-import in.nozama.service.model.*;
+import org.springframework.stereotype.Component;
 
+import in.nozama.service.model.UserCredentials;
 
-public class LoginCredentialsRowMapper implements RowMapper<LoginCredentials> {
+@Component
+public class LoginCredentialsRowMapper implements RowMapper<UserCredentials> {
 
 	@Override
-	public LoginCredentials mapRow(ResultSet row, int rowNum) throws SQLException {
+	public UserCredentials mapRow(ResultSet row, int rowNum) throws SQLException {
 
-		LoginCredentials credentials = new LoginCredentials();
+		UserCredentials credentials = new UserCredentials();
 
 		credentials.setEmail(row.getString("email"));
 		credentials.setPassword(row.getString("password"));
