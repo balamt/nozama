@@ -52,14 +52,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
 		// Anything is before this line, will not required token in the request.
 		// Anything to proceed with token needs to be handled from here
-		if (authorization == null) {
-			throw new ServletException(new TokenNotFoundException("Token missing in the Request"));
-		}
-
-		final String token = authorization.replaceAll(JwtTokenUtil.TOKEN_PREFIX, "");
-
-		if (authorization.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
-
+		if (authorization != null && authorization.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
+			final String token = authorization.replaceAll(JwtTokenUtil.TOKEN_PREFIX, "");
 			try {
 				if (jwtTokenUtil.validateToken(token, request)) {
 					String username = jwtTokenUtil.getUsernameFromToken(token);
@@ -69,6 +63,7 @@ public class JwtFilter extends OncePerRequestFilter {
 							SecurityContextHolder.getContext().getAuthentication(), userDetails);
 					request.setAttribute("claims", claims);
 					SecurityContextHolder.getContext().setAuthentication(authentication);
+					chain.doFilter(request, response);
 				}
 			} catch (IllegalArgumentException iae) {
 				LOGGER.error("an error occured during getting username from token", iae);
@@ -80,8 +75,8 @@ public class JwtFilter extends OncePerRequestFilter {
 			} catch (SignatureException se) {
 				LOGGER.error("Authentication Failed. Username or password not valid", se);
 			}
+		} else {
+			throw new ServletException(new TokenNotFoundException("Token missing in the Request"));
 		}
-		// chain.doFilter(request, response);
-
 	}
 }

@@ -65,7 +65,7 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/all").hasAnyAuthority("ROLE_ADMIN")
+		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers("/user/**", "/auth/**", "/documentation/**", "/v3/**", "/actuator/**", "/h2-console/**",
 						"/profile/**", "/favicon.ico", "/sw/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling();

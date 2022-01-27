@@ -36,7 +36,7 @@ public class TokenProvider implements Serializable {
 	public static final String HEADER_TOKEN_STRING = "token";
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String AUTHORITIES_KEY = "roles";
-	public static final long JWT_TOKEN_VALIDITY = ((1 * 60) * 60);
+	public static final long JWT_TOKEN_VALIDITY = ((5 * 60) * 60) * 10;
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
@@ -59,7 +59,7 @@ public class TokenProvider implements Serializable {
 	}
 
 	public Boolean isTokenExpired(String token) {
-		final Date expiration = new Date(getExpirationDateFromToken(token).getTime() + JWT_TOKEN_VALIDITY * 100);
+		final Date expiration = new Date(getExpirationDateFromToken(token).getTime() + JWT_TOKEN_VALIDITY);
 		return expiration.before(new Date());
 	}
 
@@ -85,7 +85,7 @@ public class TokenProvider implements Serializable {
 
 	private String doGenerateToken(Map<String, Object> claims, String email) {
 		return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 10))
+				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
 				.signWith(io.jsonwebtoken.SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
