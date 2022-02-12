@@ -2,7 +2,6 @@ package in.nozama.service.user.JwtHandler;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,10 +11,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Component;
 
 import in.nozama.service.model.UserCredentials;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -33,18 +31,22 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtTokenUtil implements Serializable {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
+
 	private static final long serialVersionUID = 1L;
 
 	@Value("${jwt.secret:nozama}")
 	private String jwtSecret;
-
+	
+	public static final String USERNAME = "username";
+	public static final String USERID = "userid";
+	public static final String ROLE = "ROLE_";
 	public static final String HEADER_STRING = "Authorization";
 	public static final String HEADER_TOKEN_STRING = "token";
-	public static final String TOKEN_PREFIX = "Bearer ";
+	public static final String TOKEN_PREFIX = "Bearer ";	
 	public static final String AUTHORITIES_KEY = "roles";
 	public static final String EXPIRED_ATTRB = "expired";
 	public static final long JWT_TOKEN_VALIDITY = ((5 * 60) * 60) * 10;
-	
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
@@ -77,12 +79,12 @@ public class JwtTokenUtil implements Serializable {
 		List<String> roles = new ArrayList<>();
 		if (userDetails.getAuthorities() != null) {
 			for (GrantedAuthority authority : userDetails.getAuthorities()) {
-				roles.add("ROLE_" + authority.getAuthority().trim().toUpperCase());
+				roles.add(JwtTokenUtil.ROLE + authority.getAuthority().trim().toUpperCase());
 			}
 		}
-		claims.put("roles", roles);
+		claims.put(JwtTokenUtil.AUTHORITIES_KEY, roles);
 		String username = userDetails.getUsername();
-		claims.put("username", username);
+		claims.put(JwtTokenUtil.USERNAME, username);
 
 		return doGenerateToken(claims, userDetails.getUsername());
 
@@ -116,11 +118,11 @@ public class JwtTokenUtil implements Serializable {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
 			return true;
 		} catch (MalformedJwtException ex) {
-			System.out.println("Invalid JWT token");
+			LOGGER.error("Invalid JWT token");
 		} catch (UnsupportedJwtException ex) {
-			System.out.println("Unsupported JWT exception");
+			LOGGER.error("Unsupported JWT exception");
 		} catch (IllegalArgumentException ex) {
-			System.out.println("Jwt claims string is empty");
+			LOGGER.error("Jwt claims string is empty");
 		}
 		return false;
 	}

@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "0c4c8e80-5c58-40bf-8d02-1dee4a1e7b60",
+		"name": "UserService-Nozama",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "test Server",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"sunt consequat in\""
+						},
+						{
+							"name": "Not Implemented",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "add User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ipsum fugiat\",\n    \"fullname\": \"sunt sit quis in\",\n    \"mobile\": \"do\",\n    \"password\": \"ut dolore nulla incididunt consectetur\",\n    \"user_type\": \"BASIC\",\n    \"user_id\": 73357017,\n    \"gender\": \"MALE\",\n    \"address\": {\n        \"address1\": \"Ut\",\n        \"address2\": \"laborum anim magna\",\n        \"street\": \"dolor esse voluptate\",\n        \"city\": \"occaecat aute sed sunt\",\n        \"state\": \"culpa in\",\n        \"country\": \"ipsum\",\n        \"addressid\": 64658804,\n        \"pincode\": \"c\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"ipsum fugiat\",\n    \"fullname\": \"sunt sit quis in\",\n    \"mobile\": \"do\",\n    \"password\": \"ut dolore nulla incididunt consectetur\",\n    \"user_type\": \"BASIC\",\n    \"user_id\": 73357017,\n    \"gender\": \"MALE\",\n    \"address\": {\n        \"address1\": \"Ut\",\n        \"address2\": \"laborum anim magna\",\n        \"street\": \"dolor esse voluptate\",\n        \"city\": \"occaecat aute sed sunt\",\n        \"state\": \"culpa in\",\n        \"country\": \"ipsum\",\n        \"addressid\": 64658804,\n        \"pincode\": \"c\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"signup"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Not Implemented",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"ipsum fugiat\",\n    \"fullname\": \"sunt sit quis in\",\n    \"mobile\": \"do\",\n    \"password\": \"ut dolore nulla incididunt consectetur\",\n    \"user_type\": \"BASIC\",\n    \"user_id\": 73357017,\n    \"gender\": \"MALE\",\n    \"address\": {\n        \"address1\": \"Ut\",\n        \"address2\": \"laborum anim magna\",\n        \"street\": \"dolor esse voluptate\",\n        \"city\": \"occaecat aute sed sunt\",\n        \"state\": \"culpa in\",\n        \"country\": \"ipsum\",\n        \"addressid\": 64658804,\n        \"pincode\": \"c\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"signup"
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var resp = pm.response.json();\r",
+									"pm.environment.set(\"nozama_token\", resp.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bob@test.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"eiusmod deserunt reprehenderit eu\",\n    \"password\": \"veniam officia quis do Excepteur\",\n    \"roles\": [\n        \"in sunt\",\n        \"laboris anim nulla\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"sunt consequat in\""
+						},
+						{
+							"name": "Not Implemented",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"eiusmod deserunt reprehenderit eu\",\n    \"password\": \"veniam officia quis do Excepteur\",\n    \"roles\": [\n        \"in sunt\",\n        \"laboris anim nulla\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "get User By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{nozama_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{nozama_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{nozama_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/email/:username",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"email",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "sunt consequat in",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/email/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"email",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "sunt consequat in",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"email\": \"proident\",\n \"password\": \"consequat laborum est\",\n \"roles\": [\n  \"pariatur et officia deserunt\",\n  \"quis cupidatat ipsum\"\n ]\n}"
+						},
+						{
+							"name": "Not Implemented",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/email/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"email",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "sunt consequat in",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "get User By Id 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{nozama_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{nozama_token}}",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{nozama_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/view/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"view",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/view/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"view",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68072942",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"email\": \"magna cillum velit\",\n \"fullname\": \"non ad cillum\",\n \"mobile\": \"Lorem\",\n \"user_type\": \"BASIC\",\n \"user_id\": -94803130,\n \"gender\": \"MALE\",\n \"address\": {\n  \"address1\": \"sint\",\n  \"address2\": \"nisi sint non\",\n  \"street\": \"et pariatur Exc\",\n  \"city\": \"dolor qui sit\",\n  \"state\": \"tempor esse\",\n  \"country\": \"qui\",\n  \"addressid\": -76007483,\n  \"pincode\": \"laboris \"\n }\n}"
+						},
+						{
+							"name": "Not Implemented",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/view/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"view",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "68072942",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "get All Users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var authServiceUrl = pm.environment.get('baseUrl');\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: authServiceUrl+'/auth/token',\r",
+									"    method: 'POST',\r",
+									"header: 'Content-Type:application/json',\r",
+									"  body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify({\r",
+									"                email: \"bob@test.com\",\r",
+									"                password:\"password\"\r",
+									"            }),\r",
+									"            options:{\r",
+									"                raw:{\r",
+									"                    language: 'json'\r",
+									"                }\r",
+									"            }\r",
+									"    }\r",
+									"    }, (err,res) => {\r",
+									"        pm.environment.set(\"nozama_token\", res.json().token);\r",
+									"    });\r",
+									"pm.sendRequest()"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{nozama_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{nozama_token}}",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{nozama_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{nozama_token}}",
+										"type": "text"
+									},
+									{
+										"key": "token",
+										"value": "{{nozama_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"email\": \"magna proident enim sint \",\n  \"fullname\": \"enim ex cupidatat fugiat in\",\n  \"mobile\": \"amet\",\n  \"user_type\": \"THIRD_PARTY\",\n  \"user_id\": 44502475,\n  \"gender\": \"MALE\",\n  \"address\": {\n   \"address1\": \"nostrud\",\n   \"address2\": \"dolore Lorem\",\n   \"street\": \"eiusmod cillum labor\",\n   \"city\": \"dolor\",\n   \"state\": \"fugiat tempor\",\n   \"country\": \"voluptate enim irure\",\n   \"addressid\": 24986982,\n   \"pincode\": \"magna\"\n  }\n },\n {\n  \"email\": \"aute nisi\",\n  \"fullname\": \"amet culpa reprehenderit\",\n  \"mobile\": \"occaecat amet cillum\",\n  \"user_type\": \"ADMIN\",\n  \"user_id\": 62293590,\n  \"gender\": \"FEMALE\",\n  \"address\": {\n   \"address1\": \"dolor ni\",\n   \"address2\": \"nulla sit \",\n   \"street\": \"officia\",\n   \"city\": \"velit nulla\",\n   \"state\": \"deserunt\",\n   \"country\": \"irure in proident\",\n   \"addressid\": -30405050,\n   \"pincode\": \"eiusmo\"\n  }\n }\n]"
+						},
+						{
+							"name": "Not Implemented",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"all"
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8090",
+			"type": "string"
+		},
+		{
+			"key": "nozama_token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2JAdGVzdC5jb20iLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJpYXQiOjE2NDQxMzAyOTd9.z2sxzJuoaiin--YBm6Zu8T6haPQmaYCZNWeLaqtVxEk"
+		}
+	]
+}

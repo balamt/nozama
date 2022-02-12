@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +26,10 @@ import io.jsonwebtoken.SignatureException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+	public static final String UNAUTHORIZED = "Unauthorized";
+
+	public static final String CLAIMS = "claims";
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
 
 	@Autowired
@@ -40,13 +42,23 @@ public class JwtFilter extends OncePerRequestFilter {
 		this.jwtTokenUtil = ctx.getBean(JwtTokenUtil.class);
 		this.userDetailsService = ctx.getBean(UserDetailsService.class);
 	}
+		
+	private boolean isAllowedPath(HttpServletRequest request) {
+		return (request.getServletPath().contains("/user/email")
+				|| request.getServletPath().contains("/user/signup")
+				|| request.getServletPath().contains("/user/login")
+				|| request.getServletPath().contains("/error")
+				|| request.getServletPath().contains("/swagger-ui")
+				|| request.getServletPath().contains("/api-docs/")
+				|| request.getServletPath().endsWith("/actuator/info"));
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		final String authorization = request.getHeader(JwtTokenUtil.HEADER_STRING);
-
-		if (request.getServletPath().contains("/user/email")) {
+		final boolean isPermittedUrl = isAllowedPath(request);
+		if (isPermittedUrl) {
 			chain.doFilter(request, response);
 		}
 
@@ -61,7 +73,7 @@ public class JwtFilter extends OncePerRequestFilter {
 					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 					UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthentication(token,
 							SecurityContextHolder.getContext().getAuthentication(), userDetails);
-					request.setAttribute("claims", claims);
+					request.setAttribute(JwtFilter.CLAIMS, claims);
 					SecurityContextHolder.getContext().setAuthentication(authentication);
 					chain.doFilter(request, response);
 				}
@@ -70,12 +82,12 @@ public class JwtFilter extends OncePerRequestFilter {
 			} catch (ExpiredJwtException ejte) {
 				final String expiredMsg = ejte.getMessage();
 				LOGGER.warn("Token is expired and not valid anymore", ejte);
-				final String msg = (expiredMsg != null) ? expiredMsg : "Unauthorized";
+				final String msg = (expiredMsg != null) ? expiredMsg : JwtFilter.UNAUTHORIZED;
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
 			} catch (SignatureException se) {
 				LOGGER.error("Authentication Failed. Username or password not valid", se);
 			}
-		} else {
+		} else if(!isPermittedUrl) {
 			throw new ServletException(new TokenNotFoundException("Token missing in the Request"));
 		}
 	}

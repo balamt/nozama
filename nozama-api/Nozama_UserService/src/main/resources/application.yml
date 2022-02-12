@@ -5,6 +5,8 @@ eureka:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 jwt:
   secret: nozama
 logging:
@@ -12,15 +14,17 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
-        type: ERROR
+        type: INFO
       springframework:
         security: DEBUG
-        type: TRACE
+        type: INFO
 server:
   error:
     include-stacktrace: never
   port: 8081
 spring:
+  application:
+    name: nozama-userservice
   config:
     import:
     - optional:configserver:${CONFIG_SERVER:http://localhost:8091}
@@ -32,6 +36,8 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+  zipkin:
+    base-url: http://localhost:9411/
   jpa:
     hibernate:
       ddl-auto: update

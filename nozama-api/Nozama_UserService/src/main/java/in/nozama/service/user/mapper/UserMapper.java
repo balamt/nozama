@@ -58,7 +58,6 @@ public class UserMapper {
 			user.setGender(userRequest.getGender());
 			user.setMobile(userRequest.getMobile());
 			user.setPassword(userRequest.getPassword());
-			System.out.println("User type: "  + userRequest.getUsertype().code());
 			user.setUsertype(userRequest.getUsertype());
 		}
 		return user;

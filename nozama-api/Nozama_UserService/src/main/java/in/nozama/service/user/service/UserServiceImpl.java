@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,16 +20,19 @@ import in.nozama.service.user.model.User;
 import in.nozama.service.user.repository.UserRepository;
 import in.nozama.service.user.repository.UserRepositoryCustomDao;
 
-
-
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired UserRepository userRepository;
-	
-	@Autowired UserMapper userMapper;
+	private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	@Autowired UserRepositoryCustomDao userRepositoryCustomDao;
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	UserMapper userMapper;
+
+	@Autowired
+	UserRepositoryCustomDao userRepositoryCustomDao;
 
 	@Override
 	public List<UserResponse> getAllUser() {
@@ -38,23 +43,22 @@ public class UserServiceImpl implements UserService {
 	public Optional<UserResponse> getUserById(Long userId) {
 		return userMapper.map(userRepository.findById(userId));
 	}
-	
 
 	@Override
-	public User addNewUser(CreateUserRequest user){
-		User userPersisted = userRepository.save(userMapper.map(user));
-		System.out.println("User Service addNewUser " + userPersisted.toString());
-		if(userPersisted.getUserid() != null && userPersisted.getUserid() > 0){
-			return userPersisted;
-		}
-		else{
-			return null;
-		}
+	public User addNewUser(CreateUserRequest user) {
+
+			User userPersisted = userRepository.save(userMapper.map(user));
+			if (userPersisted.getUserid() != null && userPersisted.getUserid() > 0) {
+				return userPersisted;
+			}
+
+		return null;
 	}
 
 	@Override
 	public boolean validateUser(UserCredentials userCredentials) {
-		return userRepositoryCustomDao.findUserByEmailAndPassword(userCredentials.getEmail(),userCredentials.getPassword());
+		return userRepositoryCustomDao.findUserByEmailAndPassword(userCredentials.getEmail(),
+				userCredentials.getPassword());
 	}
 
 	@Override
@@ -74,11 +78,11 @@ public class UserServiceImpl implements UserService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserCredentials uc = getUserByUsername(username);
 		List<SimpleGrantedAuthority> grantedAuthority = new ArrayList<SimpleGrantedAuthority>();
-		for(String role :  uc.getRoles()) {
+		for (String role : uc.getRoles()) {
 			grantedAuthority.add(new SimpleGrantedAuthority(role));
 		}
-		return new org.springframework.security.core.userdetails.User(uc.getEmail(), uc.getPassword(), grantedAuthority);
-	}	
-	
+		return new org.springframework.security.core.userdetails.User(uc.getEmail(), uc.getPassword(),
+				grantedAuthority);
+	}
 
 }

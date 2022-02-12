@@ -65,7 +65,7 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests()
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/signup").permitAll()
 				.antMatchers("/user/**", "/auth/**", "/documentation/**", "/v3/**", "/actuator/**", "/h2-console/**",
 						"/profile/**", "/favicon.ico", "/sw/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling();
