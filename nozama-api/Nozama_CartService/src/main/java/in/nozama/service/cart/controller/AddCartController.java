@@ -1,4 +1,4 @@
-package in.nozama.nozamacartservice.controller;
+package in.nozama.service.cart.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import in.nozama.nozamacartservice.model.Item;
-import in.nozama.nozamacartservice.service.AddCartService;
-import in.nozama.nozamacartservice.util.CartResponse;
+import in.nozama.service.cart.model.Item;
+import in.nozama.service.cart.service.AddCartService;
+import in.nozama.service.cart.util.CartResponse;
 
 @RestController
 @RequestMapping("/cart")

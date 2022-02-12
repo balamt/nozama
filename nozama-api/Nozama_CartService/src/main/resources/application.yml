@@ -1,3 +1,14 @@
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+jwt:
+  secret: nozama
 logging:
   level:
     org:
@@ -13,6 +24,8 @@ server:
 spring:
   application:
     name: nozama-cartservice
+  zipkin:
+    base-url: http://localhost:9411/
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
@@ -27,3 +40,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+springdoc:
+  swagger-ui:
+    path: /sw/swagger-ui.html
+ribbon:
+  eureka:
+    enabled: false

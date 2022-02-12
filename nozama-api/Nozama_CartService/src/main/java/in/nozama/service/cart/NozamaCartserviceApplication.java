@@ -1,10 +1,10 @@
-package in.nozama.nozamacartservice;
+package in.nozama.service.cart;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@EntityScan("in.nozama.service.model")
+@EntityScan("in.nozama.service.cart.model")
 @SpringBootApplication
 public class NozamaCartserviceApplication {
 

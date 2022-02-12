@@ -1,4 +1,4 @@
-package in.nozama.nozamacartservice.controller;
+package in.nozama.service.cart.controller;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.nozama.nozamacartservice.model.Item;
-import in.nozama.nozamacartservice.service.ViewCartService;
-import in.nozama.nozamacartservice.util.CartResponse;
+import in.nozama.service.cart.model.Item;
+import in.nozama.service.cart.service.ViewCartService;
+import in.nozama.service.cart.util.CartResponse;
 
 @RestController
 @RequestMapping("/cart")
@@ -26,7 +26,7 @@ public class ViewCartController {
 	
 
 
-	@PostMapping(value = "/mycart/{itemId}")
+	@GetMapping(value = "/mycart/{itemId}")
 	public ResponseEntity<CartResponse> viewCart(@PathVariable("itemId") Long itemId ){
 
 		LOGGER.info("Before viewing the items in cart in ViewCartController ");

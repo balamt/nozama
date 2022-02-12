@@ -1,8 +1,8 @@
-package in.nozama.nozamacartservice.util;
+package in.nozama.service.cart.util;
 
 import java.util.List;
 
-import in.nozama.nozamacartservice.model.Item;
+import in.nozama.service.cart.model.Item;
 
 public class CartResponse {
 

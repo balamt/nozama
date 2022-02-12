@@ -1,4 +1,4 @@
-package in.nozama.nozamacartservice.controller;
+package in.nozama.service.cart.controller;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.nozama.nozamacartservice.model.Item;
-import in.nozama.nozamacartservice.service.RemoveCartService;
-import in.nozama.nozamacartservice.util.CartResponse;
+import in.nozama.service.cart.model.Item;
+import in.nozama.service.cart.service.RemoveCartService;
+import in.nozama.service.cart.util.CartResponse;
 
 @RestController
 @RequestMapping("/cart")

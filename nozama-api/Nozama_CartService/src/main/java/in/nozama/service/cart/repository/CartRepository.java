@@ -1,11 +1,11 @@
-package in.nozama.nozamacartservice.repository;
+package in.nozama.service.cart.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import in.nozama.nozamacartservice.model.Item;
+import in.nozama.service.cart.model.Item;
 
 @Repository
 public interface CartRepository extends JpaRepository<Item, Long> {

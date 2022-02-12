@@ -1,8 +1,8 @@
-package in.nozama.nozamacartservice.service;
+package in.nozama.service.cart.service;
 
 import java.util.List;
 
-import in.nozama.nozamacartservice.model.Item;
+import in.nozama.service.cart.model.Item;
 
 public interface ViewCartService {
 
