@@ -4,6 +4,8 @@ eureka:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 logging:
   level:
     org:
@@ -15,6 +17,12 @@ server:
 spring:
   application:
     name: nozama-productservice
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 2MB
+      max-request-size: 2MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
@@ -29,3 +37,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+springdoc:
+  swagger-ui:
+    path: /sw/swagger-ui.html
+ribbon:
+  eureka:
+    enabled: false
+product:
+  image:
+    storage:
+      location: E:\temp\nozama\product
