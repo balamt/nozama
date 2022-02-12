@@ -1,0 +1,930 @@
+{
+	"info": {
+		"_postman_id": "79dc1233-2959-4d4d-b328-199e7e624265",
+		"name": "UserAuth-Nozama",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "token",
+					"item": [
+						{
+							"name": "create Auth Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var resp = pm.response.json();\r",
+											"pm.environment.set(\"nozama_token\", resp.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"bob@test.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"quis aliqua\",\n    \"password\": \"mollit magna ad anim\",\n    \"roles\": [\n        \"est quis velit\",\n        \"Excepteu\"\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/auth/token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"token"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "renew Token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/token/renew",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"token",
+										"renew"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "(Required) ",
+												"key": "Authorization",
+												"value": "do aliquip elit aute"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/auth/token/renew",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"token",
+												"renew"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "get Users 4",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "get Users 5",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "get Users 3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "get Users 1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "get Users 2",
+							"request": {
+								"method": "OPTIONS",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "OPTIONS",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "get Users 6",
+							"request": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "HEAD",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "get Users",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "status",
+					"item": [
+						{
+							"name": "test Server 4",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "test Server 5",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "test Server 3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "test Server 1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "test Server 2",
+							"request": {
+								"method": "OPTIONS",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "OPTIONS",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "test Server 6",
+							"request": {
+								"method": "HEAD",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "HEAD",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						},
+						{
+							"name": "test Server",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/auth/status",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"auth",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "do aliquip elit aute"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "health",
+			"item": [
+				{
+					"name": "get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/health/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"health",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"do aliquip elit aute\""
+						}
+					]
+				},
+				{
+					"name": "get Auth Service Health Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health",
+								"status"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/health/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"health",
+										"status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"do aliquip elit aute\""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8089",
+			"type": "string"
+		}
+	]
+}
