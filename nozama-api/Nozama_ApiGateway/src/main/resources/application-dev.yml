@@ -15,27 +15,29 @@ eureka:
 spring:
   application:
     name: nozama-api-gateway
+  zipkin:
+    base-url: http://${zipkin.host:localhost}:${9411:9411}/
   cloud:
     gateway:
       routes:
       - id: nozama-productservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8082}
+        uri: http://nozama-product-service:8082
         predicates:
         - Path=/category/**
       - id: nozama-productservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8082}
+        uri: http://nozama-product-service:8082
         predicates:
         - Path=/product/**
       - id: nozama-orderservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8094}
+        uri: http://nozama-order-service:8094
         predicates:
         - Path=/order/**
       - id: nozama-userservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8081}
+        uri: http://nozama-user-service:8081
         predicates:
         - Path=/user/**
       - id: nozama-userauthservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8089}
+        uri: http://nozama-user-auth-service:8089
         predicates:
         - Path=/auth/**  
       - id: nozama-cartservice
