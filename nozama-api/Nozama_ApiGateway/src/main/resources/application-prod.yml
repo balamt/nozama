@@ -7,7 +7,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: false
