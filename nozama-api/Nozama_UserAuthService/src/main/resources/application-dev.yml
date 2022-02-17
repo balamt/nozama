@@ -3,9 +3,10 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 jwt:
@@ -45,4 +46,4 @@ spring:
 ## This is the way we can provide the service proxy url and port to reach the other msa
 userservice :
   ribbon :
-    listOfServers : localhost:8081
+    listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8081}

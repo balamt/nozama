@@ -113,7 +113,7 @@ public class ProductController {
 	
 	@ExceptionHandler
 	void productImageUploadExceptionHandler(ProductImageUploadException piue, HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), piue.getMessage());
+		response.sendError(HttpStatus.NOT_FOUND.value(), piue.getMessage());
 	}
 
 }

@@ -29,7 +29,11 @@ public class ProductImageUploadServiceImpl implements ProductImageUploadService 
 	@Autowired
 	public ProductImageUploadServiceImpl(ProductImageUploadProperties productImageUploadProperties) {
 		LOG.error(productImageUploadProperties.getLocation());
-		this.dirLocation = Paths.get(productImageUploadProperties.getLocation()).toAbsolutePath().normalize();
+		if(productImageUploadProperties.getLocation() != null && productImageUploadProperties.getLocation().trim().length() <= 0) {
+			this.dirLocation = Paths.get("E:\\temp\\nozama\\product").toAbsolutePath().normalize();
+		}else {
+			this.dirLocation = Paths.get(productImageUploadProperties.getLocation()).toAbsolutePath().normalize();
+		}
 	}
 
 	@Override
