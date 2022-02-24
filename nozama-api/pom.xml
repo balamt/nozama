@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.3</version>
+		<version>2.6.4</version>
 		<relativePath />
 	</parent>
 
@@ -29,6 +29,7 @@
 		<module>Nozama_EurekaServer</module>
 		<module>Nozama_Shared_Lib</module>
 		<module>Nozama_ApiGateway</module>
+		<module>Nozama_AddressService</module>
 		<module>Nozama_UserAuthService</module>
 		<module>Nozama_UserService</module>
 		<module>Nozama_ProductService</module>
