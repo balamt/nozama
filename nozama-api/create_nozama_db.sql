@@ -7,6 +7,8 @@ CREATE DATABASE `nozama_shipment_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_user_auth_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_user_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 CREATE DATABASE `nozama_wallet_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE `nozama_address_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
 
 
 GRANT ALL PRIVILEGES ON nozama_cart_db.* TO 'nozama_dba'@'%' with grant option;
@@ -26,4 +28,6 @@ FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON nozama_wallet_db.* TO 'nozama_dba'@'%' with grant option;
 FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON nozama_user_db.* TO 'nozama_dba'@'%' with grant option;
+FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON nozama_address_db.* TO 'nozama_dba'@'%' with grant option;
 FLUSH PRIVILEGES;
