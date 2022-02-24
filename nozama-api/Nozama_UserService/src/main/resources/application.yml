@@ -17,17 +17,19 @@ logging:
         type: INFO
       springframework:
         security: DEBUG
-        type: INFO
+        type: TRACE
 server:
   error:
     include-stacktrace: never
   port: 8081
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: nozama-userservice
-  config:
-    import:
-    - optional:configserver:${CONFIG_SERVER:http://localhost:8091}
+#  config:
+#    import:
+#    - optional:configserver:${CONFIG_SERVER:http://localhost:8091}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
@@ -37,7 +39,7 @@ spring:
     serialization:
       fail-on-empty-beans: false
   zipkin:
-    base-url: http://${zipkin.host:localhost}:${9411:9411}/
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   jpa:
     hibernate:
       ddl-auto: update

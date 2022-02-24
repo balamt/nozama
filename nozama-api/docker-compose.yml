@@ -53,6 +53,7 @@ services:
       - eureka_host=nozama-eureka-server
       - eureka_port=8761
       - zipkin.host=nozama-zipkin
+      - user_service_host=nozama-user-service
     build:
       context: ./Nozama_ApiGateway/
       dockerfile: DockerFile

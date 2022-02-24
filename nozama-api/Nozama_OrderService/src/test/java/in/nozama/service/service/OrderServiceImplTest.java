@@ -1,9 +1,15 @@
 package in.nozama.service.service;
 
-import in.nozama.service.entity.Order;
-import in.nozama.service.entity.Status;
-import in.nozama.service.exception.OrderNotFoundException;
-import in.nozama.service.repository.OrderRepository;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,16 +20,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
+import in.nozama.service.exception.OrderNotFoundException;
+import in.nozama.service.repository.OrderRepository;
 
 @RunWith(MockitoJUnitRunner.class)
-@WebMvcTest
+@WebMvcTest	
 public class OrderServiceImplTest {
 
     @Mock

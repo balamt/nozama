@@ -9,8 +9,10 @@ eureka:
     prefer-ip-address: true
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
 jwt:
   secret: nozama
+  
 logging:
   level:
     org:
@@ -19,12 +21,15 @@ logging:
         type: INFO
       springframework:
         security: DEBUG
-        type: INFO
+        type: ERROR
+
 server:
   error:
     include-stacktrace: never
   port: 8089
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: nozama-userauthservice
   datasource:
@@ -36,14 +41,25 @@ spring:
     serialization:
       fail-on-empty-beans: false
   zipkin:
-    base-url: http://${zipkin.host:localhost}:${9411:9411}/
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
 ## This is the way we can provide the service proxy url and port to reach the other msa
+## The URL is pointing to API Gateway and its port number
 userservice :
   ribbon :
     listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8081}
+
+feign:
+  circuitbreaker:
+    enabled: true
+    
+#Prometheus
+management:
+  server:
+    port: 8762

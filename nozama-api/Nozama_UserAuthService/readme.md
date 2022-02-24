@@ -1,8 +1,10 @@
 #User Auth Service
 
-https://www.marcobehler.com/guides/spring-security
+* [Springboot security reference](https://www.marcobehler.com/guides/spring-security)
 
-https://www.javainuse.com/spring/boot-jwt
+* [Springboot JWT Reference](https://www.javainuse.com/spring/boot-jwt)
+* [JWT Authorization and authentication in springboot](https://www.freecodecamp.org/news/how-to-setup-jwt-authorization-and-authentication-in-spring/)
+* [Springboot Refresh/renew JWT Tokens](https://www.bezkoder.com/spring-boot-refresh-token-jwt/)
 
 User auth will call User service using Feign Client.
 Feign Client config requires the api gate way url with port details, which we can pass it through the properties file.

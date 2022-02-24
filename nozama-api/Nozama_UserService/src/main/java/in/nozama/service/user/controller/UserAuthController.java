@@ -16,9 +16,6 @@ import in.nozama.service.user.exception.AuthenticationException;
 import in.nozama.service.user.model.TokenResponse;
 import in.nozama.service.user.service.UserService;
 
-@RestController
-@CrossOrigin
-//@RequestMapping(value = "/auth")
 public class UserAuthController {
 
 	@Autowired

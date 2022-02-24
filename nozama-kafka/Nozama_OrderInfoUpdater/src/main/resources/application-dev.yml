@@ -15,7 +15,7 @@ spring:
         ddl-auto: update
 
   zipkin:
-    base-url: http://${zipkin.host:localhost}:${9411:9411}/
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
 
   jackson:
     serialization:

@@ -10,11 +10,14 @@ eureka:
       defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
-    prefer-ip-address: false
+##This property has to be true, so that it uses the IP address, instead of localhost or 127.0.0.1
+    prefer-ip-address: true
 
 spring:
   application:
     name: nozama-api-gateway
+  zipkin:
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   cloud:
     gateway:
       routes:
@@ -46,3 +49,7 @@ spring:
         uri: http://${HOST_NAME:localhost}:${eureka.port:8091}
         predicates:
         - Path=/**
+
+logging:
+  level:
+    ROOT: TRACE
