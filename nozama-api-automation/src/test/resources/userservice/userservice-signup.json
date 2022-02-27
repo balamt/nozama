@@ -1,0 +1,17 @@
+{
+  "email": "bob@test.com",
+  "fullname": "bob",
+  "mobile": "9876543210",
+  "password": "password",
+  "usertype": "DUMMY",
+  "gender": "MALE",
+  "address": {
+    "address1": "1, Doddathoguru, Electronic city",
+    "address2": "Bangalore",
+    "street": "3rd Cross",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560100"
+  }
+}

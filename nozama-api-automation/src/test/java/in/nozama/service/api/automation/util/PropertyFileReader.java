@@ -8,9 +8,10 @@ import java.util.Properties;
 
 public class PropertyFileReader {
 
-	private static final String NOZAMA_APIGATEWAY_URL = "http://localhost:8080/";
+	private static final String NOZAMA_APIGATEWAY_URL = "http://localhost:8090/";
 	private static final String NOZAMA_API_GATEWAY_URL = "nozama.api-gateway.url";
 	private static final String NOAMA_API_AUTOMATION_PROPERTIES_FILENAME = "nozama_api_automation.properties";
+	public static final String TEST_RESOURCEPATH_PROPERTIES_KEY = "test.resourcepath";
 
 	private Properties properties;
 
@@ -32,6 +33,10 @@ public class PropertyFileReader {
 			throw new RuntimeException(
 					String.format("%s not found at %s", NOAMA_API_AUTOMATION_PROPERTIES_FILENAME, propertyFilePath));
 		}
+	}
+
+	public String getTestResourcePath() {
+		return properties.getProperty(TEST_RESOURCEPATH_PROPERTIES_KEY);
 	}
 
 	public String getAPIGateWayURL() {
