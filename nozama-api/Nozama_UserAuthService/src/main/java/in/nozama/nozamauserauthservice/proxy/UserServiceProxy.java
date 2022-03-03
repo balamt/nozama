@@ -8,16 +8,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import in.nozama.nozamauserauthservice.controller.NozamaFeignFallBack;
 import in.nozama.nozamauserauthservice.exception.ServiceException;
 import in.nozama.nozamauserauthservice.model.User;
 import in.nozama.service.model.UserCredentials;
 
-@FeignClient(name = "nozama-userservice", url = "${userservice.ribbon.listOfServers}", fallback = NozamaFeignFallBack.class)
+@FeignClient(name = "nozama-userservice", url = "${userservice.ribbon.listOfServers}")
 @LoadBalancerClient(name = "nozama-userservice")
 public interface UserServiceProxy {
 	
-	@RequestMapping("/user")
+	@RequestMapping("/actuator")
 	public ResponseEntity<String> testServer();
 
 	@RequestMapping("/user/{id}")

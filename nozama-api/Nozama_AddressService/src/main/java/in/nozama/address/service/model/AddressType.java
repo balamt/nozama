@@ -10,7 +10,8 @@ public enum AddressType {
 	HOME("Home"),
 	OFFICE("Office"),
 	SHOP("Shop"),
-	VENDOR("Vendor");
+	VENDOR("Vendor"),
+	OTHER("Other");
 	
 	
 	@Getter 

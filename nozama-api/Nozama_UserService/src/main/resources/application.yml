@@ -5,6 +5,7 @@ eureka:
       defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 jwt:
@@ -17,7 +18,7 @@ logging:
         type: INFO
       springframework:
         security: DEBUG
-        type: TRACE
+        type: INFO
 server:
   error:
     include-stacktrace: never
@@ -52,3 +53,9 @@ springdoc:
 ribbon:
   eureka:
     enabled: false
+    
+## This is the way we can provide the service proxy url and port to reach the other msa
+## The URL is pointing to API Gateway and its port number
+addressservice :
+  ribbon :
+    listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8092}

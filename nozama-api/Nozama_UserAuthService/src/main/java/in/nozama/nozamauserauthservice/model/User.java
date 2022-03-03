@@ -43,7 +43,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="user_id")
+	@Column(name="userid")
 	private Long userid;
 	
 	@Size(max = 120)
@@ -70,12 +70,12 @@ public class User extends RepresentationModel<User> implements UserDetails {
 	private Gender gender;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id")
+	@JoinColumn(name = "addressid")
 	private Address address;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	@Column(name = "user_type")
+	@Column(name = "usertype")
 	private UserType usertype;
 
 	public Long getUserid() {

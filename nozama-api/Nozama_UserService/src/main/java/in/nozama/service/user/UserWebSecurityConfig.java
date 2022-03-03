@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import in.nozama.service.user.JwtHandler.JwtFilter;
+import in.nozama.service.user.jwthandler.JwtFilter;
 
 /**
  * https://medium.com/@akhileshanand/spring-boot-api-security-with-jwt-and-role-based-authorization-fea1fd7c9e32
@@ -66,7 +66,10 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/signup").permitAll()
+		http.cors().and().csrf().disable().authorizeRequests()
+		.antMatchers("/user/signup").permitAll()
+		.antMatchers("/user/status").permitAll()
+		.antMatchers("/actuator/**").permitAll()
 				.antMatchers("/user/**", "/auth/**", "/documentation/**", "/v3/**", "/actuator/**", "/h2-console/**",
 						"/profile/**", "/favicon.ico", "/sw/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling();
@@ -75,8 +78,8 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/user/login", "/user/signup", "/auth", "/auth/token", "/error", "/sw",
-				"/swagger-ui/**", "/v3/api-docs/**");
+		web.ignoring().antMatchers("/user/login","/user/status", "/user/signup", "/auth", "/auth/token", "/error", "/sw",
+				"/swagger-ui/**", "/v3/api-docs/**", "/actuator/**");
 	}
 
 //	protected JwtAuthenticationConverter authenticationConverter() {

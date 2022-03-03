@@ -46,7 +46,7 @@ public class Order implements Serializable {
 	@Column(name = "order_id")
 	private Long orderid;
 
-	@Column(name = "user_id")
+	@Column(name = "userid")
 	private long user;
 
 	@Column(name = "item_id")

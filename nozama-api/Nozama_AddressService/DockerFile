@@ -1,0 +1,7 @@
+FROM nozama-jdk:base
+LABEL maintainer="nozama"
+VOLUME /tmp
+COPY /target/nozama-address-service.jar /opt/lib/nozama-address-service.jar
+EXPOSE 8092
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-address-service.jar"]

@@ -17,18 +17,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import feign.FeignException.InternalServerError;
 import in.nozama.nozamauserauthservice.exception.AuthenticationException;
 import in.nozama.nozamauserauthservice.exception.ServiceException;
 import in.nozama.nozamauserauthservice.model.TokenResponse;
 import in.nozama.nozamauserauthservice.proxy.UserServiceProxy;
 import in.nozama.nozamauserauthservice.util.TokenProvider;
+import in.nozama.service.model.ErrorResponse;
+import in.nozama.service.model.Status;
 import in.nozama.service.model.UserCredentials;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RefreshScope
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
 public class UserAuthController {
+
+	private static final String INSTANCE_NAME = "UserAuthController";
 
 	@Autowired
 	UserServiceProxy userService;
@@ -40,8 +46,13 @@ public class UserAuthController {
 	AuthenticationManager authenticationManager;
 
 	@RequestMapping("/status")
+	@CircuitBreaker(name = INSTANCE_NAME, fallbackMethod = "fallbackTestServer")
 	public ResponseEntity testServer() {
 		return userService.testServer();
+	}
+
+	public ResponseEntity fallbackTestServer(Exception ise) {
+		return new ResponseEntity("Service is Down", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@RolesAllowed("ADMIN")
@@ -51,12 +62,12 @@ public class UserAuthController {
 	}
 
 	@RequestMapping(path = "/token/renew", method = RequestMethod.POST)
+	@CircuitBreaker(name = INSTANCE_NAME, fallbackMethod = "fallbackRenewToken")
 	public ResponseEntity<?> renewToken(@RequestHeader(TokenProvider.HEADER_STRING) final String token)
 			throws AuthenticationException, ServiceException {
 		if (!tokenProvider.isTokenExpired(token)) {
 			String username = tokenProvider.getUsernameFromToken(token);
 			final UserCredentials userCred = userService.getUserByUsername(username).getBody();
-			System.out.println(userCred.getRoles().get(0) + " Controller Role");
 			final String newToken = tokenProvider.generateToken(userCred);
 			return ResponseEntity.ok().header(TokenProvider.HEADER_TOKEN_STRING, newToken)
 					.header(TokenProvider.HEADER_STRING, newToken).body(new TokenResponse(newToken));
@@ -65,7 +76,16 @@ public class UserAuthController {
 		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new TokenResponse(token));
 	}
 
+	public ResponseEntity<?> fallbackRenewToken(Exception e) {
+		ErrorResponse response = new ErrorResponse();
+		response.setMessage(e.getMessage());
+		response.setStatus(Status.ERROR);
+		return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+	}
+
 	@RequestMapping(path = "/token", method = RequestMethod.POST)
+	@CircuitBreaker(name = INSTANCE_NAME, fallbackMethod = "fallbackCreateAuthToken")
 	public ResponseEntity<?> createAuthToken(@RequestBody UserCredentials userCredentials)
 			throws AuthenticationException, ServiceException {
 		authenticate(userCredentials);
@@ -74,6 +94,14 @@ public class UserAuthController {
 		return ResponseEntity.ok().header(TokenProvider.HEADER_TOKEN_STRING, token)
 				.header(TokenProvider.HEADER_STRING, String.format("%s %s", TokenProvider.TOKEN_PREFIX, token))
 				.body(new TokenResponse(token));
+	}
+	
+	public ResponseEntity<?> fallbackCreateAuthToken(Exception e) {
+		ErrorResponse response = new ErrorResponse();
+		response.setMessage("Unable to reach User Service to verify the authenticity of User");
+		response.setStatus(Status.ERROR);
+		return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 
 	private void authenticate(UserCredentials userCredentials) throws AuthenticationException {

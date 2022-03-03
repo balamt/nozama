@@ -42,11 +42,11 @@ spring:
         predicates:
         - Path=/auth/**  
       - id: nozama-cartservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8088}
+        uri: http://${HOST_NAME:localhost}:${eureka_port:8088}
         predicates:
         - Path=/cart/** 
       - id: nozama-cloudservice
-        uri: http://${HOST_NAME:localhost}:${eureka.port:8091}
+        uri: http://${HOST_NAME:localhost}:${eureka_port:8091}
         predicates:
         - Path=/**
 

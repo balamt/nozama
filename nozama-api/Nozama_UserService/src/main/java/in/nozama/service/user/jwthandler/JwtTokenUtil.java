@@ -1,4 +1,4 @@
-package in.nozama.service.user.JwtHandler;
+package in.nozama.service.user.jwthandler;
 
 import java.io.IOException;
 import java.io.Serializable;

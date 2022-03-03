@@ -8,5 +8,6 @@ import in.nozama.address.service.model.Address;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
+	Address findByUserId(long userid);
 
 }

@@ -27,7 +27,7 @@ public class UserResponse implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty("user_id")
+	@JsonProperty("userid")
 	private Long userid;
 	
 	@Size(max = 120)
