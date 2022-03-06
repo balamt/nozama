@@ -2,7 +2,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: http://admin:admin@${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: true
@@ -41,12 +41,18 @@ spring:
       fail-on-empty-beans: false
   zipkin:
     base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+    
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  config:
+    import:
+    - "optional:http://localhost:8888/config/"
+
 springdoc:
   swagger-ui:
     path: /sw/swagger-ui.html
@@ -59,3 +65,10 @@ ribbon:
 addressservice :
   ribbon :
     listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8092}
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - refresh
