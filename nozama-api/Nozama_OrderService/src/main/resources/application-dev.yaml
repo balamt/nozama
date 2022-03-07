@@ -13,7 +13,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         ddl-auto: update
-
+        
+  zipkin:
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+    
   jackson:
     serialization:
       fail-on-empty-beans: false
@@ -25,7 +28,7 @@ spring:
       auto-offset-reset: earliest
 
 server:
-    port: 8094
+    port: 8084
 
 kafka:
   server:
@@ -34,8 +37,14 @@ kafka:
 
 eureka:
   client:
+    fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 
 logging:
   file: 

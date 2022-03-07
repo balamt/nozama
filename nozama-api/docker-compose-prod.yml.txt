@@ -1,0 +1,188 @@
+version: '3'
+
+services:
+  nozama-mysql-container:
+    image: nozama_mysql:base
+    #Instead of container name user hostname, if container name is used will cause mysql access issue to services
+    #container_name: nozama-mysql-container
+    hostname: nozama-mysql-container
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=nozamadb
+      - MYSQL_USER=nozama_dba
+      - MYSQL_PASSWORD=nozama19
+      - MYSQL_ROOT_HOST=%
+    networks:
+      - nozama_net
+    ports:
+      - 3308:3306
+    restart: always
+
+  nozama-eureka-server-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-eureka-server:1
+    container_name: nozama-eureka-server-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+    build:
+      context: ./Nozama_EurekaServer/
+      dockerfile: DockerFile
+    ports:
+      - 8761:8761
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+  nozama-api-gateway-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-api-gateway:1
+    container_name: nozama-api-gateway-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+    build:
+      context: ./Nozama_ApiGateway/
+      dockerfile: DockerFile
+    ports:
+      - 8080:8080
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+  nozama-user-service-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-user-service:1
+    container_name: nozama-user-service-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+      #Need to remove the below two properties and see if it works.
+      - nozama.sql.host.address=nozama-mysql-container
+      - nozama.sql.host.port=3306
+    build:
+      context: ./Nozama_UserService/
+      dockerfile: DockerFile
+    ports:
+      - 8081:8081
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+  nozama-product-service-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-product-service:1
+    container_name: nozama-product-service-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+      - nozama.sql.host.address=nozama-mysql-container
+      - nozama.sql.host.port=3306
+    build:
+      context: ./Nozama_ProductService/
+      dockerfile: DockerFile
+    ports:
+      - 8082:8082
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+  nozama-order-service-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-order-service:1
+    container_name: nozama-order-service-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+      - nozama.sql.host.address=nozama-mysql-container
+      - nozama.sql.host.port=3306
+    build:
+      context: ./Nozama_OrderService/
+      dockerfile: DockerFile
+    ports:
+      - 8084:8084
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+  nozama-shipment-service-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-shipment-service:1
+    container_name: nozama-shipment-service-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+      - nozama.sql.host.address=nozama-mysql-container
+      - nozama.sql.host.port=3306
+    build:
+      context: ./Nozama_ShipmentService/
+      dockerfile: DockerFile
+    ports:
+      - 8083:8083
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+  nozama-delivery-batch-container:
+    depends_on:
+      - nozama-mysql-container
+    image: nozama-delivery-batch:1
+    container_name: nozama-delivery-batch-container
+    environment:
+      - NOZAMA_SERVICE_PROFILE=prod
+      - eureka.host=nozama-eureka-server-container
+      - eureka.port=8761
+      - nozama.sql.host.address=nozama-mysql-container
+      - nozama.sql.host.port=3306
+    build:
+      context: ../nozama-batch/Nozama_DeliveryScheduler/
+      dockerfile: DockerFile
+    ports:
+      - 8085:8085
+    links:
+      - nozama-mysql-container:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+
+networks:
+  nozama_net:
+    driver: bridge

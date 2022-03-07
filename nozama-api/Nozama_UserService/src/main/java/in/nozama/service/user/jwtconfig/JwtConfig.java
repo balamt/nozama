@@ -1,11 +1,11 @@
-package in.nozama.service.user.JwtConfig;
+package in.nozama.service.user.jwtconfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import in.nozama.service.user.JwtHandler.JwtFilter;
+import in.nozama.service.user.jwthandler.JwtFilter;
 
 
 @Configuration

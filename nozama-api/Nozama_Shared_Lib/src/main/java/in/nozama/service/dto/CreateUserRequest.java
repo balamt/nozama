@@ -24,7 +24,7 @@ public class CreateUserRequest implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("user_id")
+	@JsonProperty("userid")
 	private Long userid;
 	
 	@Size(max = 120)
@@ -54,7 +54,6 @@ public class CreateUserRequest implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	@JsonProperty("user_type")
 	private UserType usertype;
 
 }

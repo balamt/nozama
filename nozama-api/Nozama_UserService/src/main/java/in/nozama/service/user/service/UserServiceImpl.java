@@ -19,6 +19,7 @@ import in.nozama.service.user.mapper.UserMapper;
 import in.nozama.service.user.model.User;
 import in.nozama.service.user.repository.UserRepository;
 import in.nozama.service.user.repository.UserRepositoryCustomDao;
+import in.nozama.service.user.service.proxy.AddressServiceProxy;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,10 +34,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepositoryCustomDao userRepositoryCustomDao;
+	
+	@Autowired
+	AddressServiceProxy addressService;
 
 	@Override
 	public List<UserResponse> getAllUser() {
-		return userMapper.map(userRepository.findAll());
+		return userMapper.map(userRepository.findAll(), addressService);
 	}
 
 	@Override

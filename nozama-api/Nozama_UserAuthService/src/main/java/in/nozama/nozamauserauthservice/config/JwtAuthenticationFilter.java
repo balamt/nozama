@@ -39,9 +39,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		this.userDetailsService = ctx.getBean(UserDetailsService.class);
 	}
 
+	private boolean isAllowedPath(HttpServletRequest request) {
+		return (request.getServletPath().contains("/actuator/") || request.getServletPath().contains("/auth/")
+				|| request.getServletPath().contains("/error") || request.getServletPath().contains("/swagger-ui")
+				|| request.getServletPath().contains("/api-docs/")
+				|| request.getServletPath().endsWith("/actuator/info"));
+	}
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
+		final boolean isPermittedUrl = isAllowedPath(request);
+		if (isPermittedUrl) {
+			chain.doFilter(request, response);
+		}
+
 		String header = request.getHeader(TokenProvider.HEADER_STRING);
 		String username = null;
 		String authToken = null;
@@ -51,13 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				username = tokenProvider.getUsernameFromToken(authToken);
 				if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-					if ((boolean) tokenProvider.validateToken(authToken, userDetails)) {
-						UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(authToken,
-								SecurityContextHolder.getContext().getAuthentication(), userDetails);
-						authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-						logger.info("authenticated user " + username + ", setting security context");
-						SecurityContextHolder.getContext().setAuthentication(authentication);
-					}
+					validateAndAuthenticateUser(request, username, authToken, userDetails);
 				}
 
 			} catch (IllegalArgumentException iae) {
@@ -71,6 +77,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			LOGGER.warn("couldn't find bearer string, will ignore the header");
 		}
 		chain.doFilter(request, response);
+	}
+
+	private void validateAndAuthenticateUser(HttpServletRequest request, String username, String authToken,
+			UserDetails userDetails) {
+		if ((boolean) tokenProvider.validateToken(authToken, userDetails)) {
+			UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(authToken,
+					SecurityContextHolder.getContext().getAuthentication(), userDetails);
+			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+			logger.info(String.format("authenticated user {%s}, setting security context", username));
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
 	}
 
 }

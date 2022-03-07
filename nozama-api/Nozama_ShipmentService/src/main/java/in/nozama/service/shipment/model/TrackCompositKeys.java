@@ -29,7 +29,7 @@ public class TrackCompositKeys implements Serializable {
     private Order orderId;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "userid", insertable = false, updatable = false)
     private User userId;
 
     public TrackCompositKeys(){}

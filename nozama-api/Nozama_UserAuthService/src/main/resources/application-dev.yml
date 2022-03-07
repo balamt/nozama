@@ -3,13 +3,16 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
 jwt:
   secret: nozama
+  
 logging:
   level:
     org:
@@ -19,11 +22,14 @@ logging:
       springframework:
         security: DEBUG
         type: INFO
+
 server:
   error:
     include-stacktrace: never
   port: 8089
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: nozama-userauthservice
   datasource:
@@ -35,14 +41,44 @@ spring:
     serialization:
       fail-on-empty-beans: false
   zipkin:
-    base-url: http://localhost:9411/
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  config:
+    import:
+    - "optional:http://localhost:8888/config/"
+
 ## This is the way we can provide the service proxy url and port to reach the other msa
+## The URL is pointing to API Gateway and its port number
 userservice :
   ribbon :
-    listOfServers : localhost:8081
+    listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8081}
+
+feign:
+  circuitbreaker:
+    enabled: true
+    
+#Prometheus
+management:
+  server:
+    port: 8762
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
+resilience4j:  circuitbreaker:    instances:      UserAuthController: 
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        waitDurationInOpenState: 5s
+        slidingWindowType: COUNT_BASED

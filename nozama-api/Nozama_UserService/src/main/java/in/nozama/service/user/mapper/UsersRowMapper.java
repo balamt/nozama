@@ -17,13 +17,12 @@ public class UsersRowMapper implements RowMapper<User> {
     public User mapRow(ResultSet row, int rowNum) throws SQLException {
         User user = new User();
         user.setEmail(row.getString("email"));
-        user.setUserid(row.getLong("user_id"));
+        user.setUserid(row.getLong("userid"));
         user.setFullname(row.getString("fullname"));
         user.setGender(Gender.valueOf(row.getString("gender")));
         user.setMobile(row.getString("mobile"));
-        user.setUsertype(UserType.valueOf(row.getString("user_type")));
+        user.setUsertype(UserType.valueOf(row.getString("usertype")));
         user.setPassword(row.getString("password"));
-        user.setAddress(null);
         return user;
     }
 }

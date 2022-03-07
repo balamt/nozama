@@ -1,4 +1,4 @@
-package in.nozama.service.user.JwtHandler;
+package in.nozama.service.user.jwthandler;
 
 import java.io.IOException;
 
@@ -46,6 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
 	private boolean isAllowedPath(HttpServletRequest request) {
 		return (request.getServletPath().contains("/user/email")
 				|| request.getServletPath().contains("/user/signup")
+				|| request.getServletPath().contains("/user/status")
 				|| request.getServletPath().contains("/user/login")
 				|| request.getServletPath().contains("/error")
 				|| request.getServletPath().contains("/swagger-ui")

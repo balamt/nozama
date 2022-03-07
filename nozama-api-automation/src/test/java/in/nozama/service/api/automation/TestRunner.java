@@ -1,17 +1,16 @@
 package in.nozama.service.api.automation;
 
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
-
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 //Specify the Feature file location
 @CucumberOptions(
 		dryRun = false,
-		strict = true,
 		plugin = {"pretty"},
-		features = {"src/test/features"}
+		features = {"src/test/features"},
+		publish = true
 		)
 public class TestRunner {
 	

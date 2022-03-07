@@ -1,0 +1,49 @@
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://admin:admin@${eureka_host:localhost}:${eureka_port:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+        
+spring:
+  application:
+    name: "nozama-addressservice"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3306}/${NOZAMA_APP_MYSQL_DBNAME:nozama_user_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
+    username: nozama_dba
+    password: nozama19
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+        
+  zipkin:
+    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+    
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+server:
+    port: 8092
+
+springdoc:
+  api-docs:    path: /api/docs

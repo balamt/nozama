@@ -52,6 +52,8 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers("/health/**").permitAll()
+				.antMatchers("/favicon.ico").permitAll()
+				.antMatchers("/actuator/**").permitAll()
 				.antMatchers("/auth/status", "/auth/token").permitAll()
 				.antMatchers("/swagger-ui/**",
 						"/webjars/**", "/v3/**").permitAll()

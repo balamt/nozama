@@ -1,2 +1,6 @@
-FROM openjdk:8u212-jre-alpine3.9
+FROM alpine:latest
+RUN apk update \
+	&& apk upgrade \
+	&& apk add --update openjdk16 tzdata curl unzip bash \
+	&& rm  -rf /var/cache/apk/*
 LABEL maintainer="nozama"

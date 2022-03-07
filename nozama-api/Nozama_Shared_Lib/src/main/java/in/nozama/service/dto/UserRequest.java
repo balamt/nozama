@@ -20,7 +20,7 @@ public class UserRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@JsonProperty("user_id")
+	@JsonProperty("userid")
 	private Long userid;
 
 	@Email

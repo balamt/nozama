@@ -8,7 +8,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 public class NozamaApiGatewayApplication {
 	
-//	private static final Logger LOGGER = LoggerFactory.getLogger(NozamaApiGatewayApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(NozamaApiGatewayApplication.class, args);

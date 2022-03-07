@@ -11,3 +11,7 @@ nozama.iws
 nozama-api/Nozama_ShipmentService/*.log
 nozama-api/*.log
 /nozama-api-automation.tar.xz
+nozama-api/zipkin/zipkin-server-2.23.9-exec.jar
+nozama-api/Nozama_ApiGateway/bin/
+nozama-api/Nozama_CartService/bin/
+nozama-api/Nozama_ProductService/bin/

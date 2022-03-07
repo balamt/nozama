@@ -25,11 +25,12 @@ import in.nozama.service.dto.UserResponse;
 import in.nozama.service.dto.view.UserModelView;
 import in.nozama.service.model.NozamaConst;
 import in.nozama.service.model.UserCredentials;
-import in.nozama.service.user.JwtHandler.JwtTokenUtil;
 import in.nozama.service.user.exception.UserAlreadyExistsException;
 import in.nozama.service.user.exception.UserNotFoundException;
+import in.nozama.service.user.jwthandler.JwtTokenUtil;
 import in.nozama.service.user.model.User;
-import in.nozama.service.user.service.UserService;	
+import in.nozama.service.user.service.UserService;
+import in.nozama.service.user.service.proxy.AddressServiceProxy;	
 
 @RestController
 /*
@@ -43,6 +44,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	AddressServiceProxy addressService;
 	
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
@@ -91,7 +95,11 @@ public class UserController {
 			createdUser = userService.addNewUser(user);
 			headers = new HttpHeaders();
 			if (createdUser != null) {
-				headers.set("userid", createdUser.getUserid().toString());
+				if(user.getAddress() != null) {
+					user.getAddress().setUserId(createdUser.getUserid());
+					addressService.addAddress(user.getAddress());
+				}
+				headers.set(JwtTokenUtil.USERID, createdUser.getUserid().toString());
 			}
 		} catch (Exception e) {
 			LOG.warn(e.getMessage(), e);
@@ -120,7 +128,7 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
-	@GetMapping
+	@GetMapping("/status")
 	public ResponseEntity<String> testServer() {
 		return ResponseEntity.ok("User service up and running...");
 	}
