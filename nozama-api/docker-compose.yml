@@ -54,6 +54,8 @@ services:
       - eureka_port=8761
       - zipkin.host=nozama-zipkin
       - user_service_host=nozama-user-service
+      - configservice_host=nozama-config-service
+      - configservice_port=8888
     build:
       context: ./Nozama_ApiGateway/
       dockerfile: DockerFile
@@ -61,6 +63,35 @@ services:
       - 8090:8090
     links:
       - nozama-mysql:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
+    
+  nozama-config-service-container:
+#    depends_on:
+#      - nozama-mysql
+    image: nozama-config-service:1
+    container_name: nozama-config-service
+    hostname: nozama-config-service
+    environment:
+      - NOZAMA_SERVICE_PROFILE=dev
+      - eureka_host=nozama-eureka-server
+      - eureka_port=8761
+      - zipkin.host=nozama-zipkin
+      - nozama_api_host=nozama-api-gateway
+      - nozama_api_port=8090
+      #Need to remove the below two properties and see if it works.
+#      - nozama.sql.host.address=nozama-mysql
+#      - nozama.sql.host.port=3306
+    build:
+      context: ./Nozama_ConfigService/
+      dockerfile: DockerFile
+    ports:
+      - 8888:8888
+#    links:
+#      - nozama-mysql:nozama_mysql
     networks:
       - nozama_net
     volumes:

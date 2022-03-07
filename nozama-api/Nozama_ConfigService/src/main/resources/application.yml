@@ -1,9 +1,9 @@
-server:  port: 8888  spring:  application:    name: nozama-configservice  profiles:    active:    - native, dev    
+server:  port: 8888  spring:  application:    name: nozama-configservice  profiles:    active:    - ${NOZAMA_SERVICE_PROFILE:dev}          zipkin:    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/    
   cloud:
     config:
       server:
-        git:#basedir is the place where the clone copy of config is placed#          basedir: file:///${user.home}/central-config#          uri: file:///E:/workspace/nozama-config/central-config# uri do no include .git at the end of the git link
+        git:#basedir is the place where the clone copy of config is placed          basedir: file:///${user.home:tmp}/central-config#          uri: file:///E:/workspace/nozama-config/central-config# uri do no include .git at the end of the git link
           uri: https://github.com/balamt/nozama-config          force-pull: true#Any sub folders specify the path, names to search for properties, yml files          search-paths:
           - "central-config"          clone-on-start: true        skip-ssl-validation: true# config server URL will look like http://localhost:8888/config/        prefix: /config        logging:  level:    ROOT: INFO    org.springframework.cloud.config: TRACE    #  security:
 #    user:
-#      name: configbot#      password: s3cr3t
+#      name: configbot#      password: s3cr3teureka:  client:    fetch-registry: true    serviceUrl:      defaultZone: http://admin:admin@${eureka_host:localhost}:${eureka_port:8761}/eureka/  instance:    leaseRenewalIntervalInSeconds: 60000    prefer-ip-address: true    metadataMap:      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}

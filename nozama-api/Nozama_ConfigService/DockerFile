@@ -1,0 +1,7 @@
+FROM nozama-jdk:base
+LABEL maintainer="nozama"
+VOLUME /tmp
+COPY /target/nozama-configservice.jar /opt/lib/nozama-configservice.jar
+EXPOSE 8888
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-configservice.jar"]

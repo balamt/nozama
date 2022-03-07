@@ -1,14 +1,14 @@
 #https://stackoverflow.com/questions/41401009/load-balancer-does-not-have-available-server-for-client
-#eureka:
-#  client:
-#    fetch-registry: true
-#    serviceUrl:
-#      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
-#  instance:
-#    leaseRenewalIntervalInSeconds: 60000
-#    prefer-ip-address: true
-#    metadataMap:
-#      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
 
 jwt:
   secret: nozama
