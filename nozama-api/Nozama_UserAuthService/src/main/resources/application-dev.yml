@@ -21,12 +21,13 @@ logging:
         type: INFO
       springframework:
         security: DEBUG
-        type: INFO
+        type: TRACE
 
 server:
   error:
     include-stacktrace: never
   port: 8089
+
 spring:
   main:
     allow-circular-references: true
@@ -53,6 +54,13 @@ spring:
     import:
     - "optional:http://localhost:8888/config/"
 
+  security:
+    user:
+      name: nozamabot
+      password: n0z@m@b0Ts3cr3t
+      roles:
+      - ACTUATOR
+
 ## This is the way we can provide the service proxy url and port to reach the other msa
 ## The URL is pointing to API Gateway and its port number
 userservice :
@@ -65,12 +73,23 @@ feign:
     
 #Prometheus
 management:
-  server:
-    port: 8762
+#  server:
+#    port: 9089
   endpoints:
     web:
       exposure:
         include: "*"
+  
+  endpoint:
+    health:
+      show-details: always
+    httptrace:
+      enabled: true
+
+  metrics:
+    tags: 
+      application: ${spring.application.name}
+      env: dev
         
 resilience4j:  circuitbreaker:    instances:      UserAuthController: 
         registerHealthIndicator: true
@@ -82,3 +101,4 @@ resilience4j:  circuitbreaker:    instances:      UserAuthController:
         slidingWindowSize: 10
         waitDurationInOpenState: 5s
         slidingWindowType: COUNT_BASED
+        

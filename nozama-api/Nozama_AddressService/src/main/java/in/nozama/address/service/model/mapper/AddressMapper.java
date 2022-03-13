@@ -12,7 +12,6 @@ import in.nozama.service.dto.AddressRequest;
 @Component
 public class AddressMapper {
 
-
 	public AddressResponse map(Optional<Address> from) {
 		AddressResponse to = new AddressResponse();
 		if (from.isPresent()) {
@@ -30,11 +29,15 @@ public class AddressMapper {
 		}
 		return to;
 	}
-	
+
 	public AddressResponse mapResponse(Address from) {
-		return map(Optional.of(from));
+		if (from != null) {
+			return map(Optional.of(from));
+		} else {
+			return null;
+		}
 	}
-	
+
 	public Address map(AddressRequest from) {
 		Address to = new Address();
 		if (from != null) {

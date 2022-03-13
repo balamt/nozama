@@ -23,6 +23,9 @@ Below are the list of Applications and PORTS occupied by the service and batch/s
 |   Nozama_AddressService      	|	8092        |
 |   Nozama_CheckoutService      |               |
 |   Nozama_PaymentService       |               |
+|   mysql								       |   3306  |
+|   prometheus       						|   8763    |
+|   grafana       						|   8764    |
 
 
 <sup>Note: Make sure you are having these ports available in your machine to run the services without docker</sup>
@@ -59,3 +62,9 @@ git push origin :master          # delete master on remote
 git push origin master-old       # create master-old on remote
 git checkout -b master seotweaks # create a new local master on top of seotweaks
 git push origin master           # create master on remote
+
+---------------------------------------------------------------------
+
+## Spring CLI
+
+* [Spring CLI Download Repo Link](https://repo.spring.io/ui/native/release/org/springframework/boot/spring-boot-cli/)

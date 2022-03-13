@@ -1,0 +1,3 @@
+FROM zookeeper:latest
+FROM bitnami/kafka:latest
+LABEL maintainer="nozama"

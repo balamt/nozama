@@ -1,0 +1,4 @@
+FROM grafana/grafana:latest
+LABEL maintainer="nozama"
+VOLUME /tmp
+EXPOSE 8764

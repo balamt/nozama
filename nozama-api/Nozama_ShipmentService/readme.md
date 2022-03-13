@@ -33,5 +33,7 @@ If Kafka is Implemented try with RabbitMQ
 ## Microservice Reference from DZone
    * [Microservice communication Service to Service](https://dzone.com/articles/microservices-communication-service-to-service)
    * [Feign Client](https://dzone.com/articles/microservices-communication-feign-as-rest-client)
+   * [Kafka Docker](https://hub.docker.com/r/bitnami/kafka)
+   * [Kafka from Docker](https://towardsdatascience.com/how-to-install-apache-kafka-using-docker-the-easy-way-4ceb00817d8b)
 
  
