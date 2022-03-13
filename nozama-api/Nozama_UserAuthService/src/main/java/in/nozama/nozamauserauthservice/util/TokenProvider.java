@@ -89,7 +89,7 @@ public class TokenProvider implements Serializable {
 				.signWith(io.jsonwebtoken.SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
-	public Boolean validateToken(String token, UserDetails userDetails) {
+	public boolean validateToken(String token, UserDetails userDetails) {
 		final String email = getUsernameFromToken(token);
 		return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}

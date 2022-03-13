@@ -1,0 +1,19 @@
+global:
+    scrape_interval:     15s
+
+scrape_configs:
+- job_name: 'prometheus'
+  scrape_interval: 5s
+
+  static_configs:
+    - targets: ['nozama-prometheus:9090']
+    
+  basic_auth:
+    username: nozamabot
+    password: n0z@m@b0Ts3cr3t
+
+- job_name: 'spring-actuator'
+  metrics_path: '/actuator/prometheus'
+  scrape_interval: 5s
+  static_configs:
+    - targets: ['nozama-eureka-server:8761', 'nozama-api-gateway:8090', 'nozama-user-service:8081', 'nozama-product-service:8082', 'nozama-user-auth-service:8089',  'nozama-config-service:8888', 'nozama-address-service:8092']

@@ -54,10 +54,15 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/health/**").permitAll()
 				.antMatchers("/favicon.ico").permitAll()
 				.antMatchers("/actuator/**").permitAll()
+				.antMatchers("/actuator/prometheus").permitAll()
 				.antMatchers("/auth/status", "/auth/token").permitAll()
+				.antMatchers("/error").permitAll()
 				.antMatchers("/swagger-ui/**",
 						"/webjars/**", "/v3/**").permitAll()
-				.anyRequest().authenticated().and().exceptionHandling()
+				.anyRequest()
+				.authenticated().and()
+				.httpBasic().and()
+				.exceptionHandling()
 				.authenticationEntryPoint(unautorizedHandler).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import in.nozama.service.dto.view.UserModelView;
+import in.nozama.service.model.ErrorResponse;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +14,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonView(UserModelView.PublicView.class)

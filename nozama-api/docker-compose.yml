@@ -17,6 +17,42 @@ services:
     ports:
       - 3308:3306
     restart: always
+    
+  nozama-prometheus:
+    image: nozama-prometheus:base
+    #Instead of container name user hostname, if container name is used will cause mysql access issue to services
+    container_name: nozama-prometheus
+    hostname: nozama-prometheus
+    environment:
+      - eureka_host=nozama-eureka-server
+      - eureka_port=8761
+    networks:
+      - nozama_net
+    ports:
+      - 8763:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+    restart: always
+    
+  nozama-grafana-container:
+    image: nozama-grafana:base
+    #Instead of container name user hostname, if container name is used will cause mysql access issue to services
+    container_name: nozama-grafana
+    hostname: nozama-grafana
+    environment:
+      - eureka_host=nozama-eureka-server
+      - eureka_port=8761
+    networks:
+      - nozama_net
+    ports:
+      - 8764:3000
+#    volumes:
+#      - ./prometheus:/etc/prometheus
+#      - prometheus-data:/prometheus
+#    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+    restart: always
 
   nozama-eureka-server-container:
     depends_on:
@@ -322,3 +358,6 @@ services:
 networks:
   nozama_net:
     driver: bridge
+    
+volumes:
+  prometheus-data:

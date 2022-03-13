@@ -40,10 +40,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private boolean isAllowedPath(HttpServletRequest request) {
-		return (request.getServletPath().contains("/actuator/") || request.getServletPath().contains("/auth/")
-				|| request.getServletPath().contains("/error") || request.getServletPath().contains("/swagger-ui")
+		return (request.getServletPath().contains("/actuator") 
+				|| request.getServletPath().contains("/auth/")
+				|| request.getServletPath().contains("/prometheus")
+				|| request.getServletPath().contains("/swagger-ui")
 				|| request.getServletPath().contains("/api-docs/")
-				|| request.getServletPath().endsWith("/actuator/info"));
+				|| request.getServletPath().endsWith("/actuator/info")
+				|| request.getServletPath().contains("/error") );
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private void validateAndAuthenticateUser(HttpServletRequest request, String username, String authToken,
 			UserDetails userDetails) {
-		if ((boolean) tokenProvider.validateToken(authToken, userDetails)) {
+		if (tokenProvider.validateToken(authToken, userDetails)) {
 			UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(authToken,
 					SecurityContextHolder.getContext().getAuthentication(), userDetails);
 			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
