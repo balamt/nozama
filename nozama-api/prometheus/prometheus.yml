@@ -8,9 +8,9 @@ scrape_configs:
   static_configs:
     - targets: ['nozama-prometheus:9090']
     
-  basic_auth:
-    username: nozamabot
-    password: n0z@m@b0Ts3cr3t
+#  basic_auth:
+#    username: nozamabot
+#    password: n0z@m@b0Ts3cr3t
 
 - job_name: 'spring-actuator'
   metrics_path: '/actuator/prometheus'
