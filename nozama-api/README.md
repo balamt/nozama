@@ -1,6 +1,7 @@
 # NOZAMA-API 
 It is Parent project, we can import into the IDE.
 
+[![Maven Build - Skip Tests ](https://github.com/balamt/nozama/actions/workflows/api-maven-build-skiptest.yml/badge.svg)](https://github.com/balamt/nozama/actions/workflows/api-maven-build-skiptest.yml)
 
 
 # Ports Used in Nozama
@@ -52,7 +53,8 @@ When you run the service with Seluth dependency added to POM.xml and also added 
 * **Export**
     * This property is a boolean that indicates whether or not this log was exported to an aggregator like Zipkin. Zipkin is beyond the scope of this article but plays an important role in analyzing logs created by Sleuth.
 
-###Docker
+
+##Docker
 
     * https://keyholesoftware.com/2017/09/26/using-docker-aws-to-build-deploy-and-scale-your-application/
 
