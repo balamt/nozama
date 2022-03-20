@@ -1,0 +1,36 @@
+{
+  "app": {
+    "name": "Nozama",
+    "version": "1.0.0",
+    "url": "",
+    "owner": "balamt.in",
+    "copyright_year": "2022"
+  },
+  "env": {
+    "type": "dev"
+  },
+  "service": {
+    "dev": {
+      "baseurl": "",
+      "baseport": 8090,
+      "user": "",
+      "auth": "",
+      "product": "",
+      "cart": "",
+      "wallet": "",
+      "order": "",
+      "shipment": ""
+    },
+    "prod": {
+      "baseurl": "",
+      "baseport": 8080,
+      "user": "",
+      "auth": "",
+      "product": "",
+      "cart": "",
+      "wallet": "",
+      "order": "",
+      "shipment": ""
+    }
+  }
+}
