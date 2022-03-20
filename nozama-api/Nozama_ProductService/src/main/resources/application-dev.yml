@@ -1,17 +1,24 @@
 eureka:
   client:
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+      
 logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
   level:
     org:
       hibernate:
         SQL: DEBUG
         type: TRACE
+
 server:
   port: 8082
 spring:
@@ -26,7 +33,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
-    url: jdbc:mysql://localhost:3310/nozama_products_db?allowPublicKeyRetrieval=true&useSSL=false
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3306}/${NOZAMA_APP_MYSQL_DBNAME:nozama_products_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
     username: nozama_dba
   jackson:
     serialization:
@@ -39,13 +46,31 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        
 springdoc:
   swagger-ui:
     path: /sw/swagger-ui.html
+    
 ribbon:
   eureka:
     enabled: false
+    
 product:
   image:
     storage:
       location: ${PRODUCT_IMAGE_UPLOAD_PATH}
+
+#Prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ 
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags: 
+      application: ${spring.application.name}
+      env: dev

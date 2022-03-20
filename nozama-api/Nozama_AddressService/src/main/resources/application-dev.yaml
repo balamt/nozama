@@ -50,8 +50,6 @@ springdoc:
     
 #Prometheus
 management:
-#  server:
-#    port: 8762
   endpoints:
     web:
       exposure:
