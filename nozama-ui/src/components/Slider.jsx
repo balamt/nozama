@@ -3,7 +3,15 @@ import "jquery";
 
 import logo from "./img/logo.png";
 import { Carousel } from "react-bootstrap";
-import { CarouselItem } from "react-bootstrap";
+import { CardGroup } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { Image } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { Placeholder } from "react-bootstrap";
+import { Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 export class Slider extends React.Component {
   //   constructor(props) {
@@ -13,42 +21,92 @@ export class Slider extends React.Component {
   render() {
     return (
       <div className="container bg-info">
-        <div className="row" style={{ justifyContent: "center" }}>
-          <div className="col-sm-12">
-            <Carousel>
+        <Row>
+          <Col>
+            <Carousel indicators={false} interval={null}>
               <Carousel.Item>
-                <div className="card bg-secondary" style={{ width: "18rem" }}>
-                  <img className="card-img-top" src={logo} alt="Card cap" />
-                  <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                    <a href="/#" className="btn btn-primary">
-                      Go somewhere
-                    </a>
-                  </div>
-                </div>
+                <CardGroup>
+                  <Card className="bg-warning card-item-width">
+                    <Card.Img variant="top" src={logo} />
+                    <Card.Body>
+                      <Placeholder as={Card.Title} animation="glow">
+                        <Placeholder xs={6} />
+                      </Placeholder>
+                      <Placeholder.Button xs={6} animation="glow" />
+                    </Card.Body>
+                  </Card>
+                  <Card className="bg-warning card-item-width">
+                    <Image src={logo} />
+                    <Card.Body>
+                      My Second Card
+                      <Button>
+                        Buy Now <FontAwesomeIcon icon={faCartPlus} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                  <Card className="bg-warning card-item-width">
+                    <Image src={logo} />
+                    <Card.Body>
+                      My Third Card
+                      <Button>
+                        Buy Now <FontAwesomeIcon icon={faCartPlus} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                  <Card className="bg-warning card-item-width">
+                    <Image src={logo} />
+                    <Card.Body>
+                      My Fourth Card
+                      <Button>
+                        Buy Now <FontAwesomeIcon icon={faCartPlus} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </CardGroup>
               </Carousel.Item>
               <Carousel.Item>
-                <div className="card bg-secondary" style={{ width: "18rem" }}>
-                  <img className="card-img-top" src={logo} alt="Card cap" />
-                  <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                    <a href="/#" className="btn btn-primary">
-                      Go somewhere
-                    </a>
-                  </div>
-                </div>
+                <CardGroup>
+                  <Card className="bg-warning card-item-width">
+                    <Card.Img variant="top" src={logo} />
+                    <Card.Body>
+                      <Placeholder as={Card.Title} animation="glow">
+                        <Placeholder xs={6} />
+                      </Placeholder>
+                      <Placeholder.Button xs={6} animation="glow" />
+                    </Card.Body>
+                  </Card>
+                  <Card className="bg-warning card-item-width">
+                    <Image src={logo} />
+                    <Card.Body>
+                      My Second Card
+                      <Button>
+                        Buy Now <FontAwesomeIcon icon={faCartPlus} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                  <Card className="bg-warning card-item-width">
+                    <Image src={logo} />
+                    <Card.Body>
+                      My Third Card
+                      <Button>
+                        Buy Now <FontAwesomeIcon icon={faCartPlus} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                  <Card className="bg-warning card-item-width">
+                    <Image src={logo} />
+                    <Card.Body>
+                      My Fourth Card
+                      <Button>
+                        Buy Now <FontAwesomeIcon icon={faCartPlus} />
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </CardGroup>
               </Carousel.Item>
             </Carousel>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     );
   }

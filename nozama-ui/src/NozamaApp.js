@@ -14,15 +14,21 @@ import Header from "./components/Header.jsx";
 import { Footer, SecureFooter } from "./components/Footer.jsx";
 import LoginLayout from "./components/LoginLayout";
 import { Slider } from "./components/Slider";
+import { Stack, Ratio } from "react-bootstrap";
 
 function NozamaApp() {
   return (
     <div className="container">
       <Header logo={logo} appName={config.app.name} />
-      <main className="container" style={{ marginTop: "80px" }}>
+      <main className="container" style={{ marginTop: "110px" }}>
         <div className="row" style={{ justifyContent: "center" }}>
           {/* <LoginLayout /> */}
-          <Slider />
+          <Stack gap={4}>
+            <Slider />
+            <Slider />
+            <Slider />
+            <Slider />
+          </Stack>
         </div>
       </main>
       <SecureFooter copyrightYear={config.app.copyright_year} />

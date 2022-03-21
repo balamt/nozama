@@ -1,8 +1,11 @@
 import React from "react";
 import "jquery";
+import { Button, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "../components/css/NozamaApp.css";
+import { Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 // Functional Component, with props
 function Header(props) {
@@ -80,15 +83,37 @@ function Header(props) {
               </li>
 
               <li className="nav-item active">
-                <a className="nav-link" href="/#">
-                  <FontAwesomeIcon
-                    size="lg"
-                    icon={faCartShopping}
-                    className="text-secondary"
-                    title="Cart"
-                  />{" "}
-                  <span className="sr-only">(current)</span>
-                </a>
+                <Button variant="primary">
+                  <Row>
+                    <Col
+                      md="2"
+                      sm="1"
+                      className="d-flex"
+                      style={{
+                        "align-items": "baseline",
+                        "flex-direction": "column-reverse",
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        size="lg"
+                        icon={faCartShopping}
+                        className="text-secondary"
+                        title="Cart"
+                      />
+                      <Badge
+                        style={{
+                          "font-size": ".6em",
+                          "margin-left": "10px",
+                        }}
+                        text="primary"
+                        bg="secondary"
+                      >
+                        0
+                      </Badge>
+                      {/* <span className="visually-hidden">unread messages</span> */}
+                    </Col>
+                  </Row>
+                </Button>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/#">
