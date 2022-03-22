@@ -35,3 +35,11 @@ Search box and button alignment
   border-radius: 2px 0px 2px 2px;
   border-right: none;
 }
+
+.card-item-width {
+  /**
+  Need to write for different screens
+  **/
+  max-width: 300px;
+  min-width: 280px;
+}
