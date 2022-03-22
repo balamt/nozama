@@ -6,19 +6,28 @@ import { faSearch, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "../components/css/NozamaApp.css";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 // Functional Component, with props
 function Header(props) {
+  /**
+   * To Redirect to another context path
+   **/
+  let navigate = useNavigate();
+  const openCart = () => {
+    navigate("/cart");
+  };
+
   return (
     <React.Fragment>
       <header>
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark justify-content-between">
-          <a class="navbar-brand" href="/#">
+          <a className="navbar-brand" href="/">
             <img
               src={props.logo}
               width="45"
               height="45"
-              class="d-inline-block align-top"
+              className="d-inline-block align-top"
               alt={props.appName}
             />
             {props.appName}
@@ -58,7 +67,7 @@ function Header(props) {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="/#"
+                  href="/login"
                   id="navbarDropdown"
                   role="button"
                   data-bs-toggle="dropdown"
@@ -68,11 +77,11 @@ function Header(props) {
                   Sign in
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="/#">
+                  <a className="dropdown-item" href="/login">
                     Sign in
                   </a>
                   <div className="dropdown-divider"></div>
-                  <a className="dropdown-item" href="/#">
+                  <a className="dropdown-item" href="/signup">
                     Sign Up
                   </a>
                   <div className="dropdown-divider"></div>
@@ -83,15 +92,15 @@ function Header(props) {
               </li>
 
               <li className="nav-item active">
-                <Button variant="primary">
+                <Button variant="primary" onClick={openCart}>
                   <Row>
                     <Col
                       md="2"
                       sm="1"
                       className="d-flex"
                       style={{
-                        "align-items": "baseline",
-                        "flex-direction": "column-reverse",
+                        alignItems: "baseline",
+                        flexDirection: "column-reverse",
                       }}
                     >
                       <FontAwesomeIcon
@@ -102,8 +111,8 @@ function Header(props) {
                       />
                       <Badge
                         style={{
-                          "font-size": ".6em",
-                          "margin-left": "10px",
+                          fontSize: ".6em",
+                          marginLeft: "10px",
                         }}
                         text="primary"
                         bg="secondary"
@@ -116,7 +125,7 @@ function Header(props) {
                 </Button>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/#">
+                <a className="nav-link" href="/help">
                   Help
                 </a>
               </li>
