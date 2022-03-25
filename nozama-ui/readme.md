@@ -4,29 +4,43 @@ UI For Nozama - Build on React JS
 
 ### Pages
 
-
-|   Page         |   Description                                            |   Comments    |
-|----------------|----------------------------------------------------------|---------------|
-|   /            |   Root Home Page                                         |   Comments    |
-|   /products    |   Products page with header, search and footer           |   Comments    |
-|   Page         |   Description                                            |   Comments    |
-
+| Page      | Description                                  | Comments |
+| --------- | -------------------------------------------- | -------- |
+| /         | Root Home Page                               | Comments |
+| /products | Products page with header, search and footer | Comments |
+| /login    | Login Page                                   | Comments |
+| /signup   | Signup Page                                  | Comments |
+| /account  | User Account Page                            | Comments |
 
 ## Prerequisites
- * npm
- * nodejs
- * react
- * create-react-app
- * vscode or any code editor
- * browser (any browser)
 
+- npm
+- nodejs
+- react
+- create-react-app
+- vscode or any code editor
+- browser (any browser)
 
-## install npm, npx/node, react, create-react-app
+## install npm, npx/node, react, create-react-app ... & other dependency used in this project
 
 ```
-npm i 
+npm i --save react create-react-app react-bootstrap bootstrap@5.1.3 react-dom react-router-dom jquery popper.js react-script @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core
+
+npm i --save-dev webpack
+
 ```
 
 yes
-## References 
- * [Fontawesome for React](https://fontawesome.com/v5/docs/web/use-with/react)
+
+## References
+
+- [React Bootstrap Official Document Reference](https://react-bootstrap.github.io/getting-started/introduction/)
+- [Bootstrap 4 Reference](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+- [Bootstrap 5.1 Reference](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+- [Carousel Reference](https://www.tutsmake.com/react-bootstrap-carousel-slider-tutorial/)
+- [Bootstrap Theme Base Builder](https://themestr.app/builder)
+- [Fontawesome for React](https://fontawesome.com/v5/docs/web/use-with/react)
+- [Some Best Practices - Part 1](https://ordinarycoders.com/blog/article/reactjs-best-practices)
+- [Submit Form Data in React JS](https://www.techomoro.com/submit-a-form-data-to-rest-api-in-a-react-app/)
+- [Adding Custome Environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables)
+- [Fetch get json data](https://stackoverflow.com/questions/54656223/fetch-function-return-promise-pending)

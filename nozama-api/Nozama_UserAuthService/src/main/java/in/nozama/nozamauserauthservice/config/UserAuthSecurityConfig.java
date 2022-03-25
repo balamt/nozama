@@ -50,11 +50,11 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.cors().and().csrf().disable().authorizeRequests()
+		http.csrf().disable().authorizeRequests()
 				.antMatchers("/health/**").permitAll()
 				.antMatchers("/favicon.ico").permitAll()
-				.antMatchers("/actuator/**").permitAll()
 				.antMatchers("/actuator/prometheus").permitAll()
+				.antMatchers("/actuator/**").permitAll()				
 				.antMatchers("/auth/status", "/auth/token").permitAll()
 				.antMatchers("/error").permitAll()
 				.antMatchers("/swagger-ui/**",
@@ -68,5 +68,23 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(authenticationTokenFilerBean(), UsernamePasswordAuthenticationFilter.class);
 	}
+	
+//	 @Bean
+//	  CorsConfigurationSource corsConfigurationSource() 
+//	  {
+//	      final CorsConfiguration configuration = new CorsConfiguration();
+//	        configuration.setAllowedOrigins(ImmutableList.of("http://localhost:3000/","http://nozama:3000/","http://127.0.0.1:3000/","http://0.0.0.0:3000/","*"));
+//	        configuration.setAllowedMethods(ImmutableList.of("OPTIONS", "HEAD",
+//	                "GET", "POST", "PUT", "DELETE", "PATCH"));
+//	        // setAllowCredentials(true) is important, otherwise:
+//	        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+//	        configuration.setAllowCredentials(true);
+//	        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+//	        // will fail with 403 Invalid CORS request
+//	        configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+//	        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//	        source.registerCorsConfiguration("/**", configuration);
+//	        return source;
+//	  }
 
 }

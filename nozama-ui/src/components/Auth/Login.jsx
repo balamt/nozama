@@ -2,13 +2,16 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 
-import "./css/Login.css";
+import "../css/Login.css";
 
 const Login = (props) => {
   // const [username, password, setUserName, setPassword] = useState({
-  //   email: username,
-  //   password: password,
+  //   email: "",
+  //   password: "",
   // });
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [validated, setValidated] = useState(false);
   // Login Request is failing to populate the JSON request data.
@@ -20,12 +23,17 @@ const Login = (props) => {
       event.stopPropagation();
     }
     setValidated(true);
+
     event.preventDefault();
-    const data = new FormData(event.target);
-    const json = {};
-    Array.from(data.entries()).forEach(([key, value]) => {
-      json[key] = value;
-    });
+
+    const json = {
+      email: email,
+      password: password,
+    };
+    // Array.from(data.entries()).forEach(([key, value]) => {
+    //   json[key] = value;
+    // });
+    console.log(json);
 
     const requestOptions = {
       method: "POST",
@@ -33,9 +41,11 @@ const Login = (props) => {
       body: JSON.stringify(json), /////here is the change
       mode: "cors",
     };
-    fetch("http://localhost:8090/auth/token", requestOptions).then((response) =>
-      console.log(response.json())
-    );
+    fetch("http://localhost:8090/auth/token", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.token);
+      });
   };
 
   return (
@@ -47,7 +57,14 @@ const Login = (props) => {
     >
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Username</Form.Label>
-        <Form.Control required type="email" placeholder="Enter User Name" />
+        <Form.Control
+          required
+          type="email"
+          placeholder="Enter User Name"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
         <Form.Text className="text-info">Email id is your username.</Form.Text>
         <Form.Control.Feedback type="invalid">
           Username is Required to Login.
@@ -55,7 +72,14 @@ const Login = (props) => {
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
-        <Form.Control required type="password" placeholder="Password" />
+        <Form.Control
+          required
+          type="password"
+          placeholder="Password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
         <Form.Text className="text-info">
           Password Must be 8-20 characters long.
         </Form.Text>
