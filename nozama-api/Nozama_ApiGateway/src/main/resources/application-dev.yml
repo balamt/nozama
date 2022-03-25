@@ -9,7 +9,7 @@ eureka:
     service-url:
       defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
-    leaseRenewalIntervalInSeconds: 60000
+    leaseRenewalIntervalInSeconds: 120000
 ##This property has to be true, so that it uses the IP address, instead of localhost or 127.0.0.1
     prefer-ip-address: true
 
@@ -20,6 +20,14 @@ spring:
     base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
       routes:
       - id: nozama-productservice
         uri: http://nozama-product-service:8082
@@ -56,7 +64,7 @@ spring:
 
 logging:
   level:
-    ROOT: TRACE
+    ROOT: DEBUG
 
 #Prometheus
 management:

@@ -1,4 +1,4 @@
-package in.nozama.service.gateway;
+package in.nozama.nozamauserauthservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class WebConfig {
 		config.addAllowedOrigin("http://nozama:3000/");
 		config.addAllowedOrigin("http://127.0.0.1:3000/");
 		config.addAllowedOrigin("http://0.0.0.0:3000/");
-		config.addAllowedOrigin("*");
+//		config.addAllowedOrigin("*");
 		config.addAllowedHeader("*");
 		config.addExposedHeader("userid");
 		config.addExposedHeader("token");
