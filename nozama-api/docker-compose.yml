@@ -53,6 +53,23 @@ services:
 #      - prometheus-data:/prometheus
 #    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
     restart: always
+    
+  nozama-ui-container:
+    image: nozama-ui:1
+    container_name: nozama-ui
+    hostname: nozama-ui
+    environment:
+      - NOZAMA_SERVICE_PROFILE=dev
+    build:
+      context: ../nozama-ui/
+      dockerfile: Nozama_UI_DockerFile
+    ports:
+      - 8080:80
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+    restart: always
 
   nozama-eureka-server-container:
     depends_on:

@@ -32,7 +32,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RefreshScope
 @RestController
-@CrossOrigin(origins = { "http://localhost:3000", "*" }, allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/auth")
 public class UserAuthController {
 
@@ -68,15 +68,23 @@ public class UserAuthController {
 	@CircuitBreaker(name = INSTANCE_NAME, fallbackMethod = "fallbackRenewToken")
 	public ResponseEntity<?> renewToken(@RequestHeader(TokenProvider.HEADER_STRING) final String token)
 			throws AuthenticationException, ServiceException {
+		TokenResponse response = new TokenResponse();
 		if (!tokenProvider.isTokenExpired(token)) {
 			String username = tokenProvider.getUsernameFromToken(token);
 			final UserCredentials userCred = userService.getUserByUsername(username).getBody();
 			final String newToken = tokenProvider.generateToken(userCred);
 			return ResponseEntity.ok().header(TokenProvider.HEADER_TOKEN_STRING, newToken)
-					.header(TokenProvider.HEADER_STRING, newToken).body(new TokenResponse(newToken));
+					.header(TokenProvider.HEADER_STRING, newToken).body(constructTokenResponse(newToken));
 		}
+		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(constructTokenResponse(token));
+	}
 
-		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new TokenResponse(token));
+	private TokenResponse constructTokenResponse(final String token) {
+		TokenResponse response = new TokenResponse();
+		response.setToken(token);
+		response.setEmail(tokenProvider.getUsernameFromToken(token));
+		response.setValidTo(tokenProvider.getExpirationDateFromToken(token));
+		return response;
 	}
 
 	public ResponseEntity<?> fallbackRenewToken(Exception e) {
@@ -89,8 +97,7 @@ public class UserAuthController {
 
 	@RequestMapping(path = "/token", method = RequestMethod.POST)
 	@CircuitBreaker(name = INSTANCE_NAME, fallbackMethod = "fallbackCreateAuthToken")
-	public ResponseEntity<?> createAuthToken(@RequestBody UserCredentials userCredentials)  {
-		
+	public ResponseEntity<?> createAuthToken(@RequestBody UserCredentials userCredentials) {
 		String token = null;
 		try {
 			authenticate(userCredentials);
@@ -99,24 +106,24 @@ public class UserAuthController {
 			final UserCredentials userCred = username.getBody();
 			token = tokenProvider.generateToken(userCred);
 		} catch (Exception se) {
-			LOG.error(String.format("Error : %s " , se.getMessage()));
-			if(se instanceof AuthenticationException
-					|| se instanceof InternalAuthenticationServiceException) {
+			LOG.error(String.format("Error : %s ", se.getMessage()));
+			if (se instanceof AuthenticationException || se instanceof InternalAuthenticationServiceException) {
 				token = null;
-				if(se.getMessage().toLowerCase().contains("userdetailsservice returned null")) {
-					return  ResponseEntity.internalServerError().body(new ErrorResponse("Invalid Username! Have you forgot your Username?", Status.ERROR));
+				if (se.getMessage().toLowerCase().contains("userdetailsservice returned null")) {
+					return ResponseEntity.internalServerError()
+							.body(new ErrorResponse("Invalid Username! Have you forgot your Username?", Status.ERROR));
 				}
-				return  ResponseEntity.internalServerError().body(new ErrorResponse(se.getMessage(), Status.ERROR));
+				return ResponseEntity.internalServerError().body(new ErrorResponse(se.getMessage(), Status.ERROR));
 			}
 		}
 		if (token != null) {
 			return ResponseEntity.ok().header(TokenProvider.HEADER_TOKEN_STRING, token)
 					.header(TokenProvider.HEADER_STRING, String.format("%s %s", TokenProvider.TOKEN_PREFIX, token))
-					.body(new TokenResponse(token));
+					.body(constructTokenResponse(token));
 		}
 		return ResponseEntity.internalServerError().header(TokenProvider.HEADER_TOKEN_STRING, token)
 				.header(TokenProvider.HEADER_STRING, String.format("%s %s", TokenProvider.TOKEN_PREFIX, token))
-				.body(new TokenResponse(token));
+				.body(new ErrorResponse("Login issue! Unable to generate token.", Status.ERROR));
 	}
 
 	public ResponseEntity<?> fallbackCreateAuthToken(Exception e) {
