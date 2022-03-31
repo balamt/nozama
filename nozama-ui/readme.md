@@ -30,8 +30,6 @@ npm i --save-dev webpack
 
 ```
 
-yes
-
 ## References
 
 - [React Bootstrap Official Document Reference](https://react-bootstrap.github.io/getting-started/introduction/)
@@ -44,3 +42,5 @@ yes
 - [Submit Form Data in React JS](https://www.techomoro.com/submit-a-form-data-to-rest-api-in-a-react-app/)
 - [Adding Custome Environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables)
 - [Fetch get json data](https://stackoverflow.com/questions/54656223/fetch-function-return-promise-pending)
+- [Axios Vs fetch()](https://blog.logrocket.com/axios-vs-fetch-best-http-requests/)
+- [Configure NGINX as reverse proxy to hit ui and api](https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php)

@@ -1,0 +1,13 @@
+# Stage 1 :  Build reactjs application from node container
+FROM node:latest AS builder
+# Set Working Dir
+WORKDIR /app
+COPY . .
+RUN yarn install && yarn build
+
+# Stage 2: Setting up the nginx server
+FROM nginx:stable-alpine
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=builder /app/build .
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

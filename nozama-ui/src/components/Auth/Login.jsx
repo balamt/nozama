@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
+import AuthService from "./AuthService";
 
 import "../css/Login.css";
 
@@ -34,18 +35,18 @@ const Login = (props) => {
     //   json[key] = value;
     // });
     console.log(json);
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(json), /////here is the change
-      mode: "cors",
-    };
-    fetch("http://localhost:8090/auth/token", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.token);
-      });
+    console.log(AuthService.login(email, password));
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(json), /////here is the change
+    //   mode: "cors",
+    // };
+    // fetch("http://localhost:8090/auth/token", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data.token);
+    //   });
   };
 
   return (

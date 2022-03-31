@@ -1,5 +1,8 @@
 package in.nozama.nozamauserauthservice.config;
 
+import java.time.Duration;
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -18,15 +21,22 @@ public class WebConfig {
 		config.addAllowedOrigin("http://nozama:3000/");
 		config.addAllowedOrigin("http://127.0.0.1:3000/");
 		config.addAllowedOrigin("http://0.0.0.0:3000/");
-//		config.addAllowedOrigin("*");
+		config.addAllowedOriginPattern("http://localhost*");
+		config.addAllowedOriginPattern("http://127.0.0.1*");
+		config.addAllowedOriginPattern("http://0.0.0.0*");
+		config.addAllowedOriginPattern("http://nozama*");
+		config.addAllowedOriginPattern("*");
 		config.addAllowedHeader("*");
 		config.addExposedHeader("userid");
 		config.addExposedHeader("token");
 		config.addAllowedMethod("OPTIONS");
+		config.addAllowedMethod("HEAD");
+		config.addAllowedMethod("PATCH");
 		config.addAllowedMethod("GET");
 		config.addAllowedMethod("POST");
 		config.addAllowedMethod("PUT");
 		config.addAllowedMethod("DELETE");
+		config.setMaxAge(Duration.ofMinutes(10));
 		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
 	}
