@@ -9,7 +9,7 @@ Search box and button alignment
 */
 .form-inline {
   display: inline-flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-around;
   align-content: flex-end;
   flex-wrap: nowrap;

@@ -25,8 +25,9 @@ import {
 import { Slider } from "./components/Slider";
 import { Stack, Ratio } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-function NozamaApp() {
+function NozamaApp(props) {
   return (
     <Router>
       <Header logo={logo} appName={config.app.name} />
