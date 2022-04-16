@@ -34,3 +34,8 @@ build/
 /.mvn/
 /mvnw
 /mvnw.cmd
+
+
+### nozama log folder ###
+/log/
+*.gz

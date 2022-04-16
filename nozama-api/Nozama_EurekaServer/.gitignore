@@ -27,3 +27,8 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### nozama log folder ###
+/log/
+*.gz
+
