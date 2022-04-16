@@ -4,17 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -30,10 +27,18 @@ import com.fasterxml.jackson.annotation.JsonView;
 import in.nozama.service.dto.view.UserModelView;
 import in.nozama.service.model.Gender;
 import in.nozama.service.model.UserType;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Entity
 @Table(name = "users")
 @JsonView(UserModelView.PublicView.class)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends RepresentationModel<User> implements UserDetails {
 	
 	/**
@@ -69,79 +74,16 @@ public class User extends RepresentationModel<User> implements UserDetails {
 	@Column(name = "gender")
 	private Gender gender;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressid")
-	private Address address;
+	private Long addressid;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	@Column(name = "usertype")
 	private UserType usertype;
 
-	public Long getUserid() {
-		return userid;
-	}
-
-	public void setUserid(Long userid) {
-		this.userid = userid;
-	}
-
-	public String getFullname() {
-		return fullname;
-	}
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public UserType getUsertype() {
-		return usertype;
-	}
-
-	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
-	}
-
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -154,13 +96,13 @@ public class User extends RepresentationModel<User> implements UserDetails {
 				Objects.equals(mobile, user.mobile) &&
 				Objects.equals(password, user.password) &&
 				gender == user.gender &&
-				Objects.equals(address, user.address) &&
+				Objects.equals(addressid, user.addressid) &&
 				usertype == user.usertype;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), userid, fullname, email, mobile, password, gender, address, usertype);
+		return Objects.hash(super.hashCode(), userid, fullname, email, mobile, password, gender, addressid, usertype);
 	}
 
 	@Override
@@ -172,7 +114,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
 				", mobile='" + mobile + '\'' +
 				", password=" + password +
 				", gender=" + gender +
-				", address=" + address +
+				", address=" + addressid +
 				", usertype=" + usertype +
 				'}';
 	}

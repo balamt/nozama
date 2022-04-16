@@ -2,17 +2,15 @@ package in.nozama.service.user.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -41,7 +39,8 @@ public class User extends RepresentationModel<User> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="USERSEQ", sequenceName = "USERSEQ", initialValue = 30000, allocationSize = 2)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="userid")
 	private Long userid;
 	
@@ -79,6 +78,9 @@ public class User extends RepresentationModel<User> implements Serializable {
 		}
 		return usertype;
 	}
+	
+	@JoinColumn(name = "addressid")
+	private Long addressid;
 	
 }
 

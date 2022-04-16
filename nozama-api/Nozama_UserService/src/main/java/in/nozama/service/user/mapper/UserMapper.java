@@ -64,6 +64,10 @@ public class UserMapper {
 	}
 
 	public User map(CreateUserRequest userRequest) {
+		return this.map(userRequest, -1L);
+	}
+	
+	public User map(CreateUserRequest userRequest, long addressId) {
 		User user = null;
 		if (userRequest != null) {
 			user = new User();
@@ -74,6 +78,9 @@ public class UserMapper {
 			user.setMobile(userRequest.getMobile());
 			user.setPassword(userRequest.getPassword());
 			user.setUsertype(userRequest.getUsertype());
+			if((addressId > 0L)) {
+				user.setAddressid(addressId);
+			}
 		}
 		return user;
 	}
