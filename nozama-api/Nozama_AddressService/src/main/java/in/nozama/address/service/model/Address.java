@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,7 +37,8 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="ADDRESSSEQ", sequenceName = "ADDRESSSEQ", initialValue = 50000, allocationSize = 2)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name ="addressid")
 	private Long addressId;
 	
@@ -64,7 +66,7 @@ public class Address implements Serializable {
 
 	@Column(name = "pincode")
 	@Size(max = 10)
-	private String pinCode;
+	private String pincode;
 	
 	@Column(name="addresstype")
 	@Enumerated(EnumType.STRING)

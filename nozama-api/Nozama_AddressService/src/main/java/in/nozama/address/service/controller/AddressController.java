@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.nozama.address.service.exception.AddressNotFoundException;
-import in.nozama.address.service.model.AddressResponse;
 import in.nozama.address.service.service.AddressService;
-import in.nozama.service.dto.AddressDTO;
 import in.nozama.service.dto.AddressRequest;
+import in.nozama.service.model.AddressResponse;
 import in.nozama.service.model.ErrorResponse;
 import in.nozama.service.model.Status;
 
@@ -55,10 +54,9 @@ public class AddressController {
 	public ResponseEntity<Object> addAddress(@RequestBody AddressRequest address) {
 		Long addressid = -1l;
 		ErrorResponse errorResponse = null;
-
+		AddressResponse addressResponse = null;
 		if (address != null) {
-			headers = new HttpHeaders();
-			addressid = addressService.save(address);
+			addressResponse = addressService.save(address);
 		}
 
 		if (addressid <= -1l) {
@@ -66,9 +64,8 @@ public class AddressController {
 			errorResponse.setStatus(Status.ERROR);
 			errorResponse.setMessage("Unable to store Address! Please try after sometime.");
 		}
-		headers.add("addressid", String.valueOf(addressid));
 		return (addressid <= -1L) ? new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
-				: new ResponseEntity<>(headers, HttpStatus.CREATED);
+				: new ResponseEntity<>(addressResponse, HttpStatus.CREATED);
 	}
 
 }

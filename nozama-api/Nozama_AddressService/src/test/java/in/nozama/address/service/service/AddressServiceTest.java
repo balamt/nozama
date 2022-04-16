@@ -1,24 +1,17 @@
 package in.nozama.address.service.service;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import in.nozama.address.service.exception.AddressNotFoundException;
 import in.nozama.address.service.model.Address;
-import in.nozama.address.service.model.AddressResponse;
 import in.nozama.address.service.model.AddressType;
 import in.nozama.address.service.model.mapper.AddressMapper;
 import in.nozama.address.service.repository.AddressRepository;
+import in.nozama.service.model.AddressResponse;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest(classes = {
@@ -54,7 +47,7 @@ public class AddressServiceTest {
 		response.setCountry("country");
 		response.setStreet("street");
 		response.setState("state");
-		response.setPinCode("909090");
+		response.setPincode("909090");
 		response.setUserId(userId);
 		response.setAddressType(AddressType.HOME);
 	}

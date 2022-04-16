@@ -15,12 +15,17 @@ import lombok.ToString;
 @ToString
 public class ErrorResponse implements Serializable {
 
+	public ErrorResponse(String message, Status status) {
+		this.message = message;
+		this.status = status;
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String message;
 	private Status status;
-
+	private boolean isError = true;
 }
