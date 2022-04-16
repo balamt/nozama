@@ -1,8 +1,8 @@
 package in.nozama.service.product.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
@@ -22,6 +22,8 @@ public class AddProductRequest implements Serializable {
 	@NotNull String productCode;
 
 	@NotNull String productName;
+	
+	@NotNull String productDescription;
 
 	@Enumerated(EnumType.STRING)
 	Category category;
@@ -33,5 +35,11 @@ public class AddProductRequest implements Serializable {
 	Long warehouse;
 	
 	String productImg;
+	
+	List<String> tags;
+	
+	Long seller;
+	
+	Double rating;
 
 }

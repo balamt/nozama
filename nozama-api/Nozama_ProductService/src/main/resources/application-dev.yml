@@ -33,13 +33,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
-    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3306}/${NOZAMA_APP_MYSQL_DBNAME:nozama_products_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3310}/${NOZAMA_APP_MYSQL_DBNAME:nozama_products_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
     username: nozama_dba
   jackson:
     serialization:
       fail-on-empty-beans: false
-  zipkin:
-    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+#  zipkin:
+#    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   jpa:
     hibernate:
       ddl-auto: update
@@ -58,7 +58,7 @@ ribbon:
 product:
   image:
     storage:
-      location: ${PRODUCT_IMAGE_UPLOAD_PATH}
+      location: ${PRODUCT_IMAGE_UPLOAD_PATH:TEMP}
 
 #Prometheus
 management:
