@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -53,6 +54,13 @@ public class TokenProvider implements Serializable {
 	
 	public Date getIssuedDateFromToken(String token) {
 		return getClaimFromToken(token, Claims::getIssuedAt);
+	}
+	
+	public long getExpiryInMinutes(String token) {
+		Date date = new Date(System.currentTimeMillis());
+		Date expiryDate = this.getExpirationDateFromToken(token);
+		long diff = expiryDate.getTime() - date.getTime();
+		return TimeUnit.MILLISECONDS.toMinutes(diff);		
 	}
 
 	private Claims getAllClaimsFromToken(String token) {

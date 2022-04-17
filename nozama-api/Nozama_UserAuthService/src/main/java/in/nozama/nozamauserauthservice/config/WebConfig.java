@@ -1,8 +1,6 @@
 package in.nozama.nozamauserauthservice.config;
 
 import java.time.Duration;
-import java.util.Arrays;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;

@@ -46,7 +46,10 @@ server:
     port: 8092
 
 springdoc:
-  api-docs:    path: /api/docs
+  api-docs:
+    path: /address-api/api-docs
+  swagger-ui:
+    path: /address-sw/swagger-ui.html
     
 #Prometheus
 management:

@@ -11,14 +11,17 @@ eureka:
 jwt:
   secret: nozama
 logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
   level:
     org:
       hibernate:
         SQL: DEBUG
         type: INFO
-      springframework:
-        security: DEBUG
-        type: INFO
+#      springframework:
+#        security: DEBUG
+#        type: INFO
 server:
   error:
     include-stacktrace: never
@@ -34,7 +37,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
-    url: jdbc:mysql://localhost:3310/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3310}/${NOZAMA_APP_MYSQL_DBNAME:nozama_user_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
     username: nozama_dba
   jackson:
     serialization:
@@ -54,8 +57,10 @@ spring:
     - "optional:http://localhost:8888/config/"
 
 springdoc:
+  api-docs:
+    path: /user-api/api-docs
   swagger-ui:
-    path: /sw/swagger-ui.html
+    path: /user-sw/swagger-ui.html
 ribbon:
   eureka:
     enabled: false

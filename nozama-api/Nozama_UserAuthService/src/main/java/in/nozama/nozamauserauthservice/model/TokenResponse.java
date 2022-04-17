@@ -27,5 +27,7 @@ public class TokenResponse implements Serializable {
 	
 	@JsonFormat(timezone = "GMT+05:30")
 	private Date validTo;
+	
+	private long willExpireInMin;
 
 }

@@ -71,15 +71,15 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/user/status").permitAll()
 		.antMatchers("/actuator/**").permitAll()
 				.antMatchers("/user/**", "/auth/**", "/documentation/**", "/v3/**", "/actuator/**", "/h2-console/**",
-						"/profile/**", "/favicon.ico", "/sw/**", "/swagger-ui/**")
+						"/profile/**", "/favicon.ico", "/user-sw/**", "/user-api/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling();
 		http.addFilterBefore(authenticationTokenFilerBean(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/user/login","/user/status", "/user/signup", "/auth", "/auth/token", "/error", "/sw",
-				"/swagger-ui/**", "/v3/api-docs/**", "/actuator/**");
+		web.ignoring().antMatchers("/user/login","/user/status", "/user/signup", "/auth", "/auth/token", "/error", "/user-sw",
+				"/user-api/**", "/v3/api-docs/**", "/actuator/**");
 	}
 
 //	protected JwtAuthenticationConverter authenticationConverter() {

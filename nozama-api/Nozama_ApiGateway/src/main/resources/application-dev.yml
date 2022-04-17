@@ -37,22 +37,62 @@ spring:
         uri: http://nozama-product-service:8082
         predicates:
         - Path=/product/**
+      - id: nozama-productservice
+        uri: http://nozama-product-service:8082
+        predicates:
+        - Path=/product-api/**
+      - id: nozama-productservice
+        uri: http://nozama-product-service:8082
+        predicates:
+        - Path=/product-sw/**
       - id: nozama-orderservice
         uri: http://nozama-order-service:8094
         predicates:
         - Path=/order/**
+      - id: nozama-orderservice
+        uri: http://nozama-order-service:8094
+        predicates:
+        - Path=/order-sw/**
+      - id: nozama-orderservice
+        uri: http://nozama-order-service:8094
+        predicates:
+        - Path=/order-api/**
       - id: nozama-userservice
         uri: http://nozama-user-service:8081
         predicates:
         - Path=/user/**
+      - id: nozama-userservice
+        uri: http://nozama-user-service:8081
+        predicates:
+        - Path=/user-api/**
+      - id: nozama-userservice
+        uri: http://nozama-user-service:8081
+        predicates:
+        - Path=/user-sw/**
       - id: nozama-userauthservice
         uri: http://nozama-user-auth-service:8089
         predicates:
         - Path=/auth/**  
+      - id: nozama-userauthservice
+        uri: http://nozama-user-auth-service:8089
+        predicates:
+        - Path=/userauth-sw/**  
+      - id: nozama-userauthservice
+        uri: http://nozama-user-auth-service:8089
+        predicates:
+        - Path=/userauth-api/**
       - id: nozama-cartservice
         uri: http://${HOST_NAME:localhost}:${eureka_port:8088}
         predicates:
         - Path=/cart/** 
+      - id: nozama-cartservice
+        uri: http://${HOST_NAME:localhost}:${eureka_port:8088}
+        predicates:
+        - Path=/cart-api/** 
+      - id: nozama-cartservice
+        uri: http://${HOST_NAME:localhost}:${eureka_port:8088}
+        predicates:
+        - Path=/cart-sw/** 
       - id: nozama-config-service
         uri: http://${configservice_host:localhost}:${configservice_port:8888}
         predicates:
@@ -61,10 +101,28 @@ spring:
         uri: http://nozama-address-service:8092
         predicates:
         - Path=/address/**
+      - id: nozama-addressservice
+        uri: http://nozama-address-service:8092
+        predicates:
+        - Path=/address-sw/**
+      - id: nozama-addressservice
+        uri: http://nozama-address-service:8092
+        predicates:
+        - Path=/address-api/**
 
 logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
   level:
-    ROOT: DEBUG
+    ROOT: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+#      springframework:
+#        security: DEBUG
+#        type: TRACE
 
 #Prometheus
 management:
