@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Logout from "../Logout/Logout";
 
 function SecureProfileMenu(props) {
   return (
     <div style={props.loggedin ? {} : { display: "none" }}>
-      <a className="dropdown-item" href="/#">
+      <Link to="/account" className="dropdown-item">
         My Account
-      </a>
+      </Link>
       <div className="dropdown-divider"></div>
       {<Logout />}
     </div>

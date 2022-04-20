@@ -177,7 +177,7 @@ function Header(props) {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="/login"
+                  href="/#"
                   id="navbarDropdown"
                   role="button"
                   data-bs-toggle="dropdown"
@@ -186,7 +186,6 @@ function Header(props) {
                 >
                   <FaUserCircle size={38} className="text-info" title="User" />
                 </a>
-                {console.log(userLoggedIn)}
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <SecureProfileMenu loggedin={userLoggedIn} />
                   <ProfileMenu loggedin={userLoggedIn} />

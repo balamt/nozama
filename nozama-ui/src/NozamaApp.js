@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "jquery";
 import "popper.js";
@@ -22,12 +22,22 @@ import {
   Help,
   NotFound,
 } from "./components/pages";
-import { Slider } from "./components/Slider";
+import Slider from "./components/Slider.jsx";
 import { Stack, Ratio } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAsyncProducts,
+  getAllProducts,
+} from "./features/product/productSlice";
+import ProductDetails from "./components/Products/ProductDetails";
 
 function NozamaApp(props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAsyncProducts());
+  }, [dispatch]);
+
   return (
     <Router>
       <Header logo={logo} appName={config.app.name} />
@@ -40,12 +50,9 @@ function NozamaApp(props) {
               <Route
                 path="/"
                 element={
-                  <Stack gap={4}>
+                  <div>
                     <Slider />
-                    <Slider />
-                    <Slider />
-                    <Slider />
-                  </Stack>
+                  </div>
                 }
               />
               <Route path="/account" element={<Account />} />
@@ -54,6 +61,11 @@ function NozamaApp(props) {
               <Route path="/login" element={<Login />} />
               <Route path="/signin" element={<Login />} />
               <Route path="/product" element={<Product />} />
+              <Route
+                path="/product/:productId"
+                element={<ProductDetails />}
+                children={ProductDetails}
+              />
               <Route path="/signup" element={<Signup />} />
             </Routes>
           </div>

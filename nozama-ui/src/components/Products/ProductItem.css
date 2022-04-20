@@ -1,0 +1,94 @@
+.card-item-width {
+  margin: 10px;
+  min-width: 280px;
+  max-width: 380px;
+  min-height: 120px;
+  background-color: #fff !important;
+  color: black;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+}
+
+.card-image-price-container {
+  background-color: rgb(187 197 207 / 25%);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-product-price {
+  font-size: x-large;
+  font-weight: bold;
+  text-shadow: 0.6px 0.6px 3px rgb(155, 209, 197);
+}
+
+.card-product-image {
+  min-height: 32px;
+  max-height: 150px;
+  min-width: 32px;
+  max-width: 150px;
+}
+
+.card-product-name {
+  max-height: 55px;
+  max-width: 230px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.card-product-description {
+  color: black;
+}
+
+@media (max-width: 320px) and (max-width: 539px) {
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .card-item-width {
+    margin: 1px;
+    min-width: 280px;
+    max-width: 380px;
+    min-height: 120px;
+    background-color: #fff !important;
+    color: black;
+  }
+
+  .card-image-price-container {
+    background-color: rgb(187 197 207 / 25%);
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .card-group {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 540px) and (max-width: 770px) {
+  .card-group {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-item-width {
+    margin: 5px;
+    min-width: 320px;
+    max-width: 620px;
+    min-height: 120px;
+  }
+}
