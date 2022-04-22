@@ -4,14 +4,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import in.nozama.service.dto.product.AddCategoryRequest;
+import in.nozama.service.dto.product.AddCategoryResponse;
+import in.nozama.service.dto.product.CategoryRequest;
+import in.nozama.service.dto.product.CategoryResponse;
 import in.nozama.service.product.exception.CategoryExistException;
 import in.nozama.service.product.exception.CategoryNotFoundException;
 import in.nozama.service.product.mapper.CategoryMapper;
-import in.nozama.service.product.model.AddCategoryRequest;
-import in.nozama.service.product.model.AddCategoryResponse;
 import in.nozama.service.product.model.CategoryEntity;
-import in.nozama.service.product.model.CategoryRequest;
-import in.nozama.service.product.model.CategoryResponse;
 import in.nozama.service.product.repository.CategoryRepository;
 
 public class CategoryServiceImpl implements CategoryService {
@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public CategoryResponse getAllCategory() throws CategoryNotFoundException {
 		CategoryResponse response = new CategoryResponse();
-		response.setCategories(categoryRepository.findAll());
+		response = categoryMapper.map(categoryRepository.findAll(), response);
 		return response;
 	}
 

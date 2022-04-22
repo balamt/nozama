@@ -23,6 +23,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>in.nozama</groupId>
+			<artifactId>nozama-shared-lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>

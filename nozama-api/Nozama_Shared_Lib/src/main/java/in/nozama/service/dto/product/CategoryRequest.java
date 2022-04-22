@@ -1,4 +1,4 @@
-package in.nozama.service.product.model;
+package in.nozama.service.dto.product;
 
 import java.io.Serializable;
 
@@ -9,15 +9,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class AddCategoryRequest implements Serializable {
-
+@NoArgsConstructor
+public class CategoryRequest implements Serializable {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	String Category;
-	String CategoryCode;
+	private String category;
+	private String categoryCode;
+	private long categoryId;
 
 }

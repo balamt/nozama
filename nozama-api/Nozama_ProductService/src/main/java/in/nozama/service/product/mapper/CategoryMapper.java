@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import in.nozama.service.product.model.AddCategoryRequest;
-import in.nozama.service.product.model.AddCategoryResponse;
+import in.nozama.service.dto.product.AddCategoryRequest;
+import in.nozama.service.dto.product.AddCategoryResponse;
+import in.nozama.service.dto.product.CategoryResponse;
 import in.nozama.service.product.model.CategoryEntity;
-import in.nozama.service.product.model.CategoryResponse;
 
 @Component
 public class CategoryMapper {
@@ -33,11 +33,28 @@ public class CategoryMapper {
 
 	public CategoryResponse map(CategoryEntity from, CategoryResponse to) {
 		if (from != null && to != null) {
-			List<CategoryEntity> categories = new ArrayList();
-			categories.add(from);
+			List<String> categories = new ArrayList();
+			categories.add(from.getCategory());
 			to.setCategories(categories);
 			to.setSize(categories.size());
 		}
+		return to;
+	}
+
+	public CategoryResponse map(List<CategoryEntity> from, CategoryResponse to) {
+		if (to == null) {
+			to = new CategoryResponse();
+		}
+
+		if (from != null) {
+			List<String> cate = new ArrayList<>();
+			for (final CategoryEntity c : from) {
+				cate.add(c.getCategory());
+			}
+			to.setSize(from.size());
+			to.setCategories(cate);
+		}
+
 		return to;
 	}
 }

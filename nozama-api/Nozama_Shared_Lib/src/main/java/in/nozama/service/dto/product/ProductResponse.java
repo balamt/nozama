@@ -1,4 +1,4 @@
-package in.nozama.service.product.model;
+package in.nozama.service.dto.product;
 
 import java.io.Serializable;
 
@@ -7,13 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddProductResponse extends AddProductRequest implements Serializable {
-
+public class ProductResponse extends AddProductResponse implements Serializable {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	Long productId;
 
 }

@@ -1,5 +1,6 @@
 package in.nozama.service.product.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,21 +9,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import in.nozama.service.dto.product.AddProductRequest;
+import in.nozama.service.dto.product.AddProductResponse;
+import in.nozama.service.dto.product.ProductByCategoryResponse;
+import in.nozama.service.dto.product.ProductResponse;
 import in.nozama.service.product.exception.ProductExistsException;
 import in.nozama.service.product.exception.ProductNotFoundException;
 import in.nozama.service.product.mapper.ProductMapper;
-import in.nozama.service.product.model.AddProductRequest;
-import in.nozama.service.product.model.AddProductResponse;
 import in.nozama.service.product.model.Category;
 import in.nozama.service.product.model.Product;
-import in.nozama.service.product.model.ProductResponse;
 import in.nozama.service.product.repository.ProductRepository;
 
 @Service
@@ -103,6 +104,22 @@ public class ProductServiceImpl implements ProductService {
 					.map(productRepository.findByCategory(Category.valueOf(categoryId.toUpperCase()), pageable));
 		}
 		return pageProductResponsePage;
+	}
+
+	@Override
+	public List<ProductByCategoryResponse> getAllProductsByCategory() {
+		List<Category> categories = getAllCategories();
+		List<ProductByCategoryResponse> response = new ArrayList<>();
+		
+		for(Category c : categories) {
+			ProductByCategoryResponse r = new ProductByCategoryResponse();
+			r.setCategory(c.name());
+			r.setProducts(productMapper.mapToResponse(productRepository.findByCategory(c)));
+			response.add(r);
+		}
+
+		
+		return response;
 	}
 
 }

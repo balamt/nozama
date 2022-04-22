@@ -14,10 +14,12 @@ import in.nozama.service.product.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value="SELECT DISTINCT P.CATEGORY FROM Products P", nativeQuery = true)
+    @Query(value="SELECT DISTINCT(category) FROM `products`", nativeQuery = true)
      List<Category> findCategories();
     
     Page<Product> findByCategory(Category category, Pageable pageable);
+    
+    List<Product> findByCategory(Category category);
     
 	Product findByProductName(String productName);
 }

@@ -1,4 +1,4 @@
-package in.nozama.service.product.model;
+package in.nozama.service.dto.product;
 
 import java.io.Serializable;
 

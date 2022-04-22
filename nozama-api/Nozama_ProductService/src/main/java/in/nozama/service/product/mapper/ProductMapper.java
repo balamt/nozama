@@ -7,10 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
-import in.nozama.service.product.model.AddProductRequest;
-import in.nozama.service.product.model.AddProductResponse;
+import in.nozama.service.dto.product.AddProductRequest;
+import in.nozama.service.dto.product.AddProductResponse;
+import in.nozama.service.dto.product.ProductResponse;
+import in.nozama.service.product.model.Category;
 import in.nozama.service.product.model.Product;
-import in.nozama.service.product.model.ProductResponse;
 
 @Component
 public class ProductMapper {
@@ -20,7 +21,7 @@ public class ProductMapper {
 			to.setProductName(from.getProductName());
 			to.setProductCode(from.getProductCode());
 			to.setProductImg(from.getProductImg());
-			to.setCategory(from.getCategory());
+			to.setCategory(Category.valueOf(from.getCategory()));
 			to.setPricePerItem(from.getPricePerItem());
 			to.setStockQuantity(from.getStockQuantity());
 			to.setWarehouse(from.getWarehouse());
@@ -38,7 +39,7 @@ public class ProductMapper {
 			to.setProductCode(from.getProductCode());
 			to.setProductName(from.getProductName());
 			to.setProductImg(from.getProductImg());
-			to.setCategory(from.getCategory());
+			to.setCategory(from.getCategory().name());
 			to.setPricePerItem(from.getPricePerItem());
 			to.setStockQuantity(from.getStockQuantity());
 			to.setWarehouse(from.getWarehouse());
@@ -56,7 +57,7 @@ public class ProductMapper {
 			to.setProductCode(from.getProductCode());
 			to.setProductName(from.getProductName());
 			to.setProductImg(from.getProductImg());
-			to.setCategory(from.getCategory());
+			to.setCategory(from.getCategory().name());
 			to.setPricePerItem(from.getPricePerItem());
 			to.setStockQuantity(from.getStockQuantity());
 			to.setWarehouse(from.getWarehouse());
@@ -83,6 +84,19 @@ public class ProductMapper {
 			responses.add(addProductResponse);
 		}
 		return new PageImpl(responses);
+	}
+	
+public List<ProductResponse> mapToResponse(List<Product> from) {
+		
+	ProductResponse productResponse = null;
+		List<ProductResponse> responses = new ArrayList<>();
+
+		for (Product p : from) {
+			productResponse = new ProductResponse();
+			this.map(p, productResponse);
+			responses.add(productResponse);
+		}
+		return responses;
 	}
 
 }

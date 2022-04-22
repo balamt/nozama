@@ -24,14 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import in.nozama.service.dto.product.AddProductRequest;
+import in.nozama.service.dto.product.AddProductResponse;
+import in.nozama.service.dto.product.ProductByCategoryResponse;
+import in.nozama.service.dto.product.ProductImageUploadResponse;
+import in.nozama.service.dto.product.ProductResponse;
 import in.nozama.service.product.exception.ProductExistsException;
 import in.nozama.service.product.exception.ProductImageUploadException;
 import in.nozama.service.product.exception.ProductNotFoundException;
-import in.nozama.service.product.model.AddProductRequest;
-import in.nozama.service.product.model.AddProductResponse;
 import in.nozama.service.product.model.Product;
-import in.nozama.service.product.model.ProductImageUploadResponse;
-import in.nozama.service.product.model.ProductResponse;
 import in.nozama.service.product.service.ProductImageUploadService;
 import in.nozama.service.product.service.ProductService;
 
@@ -50,6 +51,11 @@ public class ProductController {
 	public ResponseEntity<List<Product>> getAllProducts() {
 		List<Product> products = productService.getAllProducts();
 		return ResponseEntity.ok().body(products);
+	}
+	
+	@GetMapping("/all/by/category")
+	public ResponseEntity getAllProductsByCategory(){
+		return ResponseEntity.ok(productService.getAllProductsByCategory());
 	}
 
 	@GetMapping("/{productId}")

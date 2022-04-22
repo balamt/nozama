@@ -1,11 +1,14 @@
-package in.nozama.service.product.model;
+package in.nozama.service.dto.product;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +28,7 @@ public class AddProductRequest implements Serializable {
 	
 	@NotNull String productDescription;
 
-	@Enumerated(EnumType.STRING)
-	Category category;
+	String category;
 
 	Integer stockQuantity;
 
@@ -41,5 +43,11 @@ public class AddProductRequest implements Serializable {
 	Long seller;
 	
 	Double rating;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	Date createdOn;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	Date updatedOn;
 
 }
