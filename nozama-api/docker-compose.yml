@@ -33,6 +33,7 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
+      - ./cert:/cert
     command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
     restart: always
     
@@ -69,6 +70,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-eureka-server-container:
@@ -93,6 +95,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-api-gateway-container:
@@ -120,6 +123,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
     
   nozama-config-service-container:
@@ -149,6 +153,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-user-service-container:
@@ -159,12 +164,12 @@ services:
     hostname: nozama-user-service
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
       - eureka_host=nozama-eureka-server
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - nozama_api_host=nozama-api-gateway
-      - nozama_api_port=8090
+#      - zipkin.host=nozama-zipkin
+#      - nozama_api_host=nozama-api-gateway
+#      - nozama_api_port=8090
       #Need to remove the below two properties and see if it works.
 #      - nozama.sql.host.address=nozama-mysql
 #      - nozama.sql.host.port=3306
@@ -179,6 +184,8 @@ services:
       - nozama_net
     volumes:
       - /tmp
+#If we need to point local folder to docker container, we specify as below - <host_foler_path>:<target_container_volume_path>
+      - ./cert:/cert
     restart: always
     
   nozama-user-auth-service-container:
@@ -209,6 +216,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-product-service-container:
@@ -237,6 +245,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-order-service-container:
@@ -264,6 +273,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-shipment-service-container:
@@ -291,6 +301,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-delivery-batch-container:
@@ -318,6 +329,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-zipkin-container:
@@ -340,6 +352,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
     
   nozama-address-service-container:
@@ -370,6 +383,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
 networks:
@@ -378,3 +392,5 @@ networks:
     
 volumes:
   prometheus-data:
+  nozama-share: 
+  

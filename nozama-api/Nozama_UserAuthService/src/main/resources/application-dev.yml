@@ -3,7 +3,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: true
@@ -30,6 +30,11 @@ server:
   error:
     include-stacktrace: never
   port: 8089
+  ssl:
+    key-store: /cert/nozama.jks
+    key-store-password: nozama19
+    key-alias: nozama
+    key-store-type: JKS
 
 spring:
   main:

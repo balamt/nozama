@@ -1,5 +1,10 @@
 server:
   port: 8090 
+  ssl:
+    key-store: /cert/nozama.jks
+    key-store-password: nozama19
+    key-alias: nozama
+    key-store-type: JKS
 
 eureka:
   client:
@@ -7,7 +12,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 120000
 ##This property has to be true, so that it uses the IP address, instead of localhost or 127.0.0.1
@@ -30,55 +35,59 @@ spring:
               - POST
       routes:
       - id: nozama-productservice
-        uri: http://nozama-product-service:8082
+        uri: https://nozama-product-service:8082
         predicates:
         - Path=/category/**
       - id: nozama-productservice
-        uri: http://nozama-product-service:8082
+        uri: https://nozama-product-service:8082
         predicates:
         - Path=/product/**
       - id: nozama-productservice
-        uri: http://nozama-product-service:8082
+        uri: https://nozama-product-service:8082
         predicates:
         - Path=/product-api/**
       - id: nozama-productservice
-        uri: http://nozama-product-service:8082
+        uri: https://nozama-product-service:8082
         predicates:
         - Path=/product-sw/**
       - id: nozama-orderservice
-        uri: http://nozama-order-service:8094
+        uri: https://nozama-order-service:8094
         predicates:
         - Path=/order/**
       - id: nozama-orderservice
-        uri: http://nozama-order-service:8094
+        uri: https://nozama-order-service:8094
         predicates:
         - Path=/order-sw/**
       - id: nozama-orderservice
-        uri: http://nozama-order-service:8094
+        uri: https://nozama-order-service:8094
         predicates:
         - Path=/order-api/**
       - id: nozama-userservice
-        uri: http://nozama-user-service:8081
+        uri: https://nozama-user-service:8081
         predicates:
         - Path=/user/**
       - id: nozama-userservice
-        uri: http://nozama-user-service:8081
+        uri: https://nozama-user-service:8081
         predicates:
         - Path=/user-api/**
       - id: nozama-userservice
-        uri: http://nozama-user-service:8081
+        uri: https://nozama-user-service:8081
         predicates:
         - Path=/user-sw/**
       - id: nozama-userauthservice
-        uri: http://nozama-user-auth-service:8089
+        uri: https://nozama-user-auth-service:8089
         predicates:
         - Path=/auth/**  
       - id: nozama-userauthservice
-        uri: http://nozama-user-auth-service:8089
+        uri: https://nozama-user-auth-service:8089
+        predicates:
+        - Path=/auth-health/**  
+      - id: nozama-userauthservice
+        uri: https://nozama-user-auth-service:8089
         predicates:
         - Path=/userauth-sw/**  
       - id: nozama-userauthservice
-        uri: http://nozama-user-auth-service:8089
+        uri: https://nozama-user-auth-service:8089
         predicates:
         - Path=/userauth-api/**
       - id: nozama-cartservice
@@ -98,15 +107,15 @@ spring:
         predicates:
         - Path=/config/**
       - id: nozama-addressservice
-        uri: http://nozama-address-service:8092
+        uri: https://nozama-address-service:8092
         predicates:
         - Path=/address/**
       - id: nozama-addressservice
-        uri: http://nozama-address-service:8092
+        uri: https://nozama-address-service:8092
         predicates:
         - Path=/address-sw/**
       - id: nozama-addressservice
-        uri: http://nozama-address-service:8092
+        uri: https://nozama-address-service:8092
         predicates:
         - Path=/address-api/**
 

@@ -1,0 +1,121 @@
+#https://stackoverflow.com/questions/41401009/load-balancer-does-not-have-available-server-for-client
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    prefer-ip-address: true
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+jwt:
+  secret: nozama
+  
+logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+#      springframework:
+#        security: DEBUG
+#        type: TRACE
+
+server:
+  error:
+    include-stacktrace: never
+  port: 8089
+  ssl:
+    key-store: file:${NOZAMA_CERT}/localhost/localhost.jks
+    key-store-password: password
+    key-alias: localhost
+    key-store-type: JKS
+
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: nozama-userauthservice
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: nozama19
+    url: "jdbc:mysql://localhost:3310/nozama_user_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
+    username: nozama_dba
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  zipkin:
+    base-url: http://localhost:9411/
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  config:
+    import:
+    - "optional:http://localhost:8888/config/"
+    
+  security:
+    user:
+      name: nozamabot
+      password: n0z@m@b0Ts3cr3t
+      roles:
+      - ACTUATOR
+      
+springdoc:
+  api-docs:
+    path: /userauth-api/api-docs
+  swagger-ui:
+    path: /userauth-sw/swagger-ui.html
+
+## This is the way we can provide the service proxy url and port to reach the other msa
+## The URL is pointing to API Gateway and its port number
+userservice :
+  ribbon :
+    listOfServers : https://localhost:8081
+
+feign:
+  circuitbreaker:
+    enabled: true
+    
+#Prometheus
+management:
+#  server:
+#    port: 9089
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  
+  endpoint:
+    health:
+      show-details: always
+    httptrace:
+      enabled: true
+
+  metrics:
+    tags: 
+      application: ${spring.application.name}
+      env: local
+        
+resilience4j:
+  circuitbreaker:
+    instances:
+      UserAuthController: 
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        waitDurationInOpenState: 5s
+        slidingWindowType: COUNT_BASED
+        

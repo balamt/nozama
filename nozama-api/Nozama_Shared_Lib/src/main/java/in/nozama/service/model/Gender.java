@@ -2,6 +2,8 @@ package in.nozama.service.model;
 
 public enum Gender {
 	
+	NOT_DISCLOSED("N","NOT_DISCLOSED"),
+	GENERAL("G","GENERAL"),
 	MALE("M","MALE"),
 	FEMALE("F","FEMALE");
 	

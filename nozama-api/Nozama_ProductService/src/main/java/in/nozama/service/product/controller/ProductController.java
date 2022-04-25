@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import in.nozama.service.dto.product.AddProductRequest;
 import in.nozama.service.dto.product.AddProductResponse;
-import in.nozama.service.dto.product.ProductByCategoryResponse;
 import in.nozama.service.dto.product.ProductImageUploadResponse;
 import in.nozama.service.dto.product.ProductResponse;
 import in.nozama.service.product.exception.ProductExistsException;
@@ -89,7 +88,7 @@ public class ProductController {
 	@PostMapping("/upload")
 	public ResponseEntity<ProductImageUploadResponse> uploadProductImage(@RequestParam("productimg") MultipartFile file,
 			@RequestParam("productid") Long productId) throws ProductImageUploadException {
-		String fileName = productImageUploadService.saveProductImage(file);
+		String fileName = productImageUploadService.saveProductImage(file, productId);
 		ProductImageUploadResponse response = new ProductImageUploadResponse();
 		if (productService.updateProductImage(productId, fileName)) {
 			response.setProductId(productId);

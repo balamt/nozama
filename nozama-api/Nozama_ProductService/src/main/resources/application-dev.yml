@@ -2,7 +2,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: true
@@ -21,6 +21,12 @@ logging:
 
 server:
   port: 8082
+  ssl:
+    key-store: /cert/nozama.jks
+    key-store-password: nozama19
+    key-password: nozama19
+    key-store-type: JKS
+    key-alias: nozama
 spring:
   application:
     name: nozama-productservice
@@ -59,8 +65,7 @@ ribbon:
     
 product:
   image:
-    storage:
-      location: ${PRODUCT_IMAGE_UPLOAD_PATH:TEMP}
+      location: ${PRODUCT_IMAGE_UPLOAD_PATH:/tmp/product/image}
 
 #Prometheus
 management:

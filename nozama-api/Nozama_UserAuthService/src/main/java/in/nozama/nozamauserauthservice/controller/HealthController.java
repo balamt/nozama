@@ -16,7 +16,7 @@ import in.nozama.nozamauserauthservice.service.UserService;
 @CrossOrigin(origins = {"http://localhost:3000"}, allowedHeaders = "*")
 @RefreshScope
 @RestController
-@RequestMapping(value = "/health", produces = "application/hal+json")
+@RequestMapping(value = "/auth-health", produces = "application/hal+json")
 public class HealthController {
 
 	@Autowired

@@ -16,13 +16,13 @@ public class WebConfig {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
 		config.addAllowedOrigin("http://localhost:3000/");
-		config.addAllowedOrigin("http://nozama:3000/");
+		config.addAllowedOrigin("https://nozama:3000/");
 		config.addAllowedOrigin("http://127.0.0.1:3000/");
 		config.addAllowedOrigin("http://0.0.0.0:3000/");
 		config.addAllowedOriginPattern("http://localhost*");
 		config.addAllowedOriginPattern("http://127.0.0.1*");
 		config.addAllowedOriginPattern("http://0.0.0.0*");
-		config.addAllowedOriginPattern("http://nozama*");
+		config.addAllowedOriginPattern("https://nozama*");
 		config.addAllowedOriginPattern("*");
 		config.addAllowedHeader("*");
 		config.addExposedHeader("userid");

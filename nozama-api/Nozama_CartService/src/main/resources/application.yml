@@ -2,7 +2,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     metadataMap:

@@ -10,7 +10,7 @@ import in.nozama.service.product.exception.ProductImageUploadException;
 public interface ProductImageUploadService {
 	void init() throws ProductImageUploadException;
 
-	String saveProductImage(MultipartFile file) throws ProductImageUploadException;
+	String saveProductImage(MultipartFile file, Long productId) throws ProductImageUploadException;
 
 	Resource loadProductImage(String filename) throws ProductImageUploadException;
 

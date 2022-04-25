@@ -47,3 +47,4 @@ npm i --save-dev webpack
 - [Country Flag Component for React](https://www.npmjs.com/package/react-country-flag)
 - [Tailwind Cheat Sheet](https://nerdcave.com/tailwind-cheat-sheet)
 - [React JS Basic Guide](https://www.pragimtech.com/blog/reactjs/reactjs-introduction/)
+- [Add HTTPS for react site for development](https://medium.com/swlh/how-to-make-react-js-use-https-in-development-4ead560eff10)

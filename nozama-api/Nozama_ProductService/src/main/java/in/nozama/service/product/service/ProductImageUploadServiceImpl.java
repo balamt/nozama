@@ -29,9 +29,10 @@ public class ProductImageUploadServiceImpl implements ProductImageUploadService 
 	@Autowired
 	public ProductImageUploadServiceImpl(ProductImageUploadProperties productImageUploadProperties) {
 		LOG.error(productImageUploadProperties.getLocation());
-		if(productImageUploadProperties.getLocation() != null && productImageUploadProperties.getLocation().trim().length() <= 0) {
+		if (productImageUploadProperties.getLocation() != null
+				&& productImageUploadProperties.getLocation().trim().length() <= 0) {
 			this.dirLocation = Paths.get("E:\\temp\\nozama\\product").toAbsolutePath().normalize();
-		}else {
+		} else {
 			this.dirLocation = Paths.get(productImageUploadProperties.getLocation()).toAbsolutePath().normalize();
 		}
 	}
@@ -41,20 +42,22 @@ public class ProductImageUploadServiceImpl implements ProductImageUploadService 
 	public void init() throws ProductImageUploadException {
 		try {
 			Files.createDirectories(this.dirLocation);
-
 		} catch (Exception ex) {
 			throw new ProductImageUploadException("Could not create Upload directory!");
 		}
 	}
 
 	@Override
-	public String saveProductImage(MultipartFile file) throws ProductImageUploadException {
+	public String saveProductImage(MultipartFile file, Long productId) throws ProductImageUploadException {
 		try {
-			String fileName = file.getOriginalFilename();
-			Path dirPath = this.dirLocation.resolve(fileName);
-
+			StringBuilder fileName = new StringBuilder(file.getOriginalFilename());
+			if (productId >= 1L) {
+				fileName = fileName.append("__").append(productId);
+			}
+			final String file_name = fileName.toString();
+			Path dirPath = this.dirLocation.resolve(file_name);
 			Files.copy(file.getInputStream(), dirPath, StandardCopyOption.REPLACE_EXISTING);
-			return fileName;
+			return file_name;
 		} catch (Exception e) {
 			throw new ProductImageUploadException("Could not save product image!");
 		}
