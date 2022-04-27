@@ -31,10 +31,11 @@ server:
     include-stacktrace: never
   port: 8089
   ssl:
-    key-store: /cert/nozama.jks
+    key-store: /cert/nozama.in.jks
     key-store-password: nozama19
     key-alias: nozama
-    key-store-type: JKS
+    key-store-type: PKCS12
+    enabled: true
 
 spring:
   main:
@@ -79,7 +80,7 @@ springdoc:
 ## The URL is pointing to API Gateway and its port number
 userservice :
   ribbon :
-    listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8081}
+    listOfServers : https://${nozama_api_host:localhost}:${nozama_api_port:8081}
 
 feign:
   circuitbreaker:

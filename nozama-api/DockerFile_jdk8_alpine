@@ -5,6 +5,6 @@ RUN apk update \
 	&& rm  -rf /var/cache/apk/*
 VOLUME /tmp
 COPY /cert /tmp
-ARG CERT="/tmp/nozama.crt"
+ARG CERT="/tmp/nozama.in.crt"
 RUN keytool -importcert -file $CERT -alias nozama -cacerts -storepass changeit -noprompt 
 LABEL maintainer="nozama"

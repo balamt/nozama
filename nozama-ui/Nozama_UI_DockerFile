@@ -9,6 +9,7 @@ COPY build build
 # Stage 2: Setting up the nginx server
 FROM nginx:stable-alpine
 COPY ./nginx-conf/default.conf /etc/nginx/conf.d/default.conf
+COPY ./cert/ /etc/ssl/
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/build .

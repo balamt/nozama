@@ -22,11 +22,12 @@ logging:
 server:
   port: 8082
   ssl:
-    key-store: /cert/nozama.jks
+    key-store: /cert/nozama.in.jks
     key-store-password: nozama19
     key-password: nozama19
-    key-store-type: JKS
+    key-store-type: PKCS12
     key-alias: nozama
+    enabled: true
 spring:
   application:
     name: nozama-productservice

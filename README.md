@@ -20,22 +20,19 @@
 
 --------------------------------------------------------------
 
-# Ports Used in Nozama
+# Prerequisite(s)
 
-|    Service/Applications       |     Port      |
-|-------------------------------|---------------|
-|   Nozama_EurekaServer         |   8761        |
-|   Nozama_ApiGareway           |   8080        |
-|   Nozama_UserService          |   8081        |
-|   Nozama_ProductService       |   8082        |
-|   Nozama_ShipmentService      |   8083        |
-|   Nozama_OrderService         |   8084        |
-|   Nozama_DeliveryScheduler**  |   8085        |
-|   Nozama_WallerService        |   8086        |
-|   Nozama_OrderInfoUpdater**   |   8087        |
-|   Nozama_CartService          |   7072        |
-|   Nozama_CheckoutService      |               |
-|   Nozama_PaymentService       |               |
+- JDK16+ 
+- Maven
+- nodejs, npm, react for UI
+- Lombok plugin, SonarLint plugins
+- Docker if you are using Windows/Linux (Required for learning Docker)
+- Git 
+- import CA.pem into the windows certificate "Trust CA"
+- Host File Entry in Local Development machine
+```
+127.0.0.1 nozama.in sd.nozama.in apigw.nozama.in user.nozama.in auth.nozama.in product.nozama.in zipkin.nozama.in grafana.nozama.in order.nozama.in cart.nozama.in shop.nozama.in address.nozama.in config.nozama.in
 
+```
 <sup>Note: Make sure you are having these ports available in your machine to run the services without docker</sup>
 
