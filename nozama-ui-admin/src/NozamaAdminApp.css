@@ -1,0 +1,20 @@
+#root {
+  width: 100% !important;
+}
+
+.app-body {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(232, 234, 241);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: transparent;
+  color: #212529;
+}
+
+.dropdown-item:hover {
+  background-color: #212529;
+  color: #fff;
+}
