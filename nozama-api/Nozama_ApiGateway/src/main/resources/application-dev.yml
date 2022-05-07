@@ -1,5 +1,11 @@
 server:
   port: 8090 
+  ssl:
+    key-store: /cert/nozama.in.jks
+    key-store-password: nozama19
+    key-alias: nozama
+    key-store-type: PKCS12
+    enabled: true
 
 eureka:
   client:
@@ -7,7 +13,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://sd.nozama.in:8761/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 120000
 ##This property has to be true, so that it uses the IP address, instead of localhost or 127.0.0.1
@@ -30,41 +36,103 @@ spring:
               - POST
       routes:
       - id: nozama-productservice
-        uri: http://nozama-product-service:8082
+        uri: https://product.nozama.in:8082
         predicates:
         - Path=/category/**
       - id: nozama-productservice
-        uri: http://nozama-product-service:8082
+        uri: https://product.nozama.in:8082
         predicates:
         - Path=/product/**
+      - id: nozama-productservice
+        uri: https://product.nozama.in:8082
+        predicates:
+        - Path=/product-api/**
+      - id: nozama-productservice
+        uri: https://product.nozama.in:8082
+        predicates:
+        - Path=/product-sw/**
       - id: nozama-orderservice
-        uri: http://nozama-order-service:8094
+        uri: https://order.nozama.in:8094
         predicates:
         - Path=/order/**
+      - id: nozama-orderservice
+        uri: https://order.nozama.in:8094
+        predicates:
+        - Path=/order-sw/**
+      - id: nozama-orderservice
+        uri: https://order.nozama.in:8094
+        predicates:
+        - Path=/order-api/**
       - id: nozama-userservice
-        uri: http://nozama-user-service:8081
+        uri: https://user.nozama.in:8081
         predicates:
         - Path=/user/**
+      - id: nozama-userservice
+        uri: https://user.nozama.in:8081
+        predicates:
+        - Path=/user-api/**
+      - id: nozama-userservice
+        uri: https://user.nozama.in:8081
+        predicates:
+        - Path=/user-sw/**
       - id: nozama-userauthservice
-        uri: http://nozama-user-auth-service:8089
+        uri: https://auth.nozama.in:8089
         predicates:
         - Path=/auth/**  
+      - id: nozama-userauthservice
+        uri: https://auth.nozama.in:8089
+        predicates:
+        - Path=/auth-health/**  
+      - id: nozama-userauthservice
+        uri: https://auth.nozama.in:8089
+        predicates:
+        - Path=/userauth-sw/**  
+      - id: nozama-userauthservice
+        uri: https://auth.nozama.in:8089
+        predicates:
+        - Path=/userauth-api/**
       - id: nozama-cartservice
-        uri: http://${HOST_NAME:localhost}:${eureka_port:8088}
+        uri: https://sd.nozama.in:8088
         predicates:
         - Path=/cart/** 
+      - id: nozama-cartservice
+        uri: https://cart.nozama.in:8088
+        predicates:
+        - Path=/cart-api/** 
+      - id: nozama-cartservice
+        uri: https://cart.nozama.in:8088
+        predicates:
+        - Path=/cart-sw/** 
       - id: nozama-config-service
-        uri: http://${configservice_host:localhost}:${configservice_port:8888}
+        uri: https://config.nozama.in:8888
         predicates:
         - Path=/config/**
       - id: nozama-addressservice
-        uri: http://nozama-address-service:8092
+        uri: https://address.nozama.in:8092
         predicates:
         - Path=/address/**
+      - id: nozama-addressservice
+        uri: https://address.nozama.in:8092
+        predicates:
+        - Path=/address-sw/**
+      - id: nozama-addressservice
+        uri: https://address.nozama.in:8092
+        predicates:
+        - Path=/address-api/**
 
 logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
   level:
-    ROOT: DEBUG
+    ROOT: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+#      springframework:
+#        security: DEBUG
+#        type: TRACE
 
 #Prometheus
 management:

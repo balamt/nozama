@@ -38,7 +38,7 @@ public class AddCartController {
 		CartResponse cartReponse = new CartResponse();
 
 		System.out.println(productId);
-		Long[] productDetails = restTemplate.getForObject("http://nozama-productservice/product", Long[].class);
+		Long[] productDetails = restTemplate.getForObject("https://nozama-productservice/product", Long[].class);
 		System.out.println(productDetails.toString());
 		for (Long products : productDetails) {
 			if (products.equals(productId)) {

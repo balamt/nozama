@@ -3,4 +3,8 @@ RUN apk update \
 	&& apk upgrade \
 	&& apk add --update openjdk16 tzdata curl unzip bash \
 	&& rm  -rf /var/cache/apk/*
+VOLUME /tmp
+COPY /cert /tmp
+ARG CERT="/tmp/nozama.in.crt"
+RUN keytool -importcert -file $CERT -alias nozama -cacerts -storepass changeit -noprompt 
 LABEL maintainer="nozama"

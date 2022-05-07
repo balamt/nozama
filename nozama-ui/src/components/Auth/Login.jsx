@@ -1,53 +1,34 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import AuthService from "./AuthService";
 
 import "../css/Login.css";
+import { login } from "../../features/login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
-  // const [username, password, setUserName, setPassword] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [validated, setValidated] = useState(false);
-  // Login Request is failing to populate the JSON request data.
-  // CORS issue, Need to fix in Server Code.
-  const loginHandler = (event) => {
+
+  const dispatch = useDispatch();
+  // Login
+  const loginHandler = async (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
-
     event.preventDefault();
-
-    const json = {
-      email: email,
-      password: password,
-    };
-    // Array.from(data.entries()).forEach(([key, value]) => {
-    //   json[key] = value;
-    // });
-    console.log(json);
-    console.log(AuthService.login(email, password));
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(json), /////here is the change
-    //   mode: "cors",
-    // };
-    // fetch("http://localhost:8090/auth/token", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data.token);
-    //   });
+    //Calling the Auth Login Service API
+    dispatch(login(await AuthService.login(email, password)));
+    navigate("/product");
   };
+  // EOF Login
 
   return (
     <Form

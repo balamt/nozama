@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import in.nozama.address.service.exception.AddressNotFoundException;
 import in.nozama.address.service.model.Address;
-import in.nozama.address.service.model.AddressResponse;
 import in.nozama.address.service.model.mapper.AddressMapper;
 import in.nozama.address.service.repository.AddressRepository;
 import in.nozama.service.dto.AddressRequest;
+import in.nozama.service.model.AddressResponse;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -43,10 +43,11 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Long save(AddressRequest addressRequest) {
+	public AddressResponse save(AddressRequest addressRequest) {
+		AddressResponse response = new AddressResponse();
 		Address address = addressMapper.map(addressRequest);
 		address = addressRepository.save(address);
-		return address.getAddressId();
+		return addressMapper.map(address, response);
 	}
 
 	@Override

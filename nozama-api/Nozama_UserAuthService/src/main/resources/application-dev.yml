@@ -3,7 +3,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: true
@@ -14,19 +14,28 @@ jwt:
   secret: nozama
   
 logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
   level:
     org:
       hibernate:
         SQL: DEBUG
         type: TRACE
-      springframework:
-        security: DEBUG
-        type: TRACE
+#      springframework:
+#        security: DEBUG
+#        type: TRACE
 
 server:
   error:
     include-stacktrace: never
   port: 8089
+  ssl:
+    key-store: /cert/nozama.in.jks
+    key-store-password: nozama19
+    key-alias: nozama
+    key-store-type: PKCS12
+    enabled: true
 
 spring:
   main:
@@ -36,7 +45,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
-    url: jdbc:mysql://localhost:3310/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3310}/${NOZAMA_APP_MYSQL_DBNAME:nozama_user_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
     username: nozama_dba
   jackson:
     serialization:
@@ -53,19 +62,25 @@ spring:
   config:
     import:
     - "optional:http://localhost:8888/config/"
-
+    
   security:
     user:
       name: nozamabot
       password: n0z@m@b0Ts3cr3t
       roles:
       - ACTUATOR
+      
+springdoc:
+  api-docs:
+    path: /userauth-api/api-docs
+  swagger-ui:
+    path: /userauth-sw/swagger-ui.html
 
 ## This is the way we can provide the service proxy url and port to reach the other msa
 ## The URL is pointing to API Gateway and its port number
 userservice :
   ribbon :
-    listOfServers : http://${nozama_api_host:localhost}:${nozama_api_port:8081}
+    listOfServers : https://${nozama_api_host:localhost}:${nozama_api_port:8081}
 
 feign:
   circuitbreaker:

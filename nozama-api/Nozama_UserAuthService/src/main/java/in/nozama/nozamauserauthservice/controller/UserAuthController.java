@@ -84,6 +84,7 @@ public class UserAuthController {
 		response.setToken(token);
 		response.setEmail(tokenProvider.getUsernameFromToken(token));
 		response.setValidTo(tokenProvider.getExpirationDateFromToken(token));
+		response.setWillExpireInMin(tokenProvider.getExpiryInMinutes(token));
 		return response;
 	}
 

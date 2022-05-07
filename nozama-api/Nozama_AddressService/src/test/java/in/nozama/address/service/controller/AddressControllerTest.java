@@ -28,11 +28,11 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import in.nozama.address.service.NozamaAddressServiceApplicationTests;
-import in.nozama.address.service.model.AddressResponse;
 import in.nozama.address.service.model.AddressType;
 import in.nozama.address.service.model.mapper.AddressMapper;
 import in.nozama.address.service.service.AddressService;
 import in.nozama.service.dto.AddressRequest;
+import in.nozama.service.model.AddressResponse;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -72,7 +72,7 @@ public class AddressControllerTest extends NozamaAddressServiceApplicationTests 
 		response.setCountry("country");
 		response.setStreet("street");
 		response.setState("state");
-		response.setPinCode("909090");
+		response.setPincode("909090");
 		response.setUserId(userId);
 		response.setAddressType(AddressType.HOME.toString());
 

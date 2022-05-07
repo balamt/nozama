@@ -27,4 +27,6 @@ public interface UserService extends UserDetailsService {
 	
 	UserCredentials getUserByUsername(String email);
 
+	public void UpdateAddressId(CreateUserRequest user, Long addressId);
+
 }

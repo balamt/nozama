@@ -2,7 +2,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: true
@@ -21,6 +21,13 @@ logging:
 
 server:
   port: 8082
+  ssl:
+    key-store: /cert/nozama.in.jks
+    key-store-password: nozama19
+    key-password: nozama19
+    key-store-type: PKCS12
+    key-alias: nozama
+    enabled: true
 spring:
   application:
     name: nozama-productservice
@@ -33,13 +40,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: nozama19
-    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3306}/${NOZAMA_APP_MYSQL_DBNAME:nozama_products_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3310}/${NOZAMA_APP_MYSQL_DBNAME:nozama_products_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
     username: nozama_dba
   jackson:
     serialization:
       fail-on-empty-beans: false
-  zipkin:
-    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+#  zipkin:
+#    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
   jpa:
     hibernate:
       ddl-auto: update
@@ -48,17 +55,18 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         
 springdoc:
+  api-docs:
+    path: /product-api/api-docs
   swagger-ui:
-    path: /sw/swagger-ui.html
-    
+    path: /product-sw/swagger-ui.html
+
 ribbon:
   eureka:
     enabled: false
     
 product:
   image:
-    storage:
-      location: ${PRODUCT_IMAGE_UPLOAD_PATH}
+      location: ${PRODUCT_IMAGE_UPLOAD_PATH:/tmp/product/image}
 
 #Prometheus
 management:

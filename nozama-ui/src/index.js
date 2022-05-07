@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
 import "./index.css";
 import NozamaApp from "./NozamaApp.js";
+import { store } from "./features/store.js";
+
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <NozamaApp />
+    <Provider store={store}>
+      <NozamaApp />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

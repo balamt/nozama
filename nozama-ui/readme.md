@@ -44,3 +44,7 @@ npm i --save-dev webpack
 - [Fetch get json data](https://stackoverflow.com/questions/54656223/fetch-function-return-promise-pending)
 - [Axios Vs fetch()](https://blog.logrocket.com/axios-vs-fetch-best-http-requests/)
 - [Configure NGINX as reverse proxy to hit ui and api](https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php)
+- [Country Flag Component for React](https://www.npmjs.com/package/react-country-flag)
+- [Tailwind Cheat Sheet](https://nerdcave.com/tailwind-cheat-sheet)
+- [React JS Basic Guide](https://www.pragimtech.com/blog/reactjs/reactjs-introduction/)
+- [Add HTTPS for react site for development](https://medium.com/swlh/how-to-make-react-js-use-https-in-development-4ead560eff10)

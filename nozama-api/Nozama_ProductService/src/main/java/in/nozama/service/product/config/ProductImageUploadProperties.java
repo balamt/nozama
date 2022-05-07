@@ -8,10 +8,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "product.image.storage.location")
+@ConfigurationProperties(prefix = "product.image.location")
 public class ProductImageUploadProperties {
 	
-	@Value("${product.image.storage.location}")
+	@Value("${product.image.location}")
 	private String location;
 
 }

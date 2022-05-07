@@ -1,5 +1,6 @@
 package in.nozama.service.product.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -7,13 +8,20 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import in.nozama.service.dto.product.AddProductRequest;
+import in.nozama.service.dto.product.AddProductResponse;
+import in.nozama.service.dto.product.ProductByCategoryResponse;
+import in.nozama.service.dto.product.ProductResponse;
 import in.nozama.service.product.exception.ProductExistsException;
 import in.nozama.service.product.exception.ProductNotFoundException;
 import in.nozama.service.product.mapper.ProductMapper;
-import in.nozama.service.product.model.AddProductRequest;
-import in.nozama.service.product.model.AddProductResponse;
 import in.nozama.service.product.model.Category;
 import in.nozama.service.product.model.Product;
 import in.nozama.service.product.repository.ProductRepository;
@@ -76,6 +84,42 @@ public class ProductServiceImpl implements ProductService {
 		prod.setProductImg(fileName);
 		prod = productRepository.saveAndFlush(prod);
 		return (!prod.getProductImg().isBlank());
+	}
+
+	@Override
+	public Page<ProductResponse> findByCategoryWithPage(Long page, int defaultItemCount) {
+		return this.findByCategoryWithPage(null, page, defaultItemCount);
+	}
+
+	@Override
+	public Page<ProductResponse> findByCategoryWithPage(String categoryId, Long page, int defaultItemCount) {
+		if (page <= 0) {
+			page = 1L;
+		}
+		Pageable pageable = PageRequest.of((int) (page - 1), defaultItemCount)
+				.withSort(Sort.by(Direction.DESC, "createdOn"));
+		Page<ProductResponse> pageProductResponsePage = productMapper.map(productRepository.findAll(pageable));
+		if (categoryId != null && (!categoryId.isEmpty())) {
+			return productMapper
+					.map(productRepository.findByCategory(Category.valueOf(categoryId.toUpperCase()), pageable));
+		}
+		return pageProductResponsePage;
+	}
+
+	@Override
+	public List<ProductByCategoryResponse> getAllProductsByCategory() {
+		List<Category> categories = getAllCategories();
+		List<ProductByCategoryResponse> response = new ArrayList<>();
+		
+		for(Category c : categories) {
+			ProductByCategoryResponse r = new ProductByCategoryResponse();
+			r.setCategory(c.name());
+			r.setProducts(productMapper.mapToResponse(productRepository.findByCategory(c)));
+			response.add(r);
+		}
+
+		
+		return response;
 	}
 
 }

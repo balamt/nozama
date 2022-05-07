@@ -15,7 +15,7 @@ public class WebConfig {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
 		config.addAllowedOrigin("http://localhost:3000/");
-		config.addAllowedOrigin("http://nozama:3000/");
+		config.addAllowedOrigin("https://nozama:3000/");
 		config.addAllowedOrigin("http://127.0.0.1:3000/");
 		config.addAllowedOrigin("http://0.0.0.0:3000/");
 		config.addAllowedOrigin("*");

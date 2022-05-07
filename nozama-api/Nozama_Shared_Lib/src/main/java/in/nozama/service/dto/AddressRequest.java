@@ -28,7 +28,7 @@ public class AddressRequest implements Serializable {
 	private String city;
 	private String state;
 	private String country;
-	private String pinCode;
+	private String pincode;
 	private String addressType;
 
 }

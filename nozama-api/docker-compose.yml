@@ -5,7 +5,7 @@ services:
     image: nozama_mysql:base
     #Instead of container name user hostname, if container name is used will cause mysql access issue to services
     container_name: nozama-mysql
-    hostname: nozama-mysql
+    hostname: mysql.nozama.in
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=nozamadb
@@ -22,9 +22,9 @@ services:
     image: nozama-prometheus:base
     #Instead of container name user hostname, if container name is used will cause mysql access issue to services
     container_name: nozama-prometheus
-    hostname: nozama-prometheus
+    hostname: prometheus.nozama.in
     environment:
-      - eureka_host=nozama-eureka-server
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
     networks:
       - nozama_net
@@ -33,6 +33,7 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
+      - ./cert:/cert
     command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
     restart: always
     
@@ -40,9 +41,9 @@ services:
     image: nozama-grafana:base
     #Instead of container name user hostname, if container name is used will cause mysql access issue to services
     container_name: nozama-grafana
-    hostname: nozama-grafana
+    hostname: grafana.nozama.in
     environment:
-      - eureka_host=nozama-eureka-server
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
     networks:
       - nozama_net
@@ -57,7 +58,7 @@ services:
   nozama-ui-container:
     image: nozama-ui:1
     container_name: nozama-ui
-    hostname: nozama-ui
+    hostname: nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
     build:
@@ -69,6 +70,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-eureka-server-container:
@@ -76,12 +78,12 @@ services:
       - nozama-mysql
     image: nozama-eureka-server:1
     container_name: nozama-eureka-server
-    hostname: nozama-eureka-server
+    hostname: sd.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-#      - eureka_host=nozama-eureka-server
+#      - eureka_host=sd.nozama.in
 #      - eureka_port=8761
-      - zipkin.host=nozama-zipkin
+      - zipkin.host=zipkin.nozama.in
     build:
       context: ./Nozama_EurekaServer/
       dockerfile: DockerFile
@@ -93,6 +95,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-api-gateway-container:
@@ -100,14 +103,14 @@ services:
       - nozama-mysql
     image: nozama-api-gateway:1
     container_name: nozama-api-gateway
-    hostname: nozama-api-gateway
+    hostname: apigw.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - eureka_host=nozama-eureka-server
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - user_service_host=nozama-user-service
-      - configservice_host=nozama-config-service
+      - zipkin.host=zipkin.nozama.in
+      - user_service_host=user.nozama.in
+      - configservice_host=config.nozama.in
       - configservice_port=8888
     build:
       context: ./Nozama_ApiGateway/
@@ -120,6 +123,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
     
   nozama-config-service-container:
@@ -127,13 +131,13 @@ services:
 #      - nozama-mysql
     image: nozama-config-service:1
     container_name: nozama-config-service
-    hostname: nozama-config-service
+    hostname: config.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - eureka_host=nozama-eureka-server
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - nozama_api_host=nozama-api-gateway
+      - zipkin.host=zipkin.nozama.in
+      - nozama_api_host=apigw.nozama.in
       - nozama_api_port=8090
       #Need to remove the below two properties and see if it works.
 #      - nozama.sql.host.address=nozama-mysql
@@ -149,6 +153,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-user-service-container:
@@ -156,17 +161,17 @@ services:
       - nozama-mysql
     image: nozama-user-service:1
     container_name: nozama-user-service
-    hostname: nozama-user-service
+    hostname: user.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - nozama_api_host=nozama-api-gateway
-      - nozama_api_port=8090
+#      - zipkin.host=zipkin.nozama.in
+#      - nozama_api_host=apigw.nozama.in
+#      - nozama_api_port=8090
       #Need to remove the below two properties and see if it works.
-#      - nozama.sql.host.address=nozama-mysql
+#      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
       context: ./Nozama_UserService/
@@ -179,6 +184,8 @@ services:
       - nozama_net
     volumes:
       - /tmp
+#If we need to point local folder to docker container, we specify as below - <host_foler_path>:<target_container_volume_path>
+      - ./cert:/cert
     restart: always
     
   nozama-user-auth-service-container:
@@ -186,17 +193,17 @@ services:
       - nozama-mysql
     image: nozama-user-auth-service:1
     container_name: nozama-user-auth-service
-    hostname: nozama-user-auth-service
+    hostname: auth.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - nozama_api_host=nozama-api-gateway
+      - zipkin.host=zipkin.nozama.in
+      - nozama_api_host=apigw.nozama.in
       - nozama_api_port=8090
       #Need to remove the below two properties and see if it works.
-      - nozama.sql.host.address=nozama-mysql
+      - nozama.sql.host.address=mysql.nozama.in
       - nozama.sql.host.port=3306
     build:
       context: ./Nozama_UserAuthService/
@@ -209,6 +216,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-product-service-container:
@@ -216,14 +224,14 @@ services:
       - nozama-mysql
     image: nozama-product-service:1
     container_name: nozama-product-service
-    hostname: nozama-product-service
+    hostname: product.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_products_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_products_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - nozama.sql.host.address=nozama-mysql
+      - zipkin.host=zipkin.nozama.in
+      - nozama.sql.host.address=mysql.nozama.in
       - nozama.sql.host.port=3306
       - PRODUCT_IMAGE_UPLOAD_PATH=/product/image/
     build:
@@ -237,6 +245,8 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
+      - /product
     restart: always
 
   nozama-order-service-container:
@@ -244,14 +254,14 @@ services:
       - nozama-mysql
     image: nozama-order-service:1
     container_name: nozama-order-service
-    hostname: nozama-order-service
+    hostname: order.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_order_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_order_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-#      - nozama.sql.host.address=nozama-mysql
+      - zipkin.host=zipkin.nozama.in
+#      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
       context: ./Nozama_OrderService/
@@ -264,21 +274,22 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-shipment-service-container:
     depends_on:
       - nozama-mysql
     image: nozama-shipment-service:1
-    container_name: nozama-shipment-service
+    container_name: shipment.nozama.in
     hostname: nozama-shipment-service
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_shipment_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_shipment_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-#      - nozama.sql.host.address=nozama-mysql
+      - zipkin.host=zipkin.nozama.in
+#      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
       context: ./Nozama_ShipmentService/
@@ -291,6 +302,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-delivery-batch-container:
@@ -298,14 +310,14 @@ services:
       - nozama-mysql
     image: nozama-delivery-batch:1
     container_name: nozama-delivery-batch-service
-    hostname: nozama-delivery-batch-service
+    hostname: delivery.batch.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_delivery_schedule_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_delivery_schedule_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-#      - nozama.sql.host.address=nozama-mysql
+      - zipkin.host=zipkin.nozama.in
+#      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
       context: ../nozama-batch/Nozama_DeliveryScheduler/
@@ -318,18 +330,19 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
   nozama-zipkin-container:
     image: nozama-zipkin:1
     container_name: nozama-zipkin
-    hostname: nozama-zipkin
+    hostname: zipkin.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_delivery_schedule_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_delivery_schedule_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-#      - nozama.sql.host.address=nozama-mysql
+#      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
       context: ./zipkin/
@@ -340,24 +353,25 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
     
   nozama-address-service-container:
     depends_on:
       - nozama-mysql
     image: nozama-address-service:1
-    container_name: nozama-address-service
+    container_name: address.nozama.in
     hostname: nozama-address-service
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://nozama-mysql:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
-      - eureka_host=nozama-eureka-server
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
       - eureka_port=8761
-      - zipkin.host=nozama-zipkin
-      - nozama_api_host=nozama-api-gateway
+      - zipkin.host=zipkin.nozama.in
+      - nozama_api_host=apigw.nozama.in
       - nozama_api_port=8090
       #Need to remove the below two properties and see if it works.
-#      - nozama.sql.host.address=nozama-mysql
+#      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
       context: ./Nozama_AddressService/
@@ -370,6 +384,7 @@ services:
       - nozama_net
     volumes:
       - /tmp
+      - ./cert:/cert
     restart: always
 
 networks:
@@ -378,3 +393,5 @@ networks:
     
 volumes:
   prometheus-data:
+  nozama-share: 
+  

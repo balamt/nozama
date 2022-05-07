@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addNewUser(CreateUserRequest user) {
-
 			User userPersisted = userRepository.save(userMapper.map(user));
 			if (userPersisted.getUserid() != null && userPersisted.getUserid() > 0) {
 				return userPersisted;
@@ -87,6 +86,11 @@ public class UserServiceImpl implements UserService {
 		}
 		return new org.springframework.security.core.userdetails.User(uc.getEmail(), uc.getPassword(),
 				grantedAuthority);
+	}
+
+	@Override
+	public void UpdateAddressId(CreateUserRequest user, Long addressId) {
+		userRepository.save(userMapper.map(user, addressId));
 	}
 
 }

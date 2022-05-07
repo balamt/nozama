@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,23 +24,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import in.nozama.service.dto.product.AddProductRequest;
+import in.nozama.service.dto.product.AddProductResponse;
+import in.nozama.service.dto.product.ProductImageUploadResponse;
+import in.nozama.service.dto.product.ProductResponse;
 import in.nozama.service.product.exception.ProductExistsException;
 import in.nozama.service.product.exception.ProductImageUploadException;
 import in.nozama.service.product.exception.ProductNotFoundException;
-import in.nozama.service.product.model.AddProductRequest;
-import in.nozama.service.product.model.AddProductResponse;
 import in.nozama.service.product.model.Product;
-import in.nozama.service.product.model.ProductImageUploadResponse;
 import in.nozama.service.product.service.ProductImageUploadService;
 import in.nozama.service.product.service.ProductService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/product")
-/*
- * @CrossOrigin(origins = {"http://localhost:4200",
- * "http://balahp:4200","http://localhost:4200/"})
- */
 public class ProductController {
 
 	@Autowired
@@ -53,6 +51,11 @@ public class ProductController {
 		List<Product> products = productService.getAllProducts();
 		return ResponseEntity.ok().body(products);
 	}
+	
+	@GetMapping("/all/by/category")
+	public ResponseEntity getAllProductsByCategory(){
+		return ResponseEntity.ok(productService.getAllProductsByCategory());
+	}
 
 	@GetMapping("/{productId}")
 	public ResponseEntity<Product> getProductById(@PathVariable(name = "productId") Long productId)
@@ -60,10 +63,20 @@ public class ProductController {
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}
 
-	@GetMapping("/by/{categoryId}")
-	public ResponseEntity<List<Product>> getProductByCategory(@PathVariable(name = "categoryId") String categoryId)
+	@GetMapping(path = { "/by/category", "/by/category/{categoryId}" })
+	public ResponseEntity<Object> getProductByCategory(
+			@PathVariable(name = "categoryId", required = false) String categoryId,
+			@RequestParam(name = "page", required = false, defaultValue = "1") Long page)
 			throws ProductNotFoundException {
-		return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
+		int defaultItemCount = 6;
+		Page<ProductResponse> responseBody = productService.findByCategoryWithPage(categoryId, page, defaultItemCount);
+		if (page >= 1 && categoryId == null) {
+			responseBody = productService.findByCategoryWithPage(page, defaultItemCount);
+			return ResponseEntity.ok(responseBody);
+		} else if (page <= 0 && categoryId != null) {
+			return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
+		}
+		return ResponseEntity.ok(responseBody);
 	}
 
 	@PostMapping("/add")
@@ -75,31 +88,32 @@ public class ProductController {
 	@PostMapping("/upload")
 	public ResponseEntity<ProductImageUploadResponse> uploadProductImage(@RequestParam("productimg") MultipartFile file,
 			@RequestParam("productid") Long productId) throws ProductImageUploadException {
-		String fileName = productImageUploadService.saveProductImage(file);
+		String fileName = productImageUploadService.saveProductImage(file, productId);
 		ProductImageUploadResponse response = new ProductImageUploadResponse();
 		if (productService.updateProductImage(productId, fileName)) {
 			response.setProductId(productId);
-		}else {
+		} else {
 			response.setError(true);
 			response.setStatus("ERROR Occured");
 		}
 		return ResponseEntity.ok(response);
 	}
-	
+
 	@GetMapping("/image/{productid}")
-	public ResponseEntity<byte[]> viewProductImage(@PathVariable(name = "productid") Long productId) throws ProductImageUploadException, ProductNotFoundException, IOException {
-		//Get the Product details by Id
+	public ResponseEntity<byte[]> viewProductImage(@PathVariable(name = "productid") Long productId)
+			throws ProductImageUploadException, ProductNotFoundException, IOException {
+		// Get the Product details by Id
 		Product prod = productService.getProductById(productId);
 		// Get the Product Image and read it as InputStream
 		InputStream is = productImageUploadService.loadProductImage(prod.getProductImg()).getInputStream();
 		// Get the file content type
 		String mime = URLConnection.guessContentTypeFromStream(is);
-		final HttpHeaders httpHeaders= new HttpHeaders();
+		final HttpHeaders httpHeaders = new HttpHeaders();
 		// Set the head to the mime type.
-	    httpHeaders.setContentType(MediaType.parseMediaType(mime));
-	    // Return the body as byte[] and the header with content type
+		httpHeaders.setContentType(MediaType.parseMediaType(mime));
+		// Return the body as byte[] and the header with content type
 		return new ResponseEntity<byte[]>(is.readAllBytes(), httpHeaders, HttpStatus.OK);
-		
+
 	}
 
 	@ExceptionHandler
@@ -112,9 +126,10 @@ public class ProductController {
 	void productExistsExceptionHandler(ProductExistsException pee, HttpServletResponse response) throws IOException {
 		response.sendError(HttpStatus.NOT_MODIFIED.value(), pee.getMessage());
 	}
-	
+
 	@ExceptionHandler
-	void productImageUploadExceptionHandler(ProductImageUploadException piue, HttpServletResponse response) throws IOException {
+	void productImageUploadExceptionHandler(ProductImageUploadException piue, HttpServletResponse response)
+			throws IOException {
 		response.sendError(HttpStatus.NOT_FOUND.value(), piue.getMessage());
 	}
 

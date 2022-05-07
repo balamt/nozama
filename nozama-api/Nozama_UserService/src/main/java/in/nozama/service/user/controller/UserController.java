@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import in.nozama.service.dto.CreateUserRequest;
 import in.nozama.service.dto.UserResponse;
 import in.nozama.service.dto.view.UserModelView;
+import in.nozama.service.model.AddressResponse;
+import in.nozama.service.model.ErrorResponse;
 import in.nozama.service.model.NozamaConst;
 import in.nozama.service.model.UserCredentials;
 import in.nozama.service.user.exception.UserAlreadyExistsException;
@@ -31,14 +33,10 @@ import in.nozama.service.user.exception.UserNotFoundException;
 import in.nozama.service.user.jwthandler.JwtTokenUtil;
 import in.nozama.service.user.model.User;
 import in.nozama.service.user.service.UserService;
-import in.nozama.service.user.service.proxy.AddressServiceProxy;	
+import in.nozama.service.user.service.proxy.AddressServiceProxy;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-/*
- * @CrossOrigin(origins = {"http://localhost:4200",
- * "http://balahp:4200","http://localhost:4200/"})
- */
 @RequestMapping(value = "/user", produces = "application/hal+json")
 public class UserController {
 
@@ -46,10 +44,10 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	AddressServiceProxy addressService;
-	
+
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
 
@@ -93,13 +91,21 @@ public class UserController {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		User createdUser = null;
+		AddressResponse addressResponse = null;
+		ErrorResponse errorResponse = null;
 		try {
 			createdUser = userService.addNewUser(user);
 			headers = new HttpHeaders();
 			if (createdUser != null) {
-				if(user.getAddress() != null) {
+				if (user.getAddress() != null) {
 					user.getAddress().setUserId(createdUser.getUserid());
-					addressService.addAddress(user.getAddress());
+					ResponseEntity<Object> response = addressService.addAddress(user.getAddress());
+					if (response.getBody() instanceof AddressResponse) {
+						addressResponse = (AddressResponse) response.getBody();
+						userService.UpdateAddressId(user, addressResponse.getAddressId());
+					} else {
+						errorResponse = (ErrorResponse) response.getBody();
+					}
 				}
 				headers.set(JwtTokenUtil.USERID, createdUser.getUserid().toString());
 			}

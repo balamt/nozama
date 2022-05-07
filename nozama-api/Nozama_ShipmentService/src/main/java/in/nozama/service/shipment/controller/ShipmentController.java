@@ -87,7 +87,7 @@ public class ShipmentController {
         InstanceInfo instanceInfo = application.getInstances().get(0);
         /**
          * Construct the URL using the serviceId and Port (Note Since RestTemplate has LoadBalance,
-         * we have to use the serviceid in the request. eg: http://nozama-orderservice:8083/order/2
+         * we have to use the serviceid in the request. eg: https://nozama-orderservice:8083/order/2
          * if we are not having load balance we can use the ip Address and port from the instanceInfo object.
          * Example:
          *  instanceInfo.getIPAddr() --- This will give the IP Address of the Order Service from the Eureka Server

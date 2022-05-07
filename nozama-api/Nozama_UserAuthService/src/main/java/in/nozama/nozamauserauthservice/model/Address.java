@@ -2,11 +2,21 @@ package in.nozama.nozamauserauthservice.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "addresses")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Address implements Serializable {
 
 	/**
@@ -39,71 +49,9 @@ public class Address implements Serializable {
 
 	@Column(name = "pincode")
 	@Size(max = 10)
-	private String pinCode;
+	private String pincode;
 
-	public Long getAddressId() {
-		return addressId;
-	}
-
-	public void setAddressId(Long addressId) {
-		this.addressId = addressId;
-	}
-
-	public String getAddress1() {
-		return address1;
-	}
-
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
-
-	public String getAddress2() {
-		return address2;
-	}
-
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getPinCode() {
-		return pinCode;
-	}
-
-	public void setPinCode(String pinCode) {
-		this.pinCode = pinCode;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -115,7 +63,7 @@ public class Address implements Serializable {
 				", city='" + city + '\'' +
 				", state='" + state + '\'' +
 				", country='" + country + '\'' +
-				", pinCode='" + pinCode + '\'' +
+				", pinCode='" + pincode + '\'' +
 				'}';
 	}
 
@@ -131,11 +79,11 @@ public class Address implements Serializable {
 				Objects.equals(city, address.city) &&
 				Objects.equals(state, address.state) &&
 				Objects.equals(country, address.country) &&
-				Objects.equals(pinCode, address.pinCode);
+				Objects.equals(pincode, address.pincode);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(addressId, address1, address2, street, city, state, country, pinCode);
+		return Objects.hash(addressId, address1, address2, street, city, state, country, pincode);
 	}
 }

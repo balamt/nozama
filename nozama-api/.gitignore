@@ -30,3 +30,7 @@ HELP.md
 ### VS Code ###
 .vscode/
 /bin/
+
+### nozama log folder ###
+/log/
+*.gz

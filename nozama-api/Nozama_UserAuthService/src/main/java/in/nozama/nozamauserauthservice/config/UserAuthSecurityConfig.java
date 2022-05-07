@@ -57,7 +57,7 @@ public class UserAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/actuator/**").permitAll()				
 				.antMatchers("/auth/status", "/auth/token").permitAll()
 				.antMatchers("/error").permitAll()
-				.antMatchers("/swagger-ui/**",
+				.antMatchers("/userauth-sw/**", "/userauth-api/**", "/swagger-ui/**",
 						"/webjars/**", "/v3/**").permitAll()
 				.anyRequest()
 				.authenticated().and()
