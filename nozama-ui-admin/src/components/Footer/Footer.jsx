@@ -4,7 +4,7 @@ import { FaRegCopyright } from "react-icons/fa";
 
 function Footer() {
   return (
-    <Container fluid className="bg-primary fixed-bottom">
+    <Container fluid className="bg-primary fixed-bottom p-2">
       Product of balamt.in &nbsp;&nbsp; <FaRegCopyright />
       &nbsp;&nbsp; {" " + new Date().getFullYear()}
     </Container>

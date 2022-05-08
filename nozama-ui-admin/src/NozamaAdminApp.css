@@ -5,7 +5,7 @@
 .app-body {
   display: flex;
   flex-direction: column;
-  background-color: rgb(232, 234, 241);
+  background-color: #f4ffffb5;
 }
 
 .dropdown-item.active,

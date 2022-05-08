@@ -11,6 +11,7 @@ import {
 import { FcShop, FcSearch } from "react-icons/fc";
 import { FaSearch } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { ROUTE_PRODUCT } from "../../AdminUIConst";
 
 function Header() {
   return (
@@ -29,7 +30,7 @@ function Header() {
               Home
             </Nav.Link>
             <NavDropdown title="Products" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={NavLink} to="/products">
+              <NavDropdown.Item as={NavLink} to={ROUTE_PRODUCT}>
                 Add Product
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/products#edit">
@@ -59,14 +60,14 @@ function Header() {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Orders" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={NavLink} to="/orders#modify">
+              <NavDropdown.Item as={NavLink} to="/order#modify">
                 Modify Orders
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/orders#remove">
+              <NavDropdown.Item as={NavLink} to="/order#remove">
                 Remove Orders
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/orders#view">
+              <NavDropdown.Item as={NavLink} to="/order#view">
                 View Orders
               </NavDropdown.Item>
             </NavDropdown>

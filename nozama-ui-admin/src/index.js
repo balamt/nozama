@@ -1,16 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 // Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./resources/css/nozama-admin-ui-base-theme.css";
 
 import NozamaAdminApp from "./NozamaAdminApp";
 import reportWebVitals from "./reportWebVitals";
+import { store } from './store/store.js';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <NozamaAdminApp />
+    <Provider store={store}>
+      <NozamaAdminApp />
+    </Provider>
   </React.StrictMode>
 );
 

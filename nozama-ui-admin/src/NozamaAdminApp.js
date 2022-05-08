@@ -9,11 +9,20 @@ import Header from "./components/Header/Header";
 import Signin from "./components/Auth/Signin";
 import Signout from "./components/Auth/Signout";
 
-import logo from "./logo.svg";
 import "./NozamaAdminApp.css";
 import Home from "./components/Home/Home";
 import Product from "./components/Product/Product";
 import { Container } from "react-bootstrap";
+import {
+  ROUTE_DASHBOARD,
+  ROUTE_HOME,
+  ROUTE_ORDER,
+  ROUTE_PRODUCT,
+  ROUTE_SETTINGS,
+  ROUTE_SIGNIN,
+  ROUTE_SIGNUP,
+  ROUTE_USER,
+} from "./AdminUIConst";
 
 function NozamaAdminApp() {
   return (
@@ -35,13 +44,14 @@ function NozamaAdminApp() {
                   }
                 />
                 <Route path="*" element={<Navigate replace to="/404" />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/products" element={<Product />} />
-                <Route path="/settings" element={<h2></h2>} />
-                <Route path="/users" element={<h2></h2>} />
-                <Route path="/dashboard" element={<h2></h2>} />
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/signout" element={<Signout />} />
+                <Route path={ROUTE_HOME} element={<Home />} />
+                <Route path={ROUTE_PRODUCT} element={<Product />} />
+                <Route path={ROUTE_ORDER} element={<h2>ORDER</h2>} />
+                <Route path={ROUTE_SETTINGS} element={<h2>SETTINGS</h2>} />
+                <Route path={ROUTE_USER} element={<h2>USER</h2>} />
+                <Route path={ROUTE_DASHBOARD} element={<h2>DASHBOARD</h2>} />
+                <Route path={ROUTE_SIGNUP} element={<Signin />} />
+                <Route path={ROUTE_SIGNIN} element={<Signout />} />
               </Routes>
             </div>
           </main>
