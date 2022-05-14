@@ -11,7 +11,12 @@ import {
 import { FcShop, FcSearch } from "react-icons/fc";
 import { FaSearch } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
-import { ROUTE_PRODUCT } from "../../AdminUIConst";
+import {
+  ROUTE_EDIT_PRODUCT,
+  ROUTE_PRODUCT,
+  ROUTE_ADD_USER,
+  ROUTE_EDIT_USER,
+} from "../../AdminUIConst";
 
 function Header() {
   return (
@@ -33,7 +38,7 @@ function Header() {
               <NavDropdown.Item as={NavLink} to={ROUTE_PRODUCT}>
                 Add Product
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/products#edit">
+              <NavDropdown.Item as={NavLink} to={ROUTE_EDIT_PRODUCT}>
                 Edit Product
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/products#remove">
@@ -45,17 +50,17 @@ function Header() {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Users" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={NavLink} to="/user#add">
+              <NavDropdown.Item as={NavLink} to={ROUTE_ADD_USER}>
                 Add User
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/user#edit">
+              <NavDropdown.Item as={NavLink} to={ROUTE_EDIT_USER}>
                 Edit User
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/user#remove">
                 Remove User
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/user#view">
+              <NavDropdown.Item as={NavLink} to="/user">
                 Find User
               </NavDropdown.Item>
             </NavDropdown>

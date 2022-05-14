@@ -1,56 +1,27 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
-import { run as runHolder } from "holderjs/holder";
+import React, { useState } from "react";
 import { Button, Alert, Card, Row, Col, Overlay, Image } from "react-bootstrap";
 
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import QuantityComponent from "./QuantityComponent";
-import thumb_preview from "../../resources/images/image_thumb.svg";
+import UserRequest from "../../services/common/UserRequest";
 
-function ProductPreviewCard({
-  name,
-  description,
-  pimage,
-  tags,
-  rate,
-  quantity,
-}) {
-  useEffect(() => {
-    runHolder(".prod-img");
-  });
+const UserPreviewCard = () => {
+  const [name, setName] = useState("Full Name");
+  const [email, setEmail] = useState("dummy@email.com");
+  const [mobile, setMobile] = useState("9876543210");
+  const [gender, setGender] = useState("Other");
+  const [userType, setUserType] = useState("BASIC");
 
-  const [favIconStyle, setFavIconStyle] = useState({
-    position: "relative",
-    marginLeft: "-52px",
-    marginTop: "12px",
-    padding: "5px",
-  });
-  const [mouseOverFav, setMouseOverFav] = useState(false);
-  const [favClicked, setFavClicked] = useState(false);
-  const [showAddCartToolTip, setShowAddCartToolTip] = useState(false);
-  const target = useRef(null);
+  const [address1, setAddress1] = useState("Address Line 1");
+  const [address2, setAddress2] = useState("Address Line 2");
+  const [street, setStreet] = useState("Street");
+  const [city, setCity] = useState("City");
+  const [state, setState] = useState("State");
+  const [country, setCountry] = useState("Country");
+  const [pincode, setPincode] = useState("1098765");
+  const [addressType, setAddressType] = useState("HOME");
 
-  const mouseOnFavourite = () => {
-    if (!favClicked) {
-      setMouseOverFav(!mouseOverFav);
-
-      //Mouse Hover change the icon color
-      if (mouseOverFav) {
-        setFavIconStyle({ ...favIconStyle, color: "red" });
-      } else {
-        setFavIconStyle({ ...favIconStyle, color: "" });
-      }
-    }
-  };
-
-  const favAdded = () => {
-    setFavClicked(!favClicked);
-    setMouseOverFav(false);
-    setFavIconStyle({ ...favIconStyle, color: "red" });
-  };
-
-  const quantityCallBack = (value) => {
-    console.log(value);
-  };
+  let user = useState(UserRequest.getUser());
+  console.log(user);
 
   return (
     <>
@@ -147,6 +118,6 @@ function ProductPreviewCard({
       </Row>
     </>
   );
-}
+};
 
-export default ProductPreviewCard;
+export default UserPreviewCard;
