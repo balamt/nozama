@@ -32,6 +32,9 @@ const Users = () => {
       } else if (query[0] === "id") {
         setUser(UserService.findUserById(parseInt(query[1])));
         console.log(user);
+      } else { 
+        //TODO: Need to implement global search in API and implement the service call in the UserService.jsx
+        console.log(UserService.findUserByIdOrUserName(search));
       }
     }
   };

@@ -1,27 +1,31 @@
-import React, { useState } from "react";
-import { Button, Alert, Card, Row, Col, Overlay, Image } from "react-bootstrap";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Button,
+  Alert,
+  Card,
+  Row,
+  Col,
+  Overlay,
+  Image,
+  Badge,
+  Container,
+} from "react-bootstrap";
 
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import UserRequest from "../../services/common/UserRequest";
+import thumb_preview from "../../resources/images/image_thumb.svg";
+import { ADDRESS_CITY, ADDRESS_COUNTRY, ADDRESS_LINE1, ADDRESS_LINE2, ADDRESS_PINCODE, ADDRESS_STATE, ADDRESS_STREET, ADDRESS_TYPE } from "../../services/common/AddressRequest";
+import UserRequest, {
+  USER_EMAIL,
+  USER_FULLNAME,
+  USER_MOBILE,
+  USER_GENDER,
+  USER_TYPE,
+  USER_ADDRESS,
+} from "../../services/common/UserRequest";
 
-const UserPreviewCard = () => {
-  const [name, setName] = useState("Full Name");
-  const [email, setEmail] = useState("dummy@email.com");
-  const [mobile, setMobile] = useState("9876543210");
-  const [gender, setGender] = useState("Other");
-  const [userType, setUserType] = useState("BASIC");
-
-  const [address1, setAddress1] = useState("Address Line 1");
-  const [address2, setAddress2] = useState("Address Line 2");
-  const [street, setStreet] = useState("Street");
-  const [city, setCity] = useState("City");
-  const [state, setState] = useState("State");
-  const [country, setCountry] = useState("Country");
-  const [pincode, setPincode] = useState("1098765");
-  const [addressType, setAddressType] = useState("HOME");
-
-  let user = useState(UserRequest.getUser());
-  console.log(user);
+const UserPreviewCard = ({ user, uimage }) => {
+  const [state] = useState(user.user);
+  const [showAddCartToolTip, setShowAddCartToolTip] = useState(false);
+  const target = useRef(null);
 
   return (
     <>
@@ -50,70 +54,59 @@ const UserPreviewCard = () => {
                 <Card.Img
                   as={Image}
                   fluid
-                  // className="prod-img"
-                  src={pimage ? pimage : thumb_preview}
+                  src={uimage ? uimage : thumb_preview}
                 />
-                {/* <img
-                  src={image}
-                  alt=""
-                  className="card-img card-image-bottom prod-img"
-                /> */}
-                {mouseOverFav ? (
-                  <FaRegHeart
-                    size={42}
-                    style={favIconStyle}
-                    onMouseEnter={mouseOnFavourite}
-                  />
-                ) : (
-                  <FaHeart
-                    size={42}
-                    style={favIconStyle}
-                    onMouseLeave={mouseOnFavourite}
-                    onClick={favAdded}
-                  />
-                )}
+                <Container
+                  fluid
+                  className="mx-2"
+                  style={{
+                    position: "absolute",
+                    fontSize: "1.2em",
+                  }}
+                >
+                  <Badge bg="warning" text="secondary">
+                    {state[USER_TYPE]}
+                  </Badge>
+                </Container>
               </div>
 
               <Card.Body ref={target} className="d-flex flex-column">
                 <Card.Title className="text-primary">
-                  {name ? name : "Product Name"}
+                  <h3>
+                    {state[USER_FULLNAME] ? state[USER_FULLNAME] : "Full Name"}
+                  </h3>
                 </Card.Title>
 
                 <Card.Subtitle>
                   <Row>
                     <Col>
-                      <h5 className="text-secondary">
-                        {rate ? rate : "1200.00 "} ₹
-                      </h5>
+                      <span className="text-warning">
+                        {state[USER_MOBILE] ? state[USER_MOBILE] : "9876543210"}
+                      </span>
                     </Col>
                     <Col>
-                      <QuantityComponent
-                        max={quantity}
-                        getQuantity={quantityCallBack}
-                      />
+                      {state[USER_EMAIL]
+                        ? state[USER_EMAIL]
+                        : "dummy@email.com"}
                     </Col>
                   </Row>
                 </Card.Subtitle>
                 <Card.Text>
-                  {description
-                    ? description
-                    : "Some quick example text to build on the card title and make up the bulk of the card's content."}
+                  <Row>
+                    <Col>
+                      {state[USER_GENDER]
+                        ? state[USER_GENDER]
+                        : "Not Disclosed"}
+                      <hr />
+                      Address : <br />{`${state[USER_ADDRESS][ADDRESS_LINE1]} , ${state[USER_ADDRESS][ADDRESS_LINE2]} , ${state[USER_ADDRESS][ADDRESS_STREET]}, ${state[USER_ADDRESS][ADDRESS_CITY]}, ${state[USER_ADDRESS][ADDRESS_STATE]}, ${state[USER_ADDRESS][ADDRESS_COUNTRY]} - ${state[USER_ADDRESS][ADDRESS_PINCODE]}`}
+                      <hr />
+                      Address Type: <Badge bg="secondary">{state[USER_ADDRESS][ADDRESS_TYPE]}</Badge>
+                    </Col>
+                  </Row>
                 </Card.Text>
-                <Button
-                  disabled={quantity <= 0 ? true : false}
-                  onClick={() => {
-                    if (quantity >= 1) {
-                      setShowAddCartToolTip(!showAddCartToolTip);
-                    }
-                  }}
-                  variant={quantity <= 0 ? "light" : "success"}
-                >
-                  Add Cart
-                </Button>
               </Card.Body>
             </Card.Link>
           </Card>
-          <sub>{tags}</sub>
         </Col>
       </Row>
     </>
