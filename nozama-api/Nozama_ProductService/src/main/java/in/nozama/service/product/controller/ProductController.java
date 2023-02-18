@@ -3,7 +3,6 @@ package in.nozama.service.product.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +31,6 @@ import in.nozama.service.dto.product.ProductResponse;
 import in.nozama.service.product.exception.ProductExistsException;
 import in.nozama.service.product.exception.ProductImageUploadException;
 import in.nozama.service.product.exception.ProductNotFoundException;
-import in.nozama.service.product.model.Product;
 import in.nozama.service.product.service.ProductImageUploadService;
 import in.nozama.service.product.service.ProductService;
 
@@ -47,18 +46,17 @@ public class ProductController {
 	ProductImageUploadService productImageUploadService;
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Product>> getAllProducts() {
-		List<Product> products = productService.getAllProducts();
-		return ResponseEntity.ok().body(products);
+	public ResponseEntity getAllProducts() {
+		return ResponseEntity.ok().body(productService.getAllProducts());
 	}
-	
+
 	@GetMapping("/all/by/category")
-	public ResponseEntity getAllProductsByCategory(){
+	public ResponseEntity getAllProductsByCategory() {
 		return ResponseEntity.ok(productService.getAllProductsByCategory());
 	}
 
 	@GetMapping("/{productId}")
-	public ResponseEntity<Product> getProductById(@PathVariable(name = "productId") Long productId)
+	public ResponseEntity<ProductResponse> getProductById(@PathVariable(name = "productId") Long productId)
 			throws ProductNotFoundException {
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}
@@ -85,6 +83,16 @@ public class ProductController {
 		return ResponseEntity.ok(productService.checkAndAddNewProduct(productRequest));
 	}
 
+	@DeleteMapping("/delete/{productId}")
+	public ResponseEntity<AddProductResponse> deleteProductByProductId(
+			@PathVariable(value = "productId") Long productId) throws ProductImageUploadException {
+		ProductResponse response = productService.deleteProductById(productId);
+		if (response != null && response.getProductImg() != null) {
+			productImageUploadService.deleteProductImage(response.getProductImg());
+		}
+		return ResponseEntity.ok(response);
+	}
+
 	@PostMapping("/upload")
 	public ResponseEntity<ProductImageUploadResponse> uploadProductImage(@RequestParam("productimg") MultipartFile file,
 			@RequestParam("productid") Long productId) throws ProductImageUploadException {
@@ -103,7 +111,7 @@ public class ProductController {
 	public ResponseEntity<byte[]> viewProductImage(@PathVariable(name = "productid") Long productId)
 			throws ProductImageUploadException, ProductNotFoundException, IOException {
 		// Get the Product details by Id
-		Product prod = productService.getProductById(productId);
+		ProductResponse prod = productService.getProductById(productId);
 		// Get the Product Image and read it as InputStream
 		InputStream is = productImageUploadService.loadProductImage(prod.getProductImg()).getInputStream();
 		// Get the file content type
@@ -114,6 +122,11 @@ public class ProductController {
 		// Return the body as byte[] and the header with content type
 		return new ResponseEntity<byte[]>(is.readAllBytes(), httpHeaders, HttpStatus.OK);
 
+	}
+	
+	@GetMapping("/all/by/stock/{limit}")
+	public ResponseEntity fetchAllProductWithStockLimit(@PathVariable(name ="limit") Long limit) {
+		return ResponseEntity.ok(productService.fetchProductByStockLimit(limit));
 	}
 
 	@ExceptionHandler

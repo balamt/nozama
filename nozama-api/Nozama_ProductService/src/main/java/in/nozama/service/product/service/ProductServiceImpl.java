@@ -38,18 +38,18 @@ public class ProductServiceImpl implements ProductService {
 	ProductMapper productMapper;
 
 	@Override
-	public List<Product> getAllProducts() {
-		return productRepository.findAll();
+	public List<ProductResponse> getAllProducts() {
+		return productMapper.mapToResponse(productRepository.findAll());
 	}
 
 	@Override
-	public Product getProductById(Long productId) throws ProductNotFoundException {
+	public ProductResponse getProductById(Long productId) throws ProductNotFoundException {
 		Optional<Product> optionalProduct = productRepository.findById(productId);
 		if (!optionalProduct.isPresent()) {
 			throw new ProductNotFoundException("No Such Product Found");
 		}
 
-		return optionalProduct.get();
+		return productMapper.map(optionalProduct.get());
 	}
 
 	@Override
@@ -120,6 +120,19 @@ public class ProductServiceImpl implements ProductService {
 
 		
 		return response;
+	}
+
+	@Override
+	public ProductResponse deleteProductById(Long productId) {
+		ProductResponse response = new ProductResponse();
+		response = productMapper.map(productRepository.findById(productId), response);
+		
+		return response;
+	}
+
+	@Override
+	public List<ProductResponse> fetchProductByStockLimit(Long limit) {
+		return productMapper.mapToResponse(productRepository.findProductsStockBelowLimit(limit));
 	}
 
 }

@@ -45,11 +45,15 @@ services:
     environment:
       - eureka_host=sd.nozama.in
       - eureka_port=8761
+    build:
+      context: .
+      dockerfile: DockerFile_grafana
     networks:
       - nozama_net
     ports:
       - 8764:3000
-#    volumes:
+    volumes:
+        - ./cert:/cert
 #      - ./prometheus:/etc/prometheus
 #      - prometheus-data:/prometheus
 #    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
@@ -281,8 +285,8 @@ services:
     depends_on:
       - nozama-mysql
     image: nozama-shipment-service:1
-    container_name: shipment.nozama.in
-    hostname: nozama-shipment-service
+    container_name: nozama-shipment-service
+    hostname: shipment.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_shipment_db?allowPublicKeyRetrieval=true&useSSL=false
@@ -345,8 +349,8 @@ services:
 #      - nozama.sql.host.address=mysql.nozama.in
 #      - nozama.sql.host.port=3306
     build:
-      context: ./zipkin/
-      dockerfile: DockerFile
+      context: ./
+      dockerfile: DockerFile_Zipkin
     ports:
       - 9411:9411
     networks:
@@ -360,8 +364,8 @@ services:
     depends_on:
       - nozama-mysql
     image: nozama-address-service:1
-    container_name: address.nozama.in
-    hostname: nozama-address-service
+    container_name: nozama-address-service
+    hostname: address.nozama.in
     environment:
       - NOZAMA_SERVICE_PROFILE=dev
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_user_db?allowPublicKeyRetrieval=true&useSSL=false
@@ -378,6 +382,37 @@ services:
       dockerfile: DockerFile
     ports:
       - 8092:8092
+    links:
+      - nozama-mysql:nozama_mysql
+    networks:
+      - nozama_net
+    volumes:
+      - /tmp
+      - ./cert:/cert
+    restart: always
+    
+  nozama-cart-service-container:
+    depends_on:
+      - nozama-mysql
+    image: nozama-cart-service:1
+    container_name: nozama-cart-service
+    hostname: cart.nozama.in
+    environment:
+      - NOZAMA_SERVICE_PROFILE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.nozama.in:3306/nozama_cart_db?allowPublicKeyRetrieval=true&useSSL=false
+      - eureka_host=sd.nozama.in
+      - eureka_port=8761
+      - zipkin.host=zipkin.nozama.in
+      - nozama_api_host=apigw.nozama.in
+      - nozama_api_port=8090
+      #Need to remove the below two properties and see if it works.
+#      - nozama.sql.host.address=mysql.nozama.in
+#      - nozama.sql.host.port=3306
+    build:
+      context: ./Nozama_CartService/
+      dockerfile: DockerFile
+    ports:
+      - 8088:8088
     links:
       - nozama-mysql:nozama_mysql
     networks:

@@ -22,9 +22,9 @@ logging:
       hibernate:
         SQL: DEBUG
         type: TRACE
-#      springframework:
-#        security: DEBUG
-#        type: TRACE
+      springframework:
+        security: DEBUG
+        type: TRACE
 
 server:
   error:
@@ -51,7 +51,7 @@ spring:
     serialization:
       fail-on-empty-beans: false
   zipkin:
-    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+    base-url: https://${zipkin.host:localhost}:${zipkin.port:9411}/
   jpa:
     hibernate:
       ddl-auto: update

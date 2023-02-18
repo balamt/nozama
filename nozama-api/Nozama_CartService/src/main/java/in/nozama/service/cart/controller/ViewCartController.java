@@ -13,23 +13,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.nozama.service.cart.mapper.CartMapper;
 import in.nozama.service.cart.model.Item;
 import in.nozama.service.cart.service.ViewCartService;
-import in.nozama.service.cart.util.CartResponse;
+import in.nozama.service.dto.cart.CartResponse;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/cart")
 public class ViewCartController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ViewCartController.class);
-	
+
 	@Autowired
 	ViewCartService myCartService;
 	
-
+	@Autowired
+	CartMapper cartMapper;
 
 	@GetMapping(value = "/mycart/{itemId}")
-	public ResponseEntity<CartResponse> viewCart(@PathVariable("itemId") Long itemId ){
+	public ResponseEntity<CartResponse> viewCart(@PathVariable("itemId") Long itemId) {
 
 		LOGGER.info("Before viewing the items in cart in ViewCartController ");
 		List<Item> responseCartItem = myCartService.viewCart(itemId);
@@ -41,9 +43,8 @@ public class ViewCartController {
 			cartresponse.setStatus(true);
 			LOGGER.info("No Item found in cart in ViewCartController ");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(cartresponse);
-		} else { 
-			CartResponse cartresponse = new CartResponse();
-			cartresponse.setItemlist(responseCartItem);
+		} else {
+			CartResponse cartresponse = cartMapper.map(responseCartItem);
 			cartresponse.setMesssage("succeffully fetched cart details");
 			cartresponse.setStatus(true);
 

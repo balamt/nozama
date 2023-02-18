@@ -1,6 +1,5 @@
 package in.nozama.service.cart.model;
 
-
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -10,15 +9,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "cart")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "item_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long itemId;
+
+	private Long userId;
 
 	@Column(name = "quantity")
 	private Integer quantity = 0;
@@ -29,41 +41,4 @@ public class Item implements Serializable {
 	@Column(name = "price")
 	private Double itemPrice = 0.0;
 
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public Long getProduct() {
-		return product;
-	}
-
-	public void setProduct(Long product) {
-		this.product = product;
-	}
-
-	public Double getItemPrice() {
-		return itemPrice;
-	}
-
-	public void setItemPrice(Double itemPrice) {
-		this.itemPrice = itemPrice;
-	}
-
-	@Override
-	public String toString() {
-		return "Item{" + "itemId=" + itemId + ", stockQuantity=" + quantity + ", product=" + product + ", itemPrice="
-				+ itemPrice + '}';
-	}
 }

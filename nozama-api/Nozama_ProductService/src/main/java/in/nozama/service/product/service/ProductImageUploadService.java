@@ -14,4 +14,6 @@ public interface ProductImageUploadService {
 
 	Resource loadProductImage(String filename) throws ProductImageUploadException;
 
+	void deleteProductImage(String filename) throws ProductImageUploadException;
+
 }

@@ -118,4 +118,21 @@ public class UserMapper {
 		return map(users);
 	}
 
+	public UserResponse map(Optional<User> from, UserResponse to, AddressServiceProxy addressService) {
+		if(from.isPresent()) {
+			if(to==null) {
+				to = new UserResponse();
+			}
+			to.setUserid(from.get().getUserid());
+			to.setEmail(from.get().getEmail());
+			to.setFullname(from.get().getFullname());
+			to.setGender(from.get().getGender());
+			to.setMobile(from.get().getMobile());
+			to.setUsertype(from.get().getUsertype());
+			AddressDTO address = addressService.getAddressByUserId(from.get().getUserid());
+			to.setAddress(address);
+		}
+		return to;
+	}
+
 }

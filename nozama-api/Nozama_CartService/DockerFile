@@ -1,0 +1,7 @@
+FROM nozama-jdk:base
+LABEL maintainer="nozama"
+VOLUME /tmp
+COPY /target/nozama-cart-service.jar /opt/lib/nozama-cart-service.jar
+EXPOSE 8088
+ENTRYPOINT ["/usr/bin/java"]
+CMD ["-jar","/opt/lib/nozama-cart-service.jar"]

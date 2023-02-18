@@ -1,21 +1,53 @@
-import React, { useState } from "react";
-import { Button, Form, FormGroup, Modal, Tab, Tabs } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Form,
+  Col,
+  Row,
+  Tab,
+  Tabs,
+  Container,
+  FloatingLabel,
+  Alert,
+  ProgressBar,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import ProductRequest from "../../services/common/ProductRequest.jsx";
+import ProductService from "../../services/ProductService.jsx";
+import ProductPreviewCard from "./ProductPreviewCard.jsx";
+
+import thumb_preview from "../../resources/images/image_thumb.svg";
+import Category from "../Category/Category.jsx";
 
 const Product = () => {
-  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(true);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productCode, setProductCode] = useState("");
   const [productRating, setProductRating] = useState(0);
   const [category, setCategory] = useState("");
+  const [productPricePerItem, setProductPricePerItem] = useState(0);
+  const [stockQuantity, setStockQuantity] = useState(0);
+  const [warehouse, setWarehouse] = useState(0);
+  const [tags, setTags] = useState([]);
+  const [productImage, setProductImage] = useState(thumb_preview);
+  const [productImageFile, setProductImageFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadProgressShow, setUploadProgressShow] = useState(false);
 
   const [validated, setValidated] = useState(false);
 
-  const closeModal = (event) => { 
-    
+  const selectedCategoryCallBack = (cat) => {
+    console.log(cat);
+    if (cat && cat.length > 0 && cat[0].category) {
+      setCategory(cat[0].category);
+    } else if (cat && cat.length > 0) {
+      setCategory(cat[0]);
+    }
   };
 
-  const addProductHandler = (event) => {
+  const addProductHandler = async (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -23,125 +55,227 @@ const Product = () => {
     }
     setValidated(true);
     event.preventDefault();
+    let newproduct = ProductRequest.getProduct();
+    newproduct.productName = productName;
+    newproduct.productDescription = productDescription;
+    newproduct.category = category;
+    newproduct.pricePerItem = productPricePerItem;
+    newproduct.stockQuantity = stockQuantity;
+    newproduct.tags = tags;
+
+    let responseProduct = ProductRequest.getProduct();
+    responseProduct = await ProductService.addProduct(newproduct);
+    console.log(responseProduct);
+    if (responseProduct?.productId) {
+      await ProductService.uploadProductImage(
+        responseProduct,
+        productImageFile,
+        (event) => {
+          let progress = Math.round((100 * event.loaded) / event.total);
+          if (progress === 100) {
+            setUploadProgressShow(false);
+            setUploadProgress(0);
+          } else {
+            setUploadProgressShow(true);
+            setUploadProgress(progress);
+          }
+        }
+      );
+    }
+    navigate("/product");
+  };
+
+  const productImageUploadHandler = (e) => {
+    setProductImageFile(e.target.files[0]);
+    setProductImage(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
     <div>
-      <div className="flex-col">
-        <h2 className="text-2xl p-2">Products</h2>
-        <div className="flex justify-start p-2">
-          <div className="p-2 border-2 w-full">
-            <Button
-              className="btn bg-green-600 text-white p-2 m-1 font-light"
-              name="Add Product"
-              onClick={() => setShow(true)}
-            >
-              Add Product
-            </Button>
-            <Button
-              className="btn bg-yellow-500 text-white p-2 m-1 font-light"
-              name="Find Product"
-            >
-              Find Product
-            </Button>
-            <Button
-              className="btn bg-red-600 text-white p-2 m-1 font-light"
-              name="Remove Product"
-            >
-              Remove Product
-            </Button>
-          </div>
-        </div>
-      </div>
-      <Modal
-        show={show}
-        fullscreen
-        onHide={() => setShow(false)}
-        aria-labelledby="example-custom-modal-styling-title"
-      >
-        <Modal.Header closeButton closeLabel="Dont Add/Save">
-          <Modal.Title id="example-custom-modal-styling-title">
-            Add New Product
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form noValidate validated={validated} onSubmit={addProductHandler}>
-            <Tabs
-              defaultActiveKey="product-tab-1"
-              id="product-tabs"
-              className="mb-3"
-            >
+      <Form noValidate validated={validated} onSubmit={addProductHandler}>
+        <Alert
+          show={showAlert}
+          key="warning"
+          variant="warning"
+          dismissible
+          onClose={() => {
+            setShowAlert(false);
+          }}
+        >
+          <Alert.Heading>Attention</Alert.Heading>
+          <ul>
+            <li>Fill in all the details and click Save.</li>
+            <li>Do not close or reload, your details will not be saved.</li>
+            <li>Upload image of 2 MB, not more than that.</li>
+            <li>Image must be Square (1:1 ratio).</li>
+          </ul>
+        </Alert>
+        <Row className="mb-1">
+          <Col xs={0} sm={5} lg={3}>
+            <ProductPreviewCard
+              name={productName}
+              description={productDescription}
+              rate={productPricePerItem}
+              quantity={stockQuantity}
+              pimage={productImage}
+              tags={tags}
+            />
+          </Col>
+          <Col>
+            <Tabs defaultActiveKey="product-tab-1" id="product-tabs">
               <Tab eventKey="product-tab-1" title="Basic Details">
-                <Form.Group className="m-3">
-                  <Form.Label className="p-2">Product Name</Form.Label>
-                  <Form.Control
-                    className="p-2"
-                    required
-                    type="text"
-                    placeholder="Product Name"
-                    onChange={(e) => {
-                      setProductName(e.target.value);
-                    }}
-                  />
-                  <Form.Label className="p-2">Product Code</Form.Label>
-                  <Form.Control
-                    className="p-2"
-                    required
-                    type="text"
-                    placeholder="Product Code"
-                    onChange={(e) => {
-                      setProductCode(e.target.value);
-                    }}
-                  />
-                  <Form.Label className="p-2">Category</Form.Label>
-                  <Form.Select
-                    className="p-2 bg-white text-gray-400"
-                    aria-label="Category"
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                    }}
-                  >
-                    <option>Select the Category</option>
-                    <option value="CLOTHING">CLOTHING</option>
-                    <option value="GROCERIES">GROCERIES</option>
-                    <option value="APPS">APPS</option>
-                  </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label className="p-2">Product Description</Form.Label>
-                  <Form.Control
-                    className="p-2"
-                    required
-                    type="text"
-                    placeholder="Product Description"
-                    onChange={(e) => {
-                      setProductDescription(e.target.value);
-                    }}
-                  />
-                  <Form.Label className="p-2">Product Rating</Form.Label>
-                  <Form.Control
-                    className="p-2"
-                    required
-                    min={0}
-                    max={5}
-                    type="number"
-                    placeholder="Product Rating"
-                    onChange={(e) => {
-                      setProductRating(e.target.value);
-                    }}
-                  />
-                </Form.Group>
+                <Container fluid>
+                  <Row>
+                    <Col xs={15} sm={11} lg={6}>
+                      <Form.Group sm={6} className="m-1">
+                        {/* <FloatingLabel className="mb-3" label="Category">
+                          <Form.Select
+                            className="bg-white text-gray-400"
+                            aria-label="Category"
+                            onChange={(e) => {
+                              setCategory(e.target.value);
+                            }}
+                          >
+                            <option>Select the Category</option>
+                            <option value="CLOTHING">CLOTHING</option>
+                            <option value="GROCERIES">GROCERIES</option>
+                            <option value="APPS">APPS</option>
+                          </Form.Select>
+                        </FloatingLabel> */}
+                        <Category
+                          getSelectedCategory={selectedCategoryCallBack}
+                        />
+                        <FloatingLabel label="Product Name" className="mb-3">
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Product Name"
+                            onChange={(e) => {
+                              setProductName(e.target.value);
+                            }}
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          className="mb-3"
+                          label="Product Description"
+                        >
+                          <Form.Control
+                            required
+                            as="textarea"
+                            placeholder="Product Description"
+                            onChange={(e) => {
+                              setProductDescription(e.target.value);
+                            }}
+                          />
+                        </FloatingLabel>
+
+                        <FloatingLabel className="mb-3" label="Product Code">
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Product Code"
+                            onChange={(e) => {
+                              setProductCode(e.target.value);
+                            }}
+                          />
+                        </FloatingLabel>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={15} sm={11} lg={6}>
+                      <Form.Group>
+                        <FloatingLabel
+                          className="mb-3"
+                          label="Product Price Per Item"
+                        >
+                          <Form.Control
+                            required
+                            type="currency"
+                            placeholder="Product Price Per Item"
+                            onChange={(e) => {
+                              setProductPricePerItem(e.target.value);
+                            }}
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          label="Available Quantity"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            type="number"
+                            placeholder="Available Quantity"
+                            onChange={(e) => {
+                              setStockQuantity(parseInt(e.target.value));
+                            }}
+                          />
+                        </FloatingLabel>
+
+                        <FloatingLabel className="mb-3" label="Warehouse Id">
+                          <Form.Control
+                            required
+                            type="number"
+                            placeholder="Warehouse"
+                            onChange={(e) => {
+                              setWarehouse(e.target.value);
+                            }}
+                          />
+                        </FloatingLabel>
+                        <FloatingLabel
+                          className="mb-3 p-2"
+                          label="Product Image"
+                        >
+                          <Form.Control
+                            accept="image/png, image/jpeg"
+                            type="file"
+                            alt="Product Image"
+                            onChange={productImageUploadHandler}
+                          />
+                        </FloatingLabel>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <FloatingLabel className="mb-3 p-2" label="Tags">
+                        <Form.Control
+                          required
+                          as="textarea"
+                          placeholder="Tags (Separate with Comma)"
+                          onKeyUp={(e) => {
+                            if (e.key === ",") {
+                              //Splitting the value by , and ignoring the empty text using filter
+                              setTags(
+                                e.target.value.split(",").filter((tag) => tag)
+                              );
+                            }
+                          }}
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+                </Container>
               </Tab>
-              <Tab eventKey="product-tab-2" title="Tags, Seller, Stock"></Tab>
-              <Tab eventKey="product-tab-3" title="Image & Preview"></Tab>
             </Tabs>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button variant="primary">Save changes</Button>
-        </Modal.Footer>
-      </Modal>
+          </Col>
+        </Row>
+        <Row className="mb-5">
+          <Col>
+            {uploadProgressShow ? (
+              <ProgressBar animated now={uploadProgress} />
+            ) : (
+              ""
+            )}
+          </Col>
+          <Col>
+            <Button variant="danger">Close</Button>
+            <Button
+              onClick={addProductHandler}
+              className="m-3"
+              variant="primary"
+            >
+              Save changes
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </div>
   );
 };

@@ -1,4 +1,10 @@
 FROM grafana/grafana:latest
 LABEL maintainer="nozama"
+USER root
 VOLUME /tmp
+COPY ./cert/nozama.in.crt /usr/share/ca-certificates/nozama.in.crt
+#Grafana docker - cannot use root user, need to find a way to add the cert and also enable the https using the defaults.ini file places inside the grafana folder.
+RUN echo ./cert/nozama.in.crt >> /etc/ca-certificates.conf
+RUN update-ca-certificates
+COPY ./grafana/grafana.ini /etc/grafana/grafana.ini 
 EXPOSE 8764

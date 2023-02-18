@@ -16,9 +16,9 @@ import in.nozama.service.product.model.Product;
 @Service
 public interface ProductService {
 
-	List<Product> getAllProducts();
+	List<ProductResponse> getAllProducts();
 
-    Product getProductById(Long productId) throws ProductNotFoundException;
+    ProductResponse getProductById(Long productId) throws ProductNotFoundException;
 
     List<Category> getAllCategories();
 
@@ -33,5 +33,9 @@ public interface ProductService {
 	Page<ProductResponse> findByCategoryWithPage(String categoryId, Long page, int defaultItemCount);
 
 	List<ProductByCategoryResponse> getAllProductsByCategory();
+
+	ProductResponse deleteProductById(Long productId);
+
+	List<ProductResponse> fetchProductByStockLimit(Long limit);
 
 }

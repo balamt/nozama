@@ -8,4 +8,6 @@ public interface RemoveCartService {
 
 	List<Item> removeItemFromCart(Long itemId);
 
+	void emptyCartForUserId(Long userId);
+
 }

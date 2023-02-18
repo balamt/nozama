@@ -4,6 +4,7 @@ import { Button, Alert, Card, Row, Col, Overlay, Image } from "react-bootstrap";
 
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import QuantityComponent from "./QuantityComponent";
+import thumb_preview from "../../resources/images/image_thumb.svg";
 
 function ProductPreviewCard({
   name,
@@ -79,7 +80,7 @@ function ProductPreviewCard({
                   as={Image}
                   fluid
                   // className="prod-img"
-                  src={pimage ? pimage : null}
+                  src={pimage ? pimage : thumb_preview}
                 />
                 {/* <img
                   src={image}

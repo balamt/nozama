@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import in.nozama.service.cart.mapper.CartMapper;
 import in.nozama.service.cart.model.Item;
 import in.nozama.service.cart.service.AddCartService;
-import in.nozama.service.cart.util.CartResponse;
+import in.nozama.service.dto.cart.CartResponse;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -27,18 +28,18 @@ public class AddCartController {
 	AddCartService addCartService;
 
 	@Autowired
+	CartMapper cartMapper;
+
+	@Autowired
 	private RestTemplate restTemplate;
 
 	@PostMapping(value = "/add")
-	public ResponseEntity<CartResponse> addCart(@RequestBody Item item, @RequestParam("productId") Long productId) {
-
-		LOGGER.info("before calling rest template");
-		Long product = -1L;
-
+	public ResponseEntity<CartResponse> addCart(@RequestBody Item item) {
 		CartResponse cartReponse = new CartResponse();
-
+		Long productId = item.getProduct();
+		Long product = -1L;
 		System.out.println(productId);
-		Long[] productDetails = restTemplate.getForObject("https://nozama-productservice/product", Long[].class);
+		Long[] productDetails = restTemplate.getForObject("https://apigw.nozama.in:8090/product/" , Long[].class);
 		System.out.println(productDetails.toString());
 		for (Long products : productDetails) {
 			if (products.equals(productId)) {
@@ -59,14 +60,14 @@ public class AddCartController {
 		Item responseItem = addCartService.addCart(item);
 		System.out.println(responseItem.toString());
 		if (responseItem.getItemPrice() != null) {
-			cartReponse.setItem(responseItem);
+			cartReponse = cartMapper.map(responseItem);
 			cartReponse.setStatus(true);
 			cartReponse.setMesssage("Successfully product added into cart");
 
 			LOGGER.info("After Adding item into the cart in AddCartController");
 
 		} else {
-			cartReponse.setItem(responseItem);
+			cartReponse = cartMapper.map(responseItem);
 			cartReponse.setStatus(false);
 			cartReponse.setMesssage("OUT OF STOCK");
 

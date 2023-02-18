@@ -11,6 +11,12 @@ import {
 import { FcShop, FcSearch } from "react-icons/fc";
 import { FaSearch } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import {
+  ROUTE_EDIT_PRODUCT,
+  ROUTE_PRODUCT,
+  ROUTE_ADD_USER,
+  ROUTE_EDIT_USER,
+} from "../../AdminUIConst";
 
 function Header() {
   return (
@@ -29,10 +35,10 @@ function Header() {
               Home
             </Nav.Link>
             <NavDropdown title="Products" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={NavLink} to="/products">
+              <NavDropdown.Item as={NavLink} to={ROUTE_PRODUCT}>
                 Add Product
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/products#edit">
+              <NavDropdown.Item as={NavLink} to={ROUTE_EDIT_PRODUCT}>
                 Edit Product
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/products#remove">
@@ -44,29 +50,29 @@ function Header() {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Users" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={NavLink} to="/user#add">
+              <NavDropdown.Item as={NavLink} to={ROUTE_ADD_USER}>
                 Add User
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/user#edit">
+              <NavDropdown.Item as={NavLink} to={ROUTE_EDIT_USER}>
                 Edit User
               </NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/user#remove">
                 Remove User
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/user#view">
+              <NavDropdown.Item as={NavLink} to="/user">
                 Find User
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Orders" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={NavLink} to="/orders#modify">
+              <NavDropdown.Item as={NavLink} to="/order#modify">
                 Modify Orders
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/orders#remove">
+              <NavDropdown.Item as={NavLink} to="/order#remove">
                 Remove Orders
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/orders#view">
+              <NavDropdown.Item as={NavLink} to="/order#view">
                 View Orders
               </NavDropdown.Item>
             </NavDropdown>

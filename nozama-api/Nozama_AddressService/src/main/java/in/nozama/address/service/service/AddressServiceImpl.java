@@ -55,4 +55,17 @@ public class AddressServiceImpl implements AddressService {
 		return addressMapper.mapResponse(addressRepository.findByUserId(userid));
 	}
 
+	@Override
+	public void removeAddressByAddressId(Long addressId) {
+		addressRepository.deleteById(addressId);		
+	}
+
+	@Override
+	public void removeAddressByUserId(Long userId) {
+		AddressResponse response = this.getAddressByUserId(userId);
+		if(response != null) {
+			this.removeAddressByAddressId(response.getAddressId());
+		}		
+	}
+
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,12 @@ public class UserController {
 		List<UserResponse> users = userService.getAllUser();
 		return ResponseEntity.ok(users);
 	}
+	
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+	@DeleteMapping(value="/delete/{id}")
+	public ResponseEntity deleteUserById(@PathVariable(name = "id")Long userId) {
+		return ResponseEntity.ok(userService.removeUserById(userId));
+	}
 
 	@GetMapping("/view/{id}")
 	@JsonView(UserModelView.PublicView.class)
@@ -83,7 +90,12 @@ public class UserController {
 		}
 		throw new UserNotFoundException(String.format("Could not find such user id %s", email));
 	}
-
+	
+	@GetMapping("/email/{username}")
+	public ResponseEntity<Long> getUserIdByUsername(@PathVariable(name="username") String email) {
+		return ResponseEntity.ok(userService.getUserByEmail(email).getUserid());
+	}
+ 
 	@PostMapping("/signup")
 	@JsonView(UserModelView.ProtectedView.class)
 	public ResponseEntity<Object> addUser(@RequestBody CreateUserRequest user) throws UserAlreadyExistsException {

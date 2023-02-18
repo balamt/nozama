@@ -1,7 +1,0 @@
-FROM nozama-jdk:base
-LABEL maintainer="nozama"
-VOLUME /tmp
-COPY /zipkin-server-2.23.9-exec.jar /opt/lib/zipkin-server-2.23.9-exec.jar
-EXPOSE 9411
-ENTRYPOINT ["/usr/bin/java"]
-CMD ["-jar","/opt/lib/zipkin-server-2.23.9-exec.jar"]
