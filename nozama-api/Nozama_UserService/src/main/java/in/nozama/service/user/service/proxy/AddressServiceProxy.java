@@ -23,4 +23,8 @@ public interface AddressServiceProxy {
 
 	@RequestMapping(path = "/address/userid/{userid}")
 	public AddressDTO getAddressByUserId(@PathVariable(value = "userid") Long userid);
+	
+	@RequestMapping(path = "/address/userid/{userid}", method = RequestMethod.DELETE)
+	public AddressDTO deteleAddressByUserId(@PathVariable(value = "userid") Long userid);
+	
 }

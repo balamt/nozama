@@ -12,4 +12,8 @@ public interface AddressService {
 
 	AddressResponse getAddressByUserId(Long userid);
 
+	void removeAddressByAddressId(Long addressId);
+
+	void removeAddressByUserId(Long userId);
+
 }

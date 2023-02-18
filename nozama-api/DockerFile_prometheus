@@ -1,7 +1,8 @@
 FROM ubuntu/prometheus:latest
 LABEL maintainer="nozama"
 VOLUME /tmp
-COPY ./prometheus.yml /etc/prometheus/prometheus.yml
+COPY ./prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+COPY ./prometheus/web-config.yml /etc/prometheus/web-config.yml
 EXPOSE 8763
 ENTRYPOINT ["/bin/prometheus"]
-CMD ["--config.file=/etc/prometheus/prometheus.yml"]
+CMD ["--config.file=/etc/prometheus/prometheus.yml","--web.config.file=/etc/prometheus/web-config.yml"]

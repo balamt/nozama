@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepositoryCustomDao userRepositoryCustomDao;
-	
+
 	@Autowired
 	AddressServiceProxy addressService;
 
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addNewUser(CreateUserRequest user) {
-			User userPersisted = userRepository.save(userMapper.map(user));
-			if (userPersisted.getUserid() != null && userPersisted.getUserid() > 0) {
-				return userPersisted;
-			}
+		User userPersisted = userRepository.save(userMapper.map(user));
+		if (userPersisted.getUserid() != null && userPersisted.getUserid() > 0) {
+			return userPersisted;
+		}
 
 		return null;
 	}
@@ -91,6 +91,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void UpdateAddressId(CreateUserRequest user, Long addressId) {
 		userRepository.save(userMapper.map(user, addressId));
+	}
+
+	@Override
+	public UserResponse removeUserById(Long userId) {
+		UserResponse response = new UserResponse();
+		response = userMapper.map(userRepository.findById(userId), response, addressService);
+		userRepository.deleteById(userId);
+		addressService.deteleAddressByUserId(userId);
+		return response;
 	}
 
 }

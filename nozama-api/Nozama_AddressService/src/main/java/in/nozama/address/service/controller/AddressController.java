@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,8 @@ public class AddressController {
 			try {
 				return new ResponseEntity<AddressResponse>(addressService.getAddressById(addressId), HttpStatus.OK);
 			} catch (AddressNotFoundException e) {
-				return new ResponseEntity<ErrorResponse>(new ErrorResponse(e.getMessage(), Status.ERROR), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse(e.getMessage(), Status.ERROR),
+						HttpStatus.NOT_FOUND);
 			}
 		}
 		ErrorResponse response = new ErrorResponse("Address Id Cannot be Empty!", Status.ERROR);
@@ -44,7 +46,19 @@ public class AddressController {
 		}
 		return new ResponseEntity<ErrorResponse>(response, HttpStatus.BAD_REQUEST);
 	}
-	
+
+	@DeleteMapping(value = "/id/{id}")
+	public ResponseEntity deleteAddressByAddressId(@PathVariable(value = "id") Long addressId) {
+		addressService.removeAddressByAddressId(addressId);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping(value = "/userid/{userid}")
+	public ResponseEntity deleteAddressByUserId(@PathVariable(value = "userid") Long userId) {
+		addressService.removeAddressByUserId(userId);
+		return ResponseEntity.ok().build();
+	}
+
 	@GetMapping(path = "/userid/{userid}")
 	public ResponseEntity getAddressByUserId(@PathVariable(value = "userid") Long userid) {
 		return new ResponseEntity(addressService.getAddressByUserId(userid), HttpStatus.OK);

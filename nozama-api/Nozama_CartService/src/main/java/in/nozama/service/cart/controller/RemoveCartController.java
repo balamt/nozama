@@ -10,12 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.nozama.service.cart.mapper.CartMapper;
 import in.nozama.service.cart.model.Item;
 import in.nozama.service.cart.service.RemoveCartService;
-import in.nozama.service.cart.util.CartResponse;
+import in.nozama.service.cart.service.proxy.UserServiceProxy;
+import in.nozama.service.dto.cart.CartResponse;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -25,9 +28,14 @@ public class RemoveCartController {
 
 	@Autowired
 	RemoveCartService removeCartService;
+	
+	@Autowired
+	UserServiceProxy userServiceProxy;
+	
+	@Autowired
+	CartMapper cartMapper;
 
 	@DeleteMapping(value = "/remove/{itemId}")
-
 	public ResponseEntity<CartResponse> removeItemFromCart(@PathVariable("itemId") Long itemId) {
 
 		LOGGER.info("before removing item from cart in RemoveCartController");
@@ -42,13 +50,19 @@ public class RemoveCartController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(cartResponse);
 
 		} else {
-			CartResponse cartResponse = new CartResponse();
-			cartResponse.setItemlist(removeItem);
+			CartResponse cartResponse = cartMapper.map(removeItem);
 			cartResponse.setMesssage("Item removed from the Cart Successfully");
 			cartResponse.setStatus(true);
 			LOGGER.info("after removing item from cart in RemoveCartController");
 			return ResponseEntity.status(HttpStatus.OK).body(cartResponse);
 
 		}
+	}
+
+	@DeleteMapping(value = "remova/all")
+	public ResponseEntity emptyCart(@RequestHeader("user") String email) {
+		Long userId = userServiceProxy.getUserIdByUsername(email).getBody();
+		removeCartService.emptyCartForUserId(userId);
+		return ResponseEntity.ok().build();
 	}
 }

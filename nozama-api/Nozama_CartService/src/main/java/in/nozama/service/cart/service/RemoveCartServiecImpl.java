@@ -27,4 +27,9 @@ public class RemoveCartServiecImpl implements RemoveCartService {
 		return removeItem;
 	}
 
+	@Override
+	public void emptyCartForUserId(Long userId) {
+		cartRepository.deleteItemByUserId(userId);
+	}
+
 }

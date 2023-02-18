@@ -2,6 +2,7 @@ package in.nozama.service.product.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -74,7 +75,7 @@ public class ProductMapper {
 	}
 
 	public Page<ProductResponse> map(List<Product> from) {
-		
+
 		AddProductResponse addProductResponse = null;
 		List<AddProductResponse> responses = new ArrayList<>();
 
@@ -85,10 +86,10 @@ public class ProductMapper {
 		}
 		return new PageImpl(responses);
 	}
-	
-public List<ProductResponse> mapToResponse(List<Product> from) {
-		
-	ProductResponse productResponse = null;
+
+	public List<ProductResponse> mapToResponse(List<Product> from) {
+
+		ProductResponse productResponse = null;
 		List<ProductResponse> responses = new ArrayList<>();
 
 		for (Product p : from) {
@@ -97,6 +98,14 @@ public List<ProductResponse> mapToResponse(List<Product> from) {
 			responses.add(productResponse);
 		}
 		return responses;
+	}
+
+	public ProductResponse map(Optional<Product> from, ProductResponse to) {
+		if (from.isPresent()) {
+			Product p = from.get();
+			to = this.map(p);
+		}
+		return to;
 	}
 
 }

@@ -29,4 +29,6 @@ public interface UserService extends UserDetailsService {
 
 	public void UpdateAddressId(CreateUserRequest user, Long addressId);
 
+	public UserResponse removeUserById(Long userId);
+
 }

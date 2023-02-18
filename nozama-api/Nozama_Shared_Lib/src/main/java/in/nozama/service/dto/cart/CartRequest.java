@@ -1,4 +1,4 @@
-package in.nozama.service.cart.model;
+package in.nozama.service.dto.cart;
 
 import java.io.Serializable;
 
@@ -15,30 +15,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "cart")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Item implements Serializable {
+public class CartRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "item_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long itemId;
-
 	private Long userId;
-
-	@Column(name = "quantity")
 	private Integer quantity = 0;
-
-	@Column(name = "product_id")
-	private Long product;
-
-	@Column(name = "price")
-	private Double itemPrice = 0.0;
+	private Long productId;
+	private Double price = 0.0;
 
 }

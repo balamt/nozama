@@ -1,0 +1,64 @@
+server:
+  port: 8761 
+  ssl:
+    key-store: file:${NOZAMA_CERT}/localhost/localhost.jks
+    key-store-password: password
+    key-alias: localhost
+    key-store-type: JKS
+
+eureka:
+  client:
+   register-with-eureka: false
+   fetch-registry: false
+   service-url:
+      defaultZone: https://localhost:8761/eureka/
+##This property has to be true, so that it uses the IP address, instead of localhost or 127.0.0.1
+  instance:
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: nozama-eureka-server
+  zipkin:
+    base-url: http://localhost:9411/
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+
+logging:
+  file: 
+    path: "../log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
+  level:
+    ROOT: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+#      springframework:
+#        security: DEBUG
+#        type: TRACE
+
+#Prometheus
+management:
+#  server:
+#    port: 8762
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ 
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags: 
+      application: ${spring.application.name}
+      env: dev

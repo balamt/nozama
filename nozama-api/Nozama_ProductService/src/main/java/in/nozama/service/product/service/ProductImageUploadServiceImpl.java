@@ -2,6 +2,7 @@ package in.nozama.service.product.service;
 
 import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -77,6 +78,23 @@ public class ProductImageUploadServiceImpl implements ProductImageUploadService 
 		} catch (MalformedURLException mue) {
 			throw new ProductImageUploadException("Cannot find or open the product image!");
 		}
+	}
+
+	@Override
+	public void deleteProductImage(String filename) throws ProductImageUploadException {
+		try {
+			Path file = this.dirLocation.resolve(filename).normalize();
+			Resource resource = new UrlResource(file.toUri());
+
+			if (resource.exists() || resource.isReadable()) {
+				Files.delete(file);
+			} 
+		} catch (Exception mue) {
+			if(!(mue instanceof NoSuchFileException)) {
+				throw new ProductImageUploadException("Cannot find or open the product image!");
+			}			
+		}
+		
 	}
 
 }

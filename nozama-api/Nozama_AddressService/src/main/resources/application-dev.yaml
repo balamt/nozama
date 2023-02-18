@@ -11,7 +11,7 @@ eureka:
 
 logging:
   file: 
-    path: "../log" 
+    path: "/log" 
     name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
   level:
     org:
@@ -36,7 +36,7 @@ spring:
       ddl-auto: update
         
   zipkin:
-    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+    base-url: https://${zipkin.host:localhost}:${zipkin.port:9411}/
     
   jackson:
     serialization:

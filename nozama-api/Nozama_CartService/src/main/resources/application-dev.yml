@@ -1,0 +1,86 @@
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: https://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 60000
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+jwt:
+  secret: nozama
+
+logging:
+  file: 
+    path: "/log" 
+    name: "${logging.file.path}/${spring.application.name:nozama}_log.log"
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+
+nozama:
+  api:
+    gateway:
+      serviceid: nozama-api-gateway
+server:
+  port: 8088
+  ssl:
+    key-store: /cert/nozama.in.jks
+    key-store-password: nozama19
+    key-alias: nozama
+    key-store-type: PKCS12
+    enabled: true
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: nozama-cartservice
+  zipkin:
+    base-url: https://${zipkin.host:localhost}:${zipkin.port:9411}/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: nozama19
+    url: "jdbc:mysql://${NOZAMA_APP_MYSQL_URL:localhost}:${NOZAMA_APP_MYSQL_PORT:3310}/${NOZAMA_APP_MYSQL_DBNAME:nozama_cart_db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
+    username: nozama_dba
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+springdoc:
+  api-docs:
+    path: /cart-api/api-docs
+  swagger-ui:
+    path: /cart-sw/swagger-ui.html
+
+ribbon:
+  eureka:
+    enabled: false
+    
+## This is the way we can provide the service proxy url and port to reach the other msa
+## The URL is pointing to API Gateway and its port number
+userservice :
+  ribbon :
+    listOfServers : https://apigw.nozama.in:8090
+    
+#Prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags: 
+      application: ${spring.application.name}
+      env: dev

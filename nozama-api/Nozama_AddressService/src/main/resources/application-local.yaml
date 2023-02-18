@@ -2,7 +2,7 @@ eureka:
   client:
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://admin:admin@${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      defaultZone: https://admin:admin@${eureka_host:localhost}:${eureka_port:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 60000
     prefer-ip-address: true
@@ -36,7 +36,7 @@ spring:
       ddl-auto: update
         
   zipkin:
-    base-url: http://${zipkin.host:localhost}:${zipkin.port:9411}/
+    base-url: http://localhost:9411/
     
   jackson:
     serialization:
@@ -69,4 +69,4 @@ management:
   metrics:
     tags: 
       application: ${spring.application.name}
-      env: dev
+      env: local
