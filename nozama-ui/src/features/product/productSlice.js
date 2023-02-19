@@ -9,6 +9,15 @@ export const fetchAsyncProducts = createAsyncThunk(
   }
 );
 
+export const fetchAsyncProductByCategory = createAsyncThunk(
+  "product/fetchAsyncProductByCategory",
+  async (categoryId) => {
+    let data = await ProductService.fetchProductByCategory(categoryId);
+    console.log(data);
+    return data;
+  }
+);
+
 export const fetchAsyncProductById = createAsyncThunk(
   "product/fetchAsyncProductById",
   async (productId) => {
@@ -23,11 +32,19 @@ export const fetchAsyncProductImageById = createAsyncThunk(
   }
 );
 
+export const fetchAsyncAllAvailableCategories = createAsyncThunk(
+  "product/fetchAsyncAllAvailableCategories",
+  async () => {
+    return await ProductService.fetchAllAvailableCategories();
+  }
+);
+
 const initialState = {
   products: {},
   categories: {},
   selectedProduct: {},
   selectedProductImage: {},
+  productByCategory: {},
 };
 
 const productSlice = createSlice({
@@ -58,14 +75,23 @@ const productSlice = createSlice({
       console.log("Product Image By ID Fulfilled");
       return { ...state, selectedProductImage: payload };
     },
+    [fetchAsyncProductByCategory.fulfilled]: (state, { payload }) => {
+      console.log("Product By Category Fulfilled");
+      return { ...state, productByCategory: payload };
+    },
+    [fetchAsyncAllAvailableCategories.fulfilled]: (state, { payload }) => {
+      console.log("All Category Fulfilled");
+      return { ...state, categories: payload };
+    },
   },
 });
 
 export const { product } = productSlice.actions;
 export const { category } = productSlice.actions;
 export const getAllProducts = (state) => state.product.products;
-export const getAllCategories = (state) => state.product.categories;
+export const getAllAvailableCategories = (state) => state.product.categories;
 export const getSelectedProduct = (state) => state.product.selectedProduct;
 export const getSelectedProductImage = (state) =>
   state.product.selectedProductImage;
+export const getProductByCategory = (state) => state.product.productByCategory;
 export default productSlice.reducer;

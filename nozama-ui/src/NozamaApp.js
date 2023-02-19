@@ -28,7 +28,10 @@ import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncProducts,
-  getAllProducts,
+  fetchAsyncProductByCategory,
+  fetchAsyncAllAvailableCategories,
+  getAllAvailableCategories,
+  getProductByCategory,
 } from "./features/product/productSlice";
 import ProductDetails from "./components/Products/ProductDetails";
 
@@ -36,8 +39,17 @@ function NozamaApp(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAsyncProducts());
+    dispatch(fetchAsyncAllAvailableCategories());
   }, [dispatch]);
+  // let categories = useSelector(getAllAvailableCategories);
+  let temp = {};
+  // useEffect(() => {
+  //   if (Object.keys(categories) >= 1 || categories.length <= 0) {
+  //     categories.map((c) => dispatch(fetchAsyncProductByCategory(c)));
+  //   }
+  // });
 
+  let products = Object.keys(temp).length >= 1 ? temp : undefined;
   return (
     <Router>
       <Header logo={logo} appName={config.app.name} />
