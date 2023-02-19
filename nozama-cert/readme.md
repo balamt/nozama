@@ -83,13 +83,23 @@ E:\workspace\java\nozama-cert\cert\CA\nozama>openssl genrsa -out nozama.key -des
 Generating RSA private key, 2048 bit long modulus (2 primes)
 Enter pass phrase for nozama.key: nozama19
 Verifying - Enter pass phrase for nozama.key: nozama19
+
+or
+
+E:\workspace\java\nozama-cert\cert\CA\nozama.in>openssl genrsa -out nozama.in.key -des3 2048
+Generating RSA private key, 2048 bit long modulus (2 primes)
+........................+++++
+........................+++++
+e is 65537 (0x010001) 
+Enter pass phrase for nozama.in.key: nozama19
+Verifying - Enter pass phrase for nozama.in.key: nozama19
 ```
 
 
 ## Now we need to create the CSR
 
 ```
-E:\workspace\java\nozama-cert\cert\CA\localhost>openssl req -new -key localhost.key -out lopenssl req -new -key localhost.key -out localhost.csr
+E:\workspace\java\nozama-cert\cert\CA\localhost>openssl req -new -key localhost.key -out localhost.csr
 Enter pass phrase for localhost.key:
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -116,7 +126,7 @@ E:\workspace\java\nozama-cert\cert\CA\localhost>
 or
 
 E:\workspace\java\nozama-cert\cert\CA\nozama>openssl req -new -key nozama.key -out nozama.csr
-Enter pass phrase for nozama.key:
+Enter pass phrase for nozama.key: nozama19
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
@@ -137,7 +147,29 @@ to be sent with your certificate request
 A challenge password []:nozama19
 An optional company name []:balamt.in
 
-E:\workspace\java\nozama-cert\cert\CA\nozama>
+or
+E:\workspace\java\nozama-cert\cert\CA\nozama.in>openssl req -new -key nozama.in.key -out nozama.in.csr
+Enter pass phrase for nozama.in.key: nozama19
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:IN
+State or Province Name (full name) [Some-State]:Tamil Nadu
+Locality Name (eg, city) []:Chennai
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Nozama Balamt.in
+Organizational Unit Name (eg, section) []:IT
+Common Name (e.g. server FQDN or YOUR name) []:Nozama Balamt.in
+Email Address []:balamurugan.th@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:nozama19
+An optional company name []:Nozama Balamt.in
+
 
 ```
 
@@ -160,6 +192,13 @@ Enter pass phrase for CA.key: password
 
 E:\workspace\java\nozama-cert\cert\CA>
 
+
+E:\workspace\java\nozama-cert\cert\CA>openssl x509 -req -in ./nozama.in/nozama.in.csr -CA CA.pem -CAkey CA.key -CAcreateserial -days 18262 -sha256 -extfile ./nozama.in/nozama.in.ext -out ./nozama.in/nozama.in.crt
+Signature ok
+subject=C = IN, ST = Tamil Nadu, L = Chennai, O = Nozama Balamt.in, OU = IT, CN = Nozama Balamt.in, emailAddress = balamurugan.th@gmail.com
+Getting CA Private Key
+Enter pass phrase for CA.key: password (CA password)
+
 ```
 
 ## We need decrypted key of domain key which we creates (localhost.key and nozama.key)
@@ -175,6 +214,12 @@ or
 E:\workspace\java\nozama-cert\cert\CA\nozama>openssl rsa -in nozama.key -out nozama.decrypted.key
 Enter pass phrase for nozama.key: nozama19
 writing RSA key
+
+or
+E:\workspace\java\nozama-cert\cert\CA\nozama.in>openssl rsa -in nozama.in.key -out nozama.in.decrypted.key
+Enter pass phrase for nozama.in.key: nozama19
+writing RSA key
+
 
 ```
 
@@ -192,6 +237,13 @@ E:\workspace\java\nozama-cert\cert\CA\nozama>openssl pkcs12 -export -in nozama.c
 Enter pass phrase for nozama.key: nozama19
 Enter Export Password:nozama19
 Verifying - Enter Export Password:nozama19
+
+or
+E:\workspace\java\nozama-cert\cert\CA\nozama.in>openssl pkcs12 -export -in nozama.in.crt -inkey nozama.in.key -out nozama.in.p12
+Enter pass phrase for nozama.in.key:nozama19
+Enter Export Password:nozama19
+Verifying - Enter Export Password:nozama19
+
 ```
 
 ## Create JKS from p12 file using keytool
@@ -225,6 +277,16 @@ Import command completed:  1 entries successfully imported, 0 entries failed or 
 Warning:
 The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore nozama.jks -destkeystore nozama.jks -deststoretype pkcs12".
 
+or
+
+E:\workspace\java\nozama-cert\cert\CA\nozama.in>keytool -importkeystore -srckeystore nozama.in.p12 -srcstoretype PKCS12 -destkeystore
+nozama.in.jks -deststoretype PKCS12
+Importing keystore nozama.in.p12 to nozama.in.jks...
+Enter destination keystore password:
+Re-enter new password:
+Enter source keystore password:
+Entry for alias 1 successfully imported.
+Import command completed:  1 entries successfully imported, 0 entries failed or cancelled
 
 ```
 
@@ -236,6 +298,9 @@ keytool -changealias -alias "1" -destalias "nozama" -keypass nozama19 -keystore 
 
 # for keypass - give key password
 # for storepass - give jks file password
+
+E:\workspace\java\nozama-cert\cert\CA\nozama.in>keytool -changealias -alias "1" -destalias "nozama" -keypass nozama19 -keystore nozama
+.in.jks -storepass nozama19
 
 ```
 

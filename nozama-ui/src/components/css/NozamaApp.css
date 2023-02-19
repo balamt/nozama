@@ -15,6 +15,7 @@ Search box and button alignment
   flex-wrap: nowrap;
   flex-direction: row;
   width: -webkit-fill-available;
+  width: -moz-available;
 }
 
 .navbar-expand-lg .navbar-collapse {

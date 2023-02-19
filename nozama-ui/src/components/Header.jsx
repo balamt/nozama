@@ -65,6 +65,7 @@ function Header(props) {
           <div
             style={{
               width: "-webkit-fill-available",
+              width: "-moz-available",
             }}
             className="collapse navbar-collapse"
           >

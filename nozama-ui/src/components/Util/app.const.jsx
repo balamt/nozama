@@ -1,10 +1,10 @@
 export default function AppConst() {
   const data = {
     USER_TOKEN: "user",
-    AUTH_SVC_URL: "http://localhost:8090/auth/",
-    PRODUCT_SVC_URL: "http://localhost:8090/product/",
-    PRODUCT_IMAGE_SVC_URL: "http://localhost:8090/product/image/",
-    CATEGORY_SVC_URL: "http://localhost:8090/category/",
+    AUTH_SVC_URL: "https://nozama.in:8080/api/auth/",
+    PRODUCT_SVC_URL: "https://nozama.in:8080/api/product/",
+    PRODUCT_IMAGE_SVC_URL: "https://nozama.in:8080/api/product/image/",
+    CATEGORY_SVC_URL: "https://nozama.in:8080/api/category/",
   };
   return data;
 }

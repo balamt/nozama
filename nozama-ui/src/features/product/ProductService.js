@@ -20,13 +20,15 @@ class ProductService {
     return AppConst().PRODUCT_IMAGE_SVC_URL + productId;
   }
 
-  fetchProductByCategory(category) {
-    return axios.get(AppConst().PRODUCT_SVC_URL + category).then((response) => {
-      return response.data;
-    });
+  fetchProductByCategory(categoryId) {
+    return axios
+      .get(AppConst().PRODUCT_SVC_URL + "by/category/" + categoryId)
+      .then((response) => {
+        return response.data.content;
+      });
   }
 
-  fetchAllCategories() {
+  fetchAllAvailableCategories() {
     return axios.get(AppConst().CATEGORY_SVC_URL + "all").then((response) => {
       return response.data;
     });
