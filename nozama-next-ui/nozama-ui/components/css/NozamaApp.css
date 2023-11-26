@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/**
+Search box and button alignment
+*/
+.form-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  align-content: flex-end;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  width: -webkit-fill-available;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  justify-content: flex-end;
+}
+
+.navbar-expand-align {
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.search-btn-border {
+  border-radius: 0px 2px 2px 2px;
+  border-left: none;
+}
+
+.search-box-border {
+  border-radius: 2px 0px 2px 2px;
+  border-right: none;
+}
+
+.card-item-width {
+  /**
+  Need to write for different screens
+  **/
+  max-width: 300px;
+  min-width: 280px;
+}

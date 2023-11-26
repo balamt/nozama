@@ -1,0 +1,16 @@
+@import url("../components/css/BaseTheme.css");
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .search-btn-border {
+    border-radius: 0px 2px 2px 2px;
+    border-left: none;
+  }
+
+  .search-box-border {
+    border-radius: 2px 0px 2px 2px;
+    border-right: none;
+  }
+}
