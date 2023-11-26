@@ -2,6 +2,14 @@
 
 It is Parent project, we can import into the IDE.
 
+prerequisites:
+JDK 17
+Springboot Version 2.7.1
+Environment Variables
+NOZAMA_CERT => Pointing to the cert\CA folder within the nozama-cert project folder. 
+
+Import the certificates (localhost.crt as localhost, nozama.in.crt as nozama-in, nozama.crt as nozama) into the cacerts file under your JDK (%JAVA_HOME%/lib/security)
+
 [![Maven Build - Skip Tests ](https://github.com/balamt/nozama/actions/workflows/api-maven-build-skiptest.yml/badge.svg)](https://github.com/balamt/nozama/actions/workflows/api-maven-build-skiptest.yml)
 
 # Ports Used in Nozama
