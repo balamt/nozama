@@ -1,19 +1,17 @@
 package in.nozama.service.repository;
 
-import in.nozama.service.entity.Order;
-import in.nozama.service.entity.Status;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+import in.nozama.service.entity.Order;
+import in.nozama.service.entity.Status;
+import jakarta.transaction.Transactional;
+
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Transactional

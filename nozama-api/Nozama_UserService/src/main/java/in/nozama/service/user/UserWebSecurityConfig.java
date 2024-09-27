@@ -1,24 +1,24 @@
 package in.nozama.service.user;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import in.nozama.service.user.jwthandler.JwtFilter;
+import jakarta.annotation.Resource;
 
 /**
  * https://medium.com/@akhileshanand/spring-boot-api-security-with-jwt-and-role-based-authorization-fea1fd7c9e32
@@ -28,8 +28,8 @@ import in.nozama.service.user.jwthandler.JwtFilter;
  */
 @Configuration
 @EnableWebSecurity(debug = true)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableGlobalAuthentication
+public class UserWebSecurityConfig extends WebSecurityConfiguration {
 
 	@Resource
 	private UserDetailsService userDetailsService;
@@ -42,16 +42,6 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Primary
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
-	public UserWebSecurityConfig(boolean disableDefaults) {
-		super(disableDefaults);
 	}
 
 	@Autowired

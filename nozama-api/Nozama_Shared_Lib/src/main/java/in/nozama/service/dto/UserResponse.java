@@ -2,8 +2,6 @@ package in.nozama.service.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import in.nozama.service.dto.view.UserModelView;
 import in.nozama.service.model.Gender;
 import in.nozama.service.model.UserType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
