@@ -1,6 +1,7 @@
 package in.nozama.address.service.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -115,7 +116,10 @@ public class AddressControllerTest extends NozamaAddressServiceApplicationTests 
 
 	@Test
 	public void givenAddressRequestWhenAddAddressIsCalledSaveAddress() throws Exception {
-		mockMvc.perform(post("/address/add").contentType(MediaType.APPLICATION_JSON).content(asJsonString(request)))
+		when(addressService.save(any(AddressRequest.class))).thenReturn(response);
+		mockMvc.perform(post("/address/add")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(asJsonString(request)))
 				.andDo(print()).andExpect(status().isCreated());
 
 	}
