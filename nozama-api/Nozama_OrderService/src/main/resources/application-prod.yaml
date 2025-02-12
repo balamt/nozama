@@ -44,6 +44,12 @@ kafka:
     path: "localhost:9092"
   topic: "order.info.updater"
 
+springdoc:
+  api-docs:
+    path: /order/v3/api-docs
+  swagger-ui:
+    path: /order/swagger-ui.html
+
 eureka:
   client:
     serviceUrl:

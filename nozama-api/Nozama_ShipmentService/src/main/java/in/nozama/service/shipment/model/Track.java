@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import lombok.NonNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,8 +30,7 @@ public class Track implements Serializable {
 	 * Reference: https://vladmihalcea.com/the-best-way-to-map-a-composite-primary-key-with-jpa-and-hibernate/
 	 */
 	@EmbeddedId
-	@NonNull
-	private TrackCompositKeys trackCompositKeys;
+    private TrackCompositKeys trackCompositKeys;
 
 	@OneToOne
 	@JoinColumn(name = "warehouse_id")

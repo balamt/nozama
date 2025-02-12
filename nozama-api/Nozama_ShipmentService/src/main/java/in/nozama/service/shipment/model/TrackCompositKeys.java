@@ -5,6 +5,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+
 import in.nozama.service.entity.Order;
 import in.nozama.service.user.model.User;
 

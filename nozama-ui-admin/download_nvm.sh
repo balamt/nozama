@@ -15,3 +15,16 @@ nvm current # Should print "v22.14.0".
 
 # Verify npm version:
 npm -v # Should print "10.9.2".
+
+#build the app
+
+npm run build
+
+# run the react app
+
+npm start
+
+# run the react app with 0.0.0.0 host
+
+npm start --host 0.0.0.0
+

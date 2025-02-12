@@ -39,7 +39,7 @@ public class AddressServiceImpl implements AddressService {
 			throw new AddressNotFoundException(
 					String.format("Address Not Found for the ID %d.", addressId));
 		}
-		return addressMapper.map(address);
+		return addressMapper.mapResponse(address.get());
 	}
 
 	@Override

@@ -19,7 +19,7 @@
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 		<feign.version>1.4.7.RELEASE</feign.version>
 		<jjwt.version>0.9.1</jjwt.version>
-		<spring.swagger.version>1.6.4</spring.swagger.version>
+		<spring.swagger.version>1.6.14</spring.swagger.version>
 	</properties>
 	<dependencies>
 		<dependency>

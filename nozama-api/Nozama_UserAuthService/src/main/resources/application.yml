@@ -2,3 +2,9 @@ spring:
   profiles:
     active:
     - ${NOZAMA_SERVICE_PROFILE:local}
+
+springdoc:
+  api-docs:
+    path: /auth/v3/api-docs
+  swagger-ui:
+    path: /auth/swagger-ui.html

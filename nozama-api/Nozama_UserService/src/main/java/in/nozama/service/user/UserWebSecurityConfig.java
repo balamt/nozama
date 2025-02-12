@@ -70,16 +70,16 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/user/signup").permitAll()
 		.antMatchers("/user/status").permitAll()
 		.antMatchers("/actuator/**").permitAll()
-				.antMatchers("/user/**", "/auth/**", "/documentation/**", "/v3/**", "/actuator/**", "/h2-console/**",
-						"/profile/**", "/favicon.ico", "/user-sw/**", "/user-api/**")
-				.permitAll().anyRequest().authenticated().and().exceptionHandling();
+		.antMatchers("/user/**", "/auth/**", "/documentation/**", "/v3/**", "/actuator/**", "/h2-console/**",
+						"/profile/**", "/favicon.ico", "/user-sw/**", "/user-api/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+				.anyRequest().authenticated().and().exceptionHandling();
 		http.addFilterBefore(authenticationTokenFilerBean(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/user/login","/user/status", "/user/signup", "/auth", "/auth/token", "/error", "/user-sw",
-				"/user-api/**", "/v3/api-docs/**", "/actuator/**");
+				"/user-api/**", "/v3/api-docs/**", "/actuator/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**");
 	}
 
 //	protected JwtAuthenticationConverter authenticationConverter() {

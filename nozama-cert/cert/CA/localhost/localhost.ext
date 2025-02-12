@@ -5,4 +5,8 @@ subjectAltName = @alt_names
 
 [alt_names]
 DNS.1 = localhost
+DNS.2 = *docker-*
+DNS.3 = host.docker.internal
+DNS.4 = *local
+DNS.5 = *docker*
 IP.1 = 127.0.0.1

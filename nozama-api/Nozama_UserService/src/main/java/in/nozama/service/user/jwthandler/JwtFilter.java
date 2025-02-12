@@ -42,16 +42,29 @@ public class JwtFilter extends OncePerRequestFilter {
 		this.jwtTokenUtil = ctx.getBean(JwtTokenUtil.class);
 		this.userDetailsService = ctx.getBean(UserDetailsService.class);
 	}
+
+	@Autowired
+	public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
+		this.jwtTokenUtil = jwtTokenUtil;
+	}
 		
 	private boolean isAllowedPath(HttpServletRequest request) {
-		return (request.getServletPath().contains("/user/email")
-				|| request.getServletPath().contains("/user/signup")
-				|| request.getServletPath().contains("/user/status")
-				|| request.getServletPath().contains("/user/login")
-				|| request.getServletPath().contains("/error")
-				|| request.getServletPath().contains("/swagger-ui")
-				|| request.getServletPath().contains("/api-docs/")
-				|| request.getServletPath().endsWith("/actuator/info"));
+		LOGGER.error("Is Allowed Path " + request.getServletPath());
+		return (request.getRequestURI().startsWith("/user/email")
+				|| request.getRequestURI().startsWith("/user/signup")
+				|| request.getRequestURI().startsWith("/user/status")
+				|| request.getRequestURI().startsWith("/user/login")
+				|| request.getRequestURI().startsWith("/error")
+				|| request.getRequestURI().contains("/user/swagger-ui")
+				|| request.getRequestURI().contains("/v3/api-docs")
+				|| request.getRequestURI().startsWith("/swagger-ui.html")
+				|| request.getRequestURI().startsWith("/user/swagger-ui.html")
+				|| request.getRequestURI().startsWith("/user/swagger-ui/index.html")
+				|| request.getRequestURI().startsWith("/user/v3/api-docs")
+				|| request.getRequestURI().startsWith("/user/v3/**")
+				|| request.getRequestURI().startsWith("/api-docs/")
+				|| request.getRequestURI().startsWith("/favicon.ico")
+				|| request.getRequestURI().startsWith("/actuator/info"));
 	}
 
 	@Override

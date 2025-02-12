@@ -1,1 +1,4 @@
-docker pull openjdk:19-jdk-alpine3.15
+#openjdk alpine is not prod ready
+#docker pull openjdk:19-jdk-alpine3.15
+
+docker pull amazoncorretto:23-alpine3.21-jdk

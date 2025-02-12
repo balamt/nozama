@@ -71,6 +71,10 @@ public class AddressController {
 		AddressResponse addressResponse = null;
 		if (address != null) {
 			addressResponse = addressService.save(address);
+			if(addressResponse != null && addressResponse.getAddressId() != null)
+			{
+				addressid = addressResponse.getAddressId();
+			}
 		}
 
 		if (addressid <= -1l) {

@@ -34,7 +34,7 @@ spring:
               - GET
               - POST
       routes:
-      - id: nozama-productservice
+      - id: nozama-productservice-category
         uri: https://localhost:8082
         predicates:
         - Path=/category/**
@@ -42,23 +42,23 @@ spring:
         uri: https://localhost:8082
         predicates:
         - Path=/product/**
-      - id: nozama-productservice
+      - id: nozama-productservice-api
         uri: https://localhost:8082
         predicates:
         - Path=/product-api/**
-      - id: nozama-productservice
+      - id: nozama-productservice-sw
         uri: https://localhost:8082
         predicates:
-        - Path=/product-sw/**
+        - Path=/product/v3/**
       - id: nozama-orderservice
         uri: https://localhost:8094
         predicates:
         - Path=/order/**
-      - id: nozama-orderservice
+      - id: nozama-orderservice-sw
         uri: https://localhost:8094
         predicates:
-        - Path=/order-sw/**
-      - id: nozama-orderservice
+        - Path=/order/v3/**
+      - id: nozama-orderservice-api
         uri: https://localhost:8094
         predicates:
         - Path=/order-api/**
@@ -66,27 +66,27 @@ spring:
         uri: https://localhost:8081
         predicates:
         - Path=/user/**
-      - id: nozama-userservice
+      - id: nozama-userservice-api
         uri: https://localhost:8081
         predicates:
         - Path=/user-api/**
-      - id: nozama-userservice
+      - id: nozama-userservice-sw
         uri: https://localhost:8081
         predicates:
-        - Path=/user-sw/**
+        - Path=/user/v3/**
       - id: nozama-userauthservice
         uri: https://localhost:8089
         predicates:
         - Path=/auth/**  
-      - id: nozama-userauthservice
+      - id: nozama-userauthservice-health
         uri: https://localhost:8089
         predicates:
         - Path=/auth-health/**  
-      - id: nozama-userauthservice
+      - id: nozama-userauthservice-sw
         uri: https://localhost:8089
         predicates:
-        - Path=/userauth-sw/**  
-      - id: nozama-userauthservice
+        - Path=/auth/v3/**
+      - id: nozama-userauthservice-api
         uri: https://localhost:8089
         predicates:
         - Path=/userauth-api/**
@@ -94,14 +94,14 @@ spring:
         uri: https://localhost:8088
         predicates:
         - Path=/cart/** 
-      - id: nozama-cartservice
+      - id: nozama-cartservice-api
         uri: https://localhost:8088
         predicates:
         - Path=/cart-api/** 
-      - id: nozama-cartservice
+      - id: nozama-cartservice-sw
         uri: https://localhost:8088
         predicates:
-        - Path=/cart-sw/** 
+        - Path=/cart/v3/**
       - id: nozama-config-service
         uri: https://localhost:8888
         predicates:
@@ -110,11 +110,11 @@ spring:
         uri: https://localhost:8092
         predicates:
         - Path=/address/**
-      - id: nozama-addressservice
+      - id: nozama-addressservice-sw
         uri: https://localhost:8092
         predicates:
-        - Path=/address-sw/**
-      - id: nozama-addressservice
+        - Path=/address/v3/**
+      - id: nozama-addressservice-api
         uri: https://localhost:8092
         predicates:
         - Path=/address-api/**
@@ -149,3 +149,36 @@ management:
     tags: 
       application: ${spring.application.name}
       env: dev
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  group-configs:
+    - group: "product"
+      paths-to-match:
+        - "/product/**"
+        - "/category/**"
+        - "/v3/**"
+    - group: "order"
+      paths-to-match:
+        - "/order/**"
+        - "/v3/**"
+    - group: "user"
+      paths-to-match:
+        - "/user/**"
+        - "/v3/**"
+    - group: "auth"
+      paths-to-match:
+        - "/auth/**"
+        - "/auth-health/**"
+        - "/v3/**"
+    - group: "cart"
+      paths-to-match:
+        - "/cart/**"
+        - "/v3/**"
+    - group: "address"
+      paths-to-match:
+        - "/address/**"
+        - "/v3/**"

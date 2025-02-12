@@ -2,3 +2,6 @@
 spring:
     profiles:
       active: ${NOZAMA_SERVICE_PROFILE:local}
+
+    main:
+      web-application-type: reactive

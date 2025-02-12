@@ -63,9 +63,10 @@ spring:
 
 springdoc:
   api-docs:
-    path: /user-api/api-docs
+    path: /user/v3/api-docs
   swagger-ui:
-    path: /user-sw/swagger-ui.html
+    path: /user/swagger-ui.html
+
 ribbon:
   eureka:
     enabled: false

@@ -52,9 +52,9 @@ server:
 
 springdoc:
   api-docs:
-    path: /address-api/api-docs
+    path: /address/v3/api-docs
   swagger-ui:
-    path: /address-sw/swagger-ui.html
+    path: /address/swagger-ui.html
     
 #Prometheus
 management:

@@ -17,6 +17,7 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
     - targets: ['sd.nozama.in:8761', 'apigw.nozama.in:8090', 'user.nozama.in:8081', 'product.nozama.in:8082', 'auth.nozama.in:8089',  'config.nozama.in:8888', 'address.nozama.in:8092']
+    - targets: ['localhost:8761', 'localhost:8090', 'localhost:8081', 'localhost:8082', 'localhost:8089',  'localhost:8888', 'localhost:8092']
   scheme: https
   tls_config:
     ca_file: /cert/CA.pem

@@ -85,6 +85,18 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger2.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>in.nozama</groupId>
+			<artifactId>nozama-orderservice</artifactId>
+			<version>2.7.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>in.nozama</groupId>
+			<artifactId>nozama-userservice</artifactId>
+			<version>2.7.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

@@ -55,9 +55,9 @@ spring:
         
 springdoc:
   api-docs:
-    path: /product-api/api-docs
+    path: /product/v3/api-docs
   swagger-ui:
-    path: /product-sw/swagger-ui.html
+    path: /product/swagger-ui.html
 
 ribbon:
   eureka:

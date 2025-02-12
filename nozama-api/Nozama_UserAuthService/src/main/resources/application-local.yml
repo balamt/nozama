@@ -71,9 +71,9 @@ spring:
       
 springdoc:
   api-docs:
-    path: /userauth-api/api-docs
+    path: /auth/v3/api-docs
   swagger-ui:
-    path: /userauth-sw/swagger-ui.html
+    path: /auth/swagger-ui.html
 
 ## This is the way we can provide the service proxy url and port to reach the other msa
 ## The URL is pointing to API Gateway and its port number

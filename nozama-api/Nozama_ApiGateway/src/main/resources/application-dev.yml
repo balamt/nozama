@@ -35,7 +35,7 @@ spring:
               - GET
               - POST
       routes:
-      - id: nozama-productservice
+      - id: nozama-productservice-category
         uri: https://product.nozama.in:8082
         predicates:
         - Path=/category/**
@@ -43,23 +43,23 @@ spring:
         uri: https://product.nozama.in:8082
         predicates:
         - Path=/product/**
-      - id: nozama-productservice
+      - id: nozama-productservice-api
         uri: https://product.nozama.in:8082
         predicates:
         - Path=/product-api/**
-      - id: nozama-productservice
+      - id: nozama-productservice-sw
         uri: https://product.nozama.in:8082
         predicates:
-        - Path=/product-sw/**
+        - Path=/product/v3/**
       - id: nozama-orderservice
         uri: https://order.nozama.in:8094
         predicates:
         - Path=/order/**
-      - id: nozama-orderservice
+      - id: nozama-orderservice-sw
         uri: https://order.nozama.in:8094
         predicates:
-        - Path=/order-sw/**
-      - id: nozama-orderservice
+        - Path=/order/v3/**
+      - id: nozama-orderservice-api
         uri: https://order.nozama.in:8094
         predicates:
         - Path=/order-api/**
@@ -67,27 +67,27 @@ spring:
         uri: https://user.nozama.in:8081
         predicates:
         - Path=/user/**
-      - id: nozama-userservice
+      - id: nozama-userservice-api
         uri: https://user.nozama.in:8081
         predicates:
         - Path=/user-api/**
-      - id: nozama-userservice
+      - id: nozama-userservice-sw
         uri: https://user.nozama.in:8081
         predicates:
-        - Path=/user-sw/**
+        - Path=/user/v3/**
       - id: nozama-userauthservice
         uri: https://auth.nozama.in:8089
         predicates:
         - Path=/auth/**  
-      - id: nozama-userauthservice
+      - id: nozama-userauthservice-health
         uri: https://auth.nozama.in:8089
         predicates:
         - Path=/auth-health/**  
-      - id: nozama-userauthservice
+      - id: nozama-userauthservice-sw
         uri: https://auth.nozama.in:8089
         predicates:
-        - Path=/userauth-sw/**  
-      - id: nozama-userauthservice
+        - Path=/auth/v3/**
+      - id: nozama-userauthservice-api
         uri: https://auth.nozama.in:8089
         predicates:
         - Path=/userauth-api/**
@@ -95,14 +95,14 @@ spring:
         uri: https://sd.nozama.in:8088
         predicates:
         - Path=/cart/** 
-      - id: nozama-cartservice
+      - id: nozama-cartservice-api
         uri: https://cart.nozama.in:8088
         predicates:
         - Path=/cart-api/** 
-      - id: nozama-cartservice
+      - id: nozama-cartservice-sw
         uri: https://cart.nozama.in:8088
         predicates:
-        - Path=/cart-sw/** 
+        - Path=/cart/v3/**
       - id: nozama-config-service
         uri: https://config.nozama.in:8888
         predicates:
@@ -111,11 +111,11 @@ spring:
         uri: https://address.nozama.in:8092
         predicates:
         - Path=/address/**
-      - id: nozama-addressservice
+      - id: nozama-addressservice-sw
         uri: https://address.nozama.in:8092
         predicates:
-        - Path=/address-sw/**
-      - id: nozama-addressservice
+        - Path=/address/v3/**
+      - id: nozama-addressservice-api
         uri: https://address.nozama.in:8092
         predicates:
         - Path=/address-api/**
@@ -150,3 +150,29 @@ management:
     tags: 
       application: ${spring.application.name}
       env: dev
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  group-configs:
+    - group: "product"
+      paths-to-match:
+        - "/product/v3/api-docs**"
+    - group: "order"
+      paths-to-match:
+        - "/order/**"
+    - group: "user"
+      paths-to-match:
+        - "/user/**"
+    - group: "auth"
+      paths-to-match:
+        - "/auth/**"
+        - "/auth-health/**"
+    - group: "cart"
+      paths-to-match:
+        - "/cart/**"
+    - group: "address"
+      paths-to-match:
+        - "/address/**"

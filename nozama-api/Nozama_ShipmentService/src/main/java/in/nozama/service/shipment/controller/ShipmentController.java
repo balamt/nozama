@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import in.nozama.service.entity.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,7 +111,7 @@ public class ShipmentController {
 
         if(LOG.isDebugEnabled()) {
             LOG.debug(MessageFormat.format("Order Service Response for OrderId : {0} \n {1}",
-                    orderId, orderFromSvc.toString()));
+                    orderId, orderFromSvc));
         }
 
         Track shipmentDetail = shipmentService.createShipment(orderFromSvc);

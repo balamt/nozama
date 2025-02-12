@@ -37,9 +37,9 @@ kafka:
 
 springdoc:
   api-docs:
-    path: /order-api/api-docs
+    path: /order/v3/api-docs
   swagger-ui:
-    path: /order-sw/swagger-ui.html
+    path: /order/swagger-ui.html
 
 eureka:
   client:

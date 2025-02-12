@@ -1,8 +1,8 @@
 package in.nozama.service.shipment.service;
 
 import in.nozama.service.entity.Order;
-import in.nozama.service.model.Track;
-import in.nozama.service.model.TrackCompositKeys;
+import in.nozama.service.shipment.model.Track;
+import in.nozama.service.shipment.model.TrackCompositKeys;
 import in.nozama.service.shipment.exception.ShipmentAlreadyCreatedException;
 import in.nozama.service.shipment.exception.ShipmentNotFoundException;
 

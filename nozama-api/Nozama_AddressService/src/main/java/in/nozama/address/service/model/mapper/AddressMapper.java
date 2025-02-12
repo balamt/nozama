@@ -77,6 +77,7 @@ public class AddressMapper {
 	public AddressRequest map(AddressResponse from) {
 		AddressRequest to = new AddressRequest();
 		if (from != null) {
+			to.setAddressId(from.getAddressId());
 			to.setAddress1(from.getAddress1());
 			to.setAddress2(from.getAddress2());
 			to.setAddressType(from.getAddressType());

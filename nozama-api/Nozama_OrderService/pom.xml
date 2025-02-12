@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
-		<spring.swagger.version>1.6.4</spring.swagger.version>
+		<spring.swagger.version>1.6.14</spring.swagger.version>
 	</properties>
 
 	<dependencies>
