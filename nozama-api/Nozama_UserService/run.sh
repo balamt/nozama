@@ -5,5 +5,5 @@ cd target
 targetFile="$(ls | grep '.jar$')"
 cd ..
 echo "Starting /target/"${targetFile}
-java -jar $PWD'/target/'${targetFile}
+java -jar $PWD'/target/'${targetFile} -NOZAMA_CERT='~/Workspace/java_ws/nozama/nozama-cert/cert/CA'
 

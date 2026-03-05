@@ -28,7 +28,7 @@ server:
   port: 8081
   ssl:
     key-store: file:${NOZAMA_CERT}/localhost/localhost.jks
-    key-store-password: password
+    key-store-password: nozama19
     key-alias: localhost
     key-store-type: JKS
 spring:
